@@ -50,7 +50,7 @@
                                 <div class="form-group">
                                     <label for="nama_lengkap" class="form-label fw-medium">Nama Lengkap</label>
                                     <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control"
-                                        placeholder="Masukkan nama lengkap" value="{{ $dataps->$nama }}" readonly>
+                                        placeholder="Masukkan nama lengkap" value="{{ old('nama', $dataps->dataMitra->nama ?? '') }}" readonly>
 
                                 </div>
                             </div>
