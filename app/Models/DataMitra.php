@@ -76,4 +76,18 @@ class DataMitra extends Model
         return $this->hasMany(PerjanjianSewa::class, 'id_mitra', 'id_mitra');
     }
 
+
+
+
+    public function getMasaBerlakuIdentitasFormattedAttribute()
+    {
+        return $this->masa_berlaku_identitas 
+            ? \Carbon\Carbon::parse($this->masa_berlaku_identitas)->format('Y-m-d'): null;
+    }
+    public function getTglPerjanjianFormattedAttribute()
+    {
+        return $this->tgl_perjanjian 
+            ? \Carbon\Carbon::parse($this->tgl_perjanjian)->format('Y-m-d'): null;
+    }
+
 }

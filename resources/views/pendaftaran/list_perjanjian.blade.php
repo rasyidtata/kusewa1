@@ -58,7 +58,7 @@
                                 <div class="form-group">
                                     <label for="nik" class="form-label fw-medium">NIK</label>
                                     <input type="text" id="nik" name="nik" class="form-control"
-                                        placeholder="Masukkan NIK" value="340413140998788001" readonly>
+                                        placeholder="Masukkan NIK" value="{{ old('no_identitas', $dataps->dataMitra->no_identitas ?? '') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                                             <i class="bi bi-calendar3"></i>
                                         </span>
                                         <input type="date" id="Masa_Berlaku_KTP" name="Masa_Berlaku_KTP"
-                                            class="form-control" value="340413140998788001" readonly>
+                                            class="form-control" value="{{ $dataps->dataMitra->masa_berlaku_identitas_formatted ?? '' }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                                 <div class="form-group">
                                     <label for="email" class="form-label fw-medium">Alamat E-mail</label>
                                     <input type="email" id="email" name="email" class="form-control"
-                                        placeholder="email@contoh.com" value="340413140998788001" readonly>
+                                        placeholder="email@contoh.com" value="{{ old('email', $dataps->dataMitra->email ?? '') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                 <div class="form-group">
                                     <label for="no_telepon" class="form-label fw-medium">No Telepon/WA</label>
                                     <input type="tel" id="no_telepon" name="no_telepon" class="form-control"
-                                        placeholder="08xxxxxxxxxx" value="340413140998788001" readonly>
+                                        placeholder="08xxxxxxxxxx" value="{{ old('no_tlpn', $dataps->dataMitra->no_tlpn ?? '') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -112,7 +112,7 @@
                                             <i class="bi bi-calendar3"></i>
                                         </span>
                                         <input type="date" id="tanggal_perjanjian" name="tanggal_perjanjian"
-                                            class="form-control" value="340413140998788001" readonly>
+                                            class="form-control" value="{{ $dataps->dataMitra->tgl_perjanjian_formatted ?? '' }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                                     <label for="penyewa_berdasarkan" class="form-label fw-medium">Penyewa
                                         Berdasarkan</label>
                                     <input type="text" id="penyewa_berdasarkan" name="penyewa_berdasarkan"
-                                        class="form-control" placeholder="Berdasarkan..." value="340413140998788001"
+                                        class="form-control" placeholder="Berdasarkan..." value="{{ old('penyewa_berdasarkan', $dataps->dataMitra->penyewa_berdasarkan ?? '') }}"
                                         readonly>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@
                                 <div class="form-group">
                                     <label for="alamat" class="form-label fw-medium">Alamat</label>
                                     <textarea id="alamat" name="alamat" class="form-control" rows="3"
-                                        placeholder="Masukkan alamat lengkap" value="340413140998788001"
+                                        placeholder="Masukkan alamat lengkap" value="{{ old('alamat', $dataps->dataMitra->alamat ?? '') }}"
                                         readonly></textarea>
                                 </div>
                             </div>
@@ -651,7 +651,7 @@
                             </tr>
                             <tr>
                                 <td class="text-center">2</td>
-                                <td>Rasyid tata d</td>
+                                <td>{{ $dataps->dataMitra->nama ?? $mitra->nama ?? 'N/A' }}</td>
                                 <td>KAI20250001</td>
                                 <td class="text-center">
                                     <input class="form-check-input" type="checkbox" id="setuju">
