@@ -66,11 +66,13 @@ class DataMitra extends Model
         return 'Rp ' . number_format($this->harga, 0, ',', '.');
     }
     
+
+
+
     public function dataAset()
     {
         return $this->hasMany(DataAset::class, 'id_mitra', 'id_mitra');
     }
-
     public function perjanjianSewa()
     {
         return $this->hasMany(PerjanjianSewa::class, 'id_mitra', 'id_mitra');
@@ -89,5 +91,7 @@ class DataMitra extends Model
         return $this->tgl_perjanjian 
             ? \Carbon\Carbon::parse($this->tgl_perjanjian)->format('Y-m-d'): null;
     }
+
+
 
 }

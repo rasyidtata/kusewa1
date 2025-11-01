@@ -53,14 +53,41 @@ class PerjanjianSewa extends Model
     {
         return $this->belongsTo(DataMitra::class, 'id_mitra', 'id_mitra');
     }
-
     public function dataAset()
     {
         return $this->belongsTo(DataAset::class, 'id_aset', 'id_aset');
     }
-
     //public function admin()
    // {
      //   return $this->belongsTo(Admin::class, 'id_admin', 'id_admin');
    // }
+    
+
+
+    public function getJangkaWaktuTahunAttribute()
+    {
+        if (empty($this->jangka_waktu)) return '0';
+        if (preg_match('/(\d+)\s*tahun/i', $this->jangka_waktu, $matches)) {
+            return $matches[1];
+        }
+        return '0';
+    }
+
+    public function getJangkaWaktuBulanAttribute()
+    {
+        if (empty($this->jangka_waktu)) return '0';
+        if (preg_match('/(\d+)\s*bulan/i', $this->jangka_waktu, $matches)) {
+            return $matches[1];
+        }
+        return '0';
+    }
+
+    public function getJangkaWaktuHariAttribute()
+    {
+        if (empty($this->jangka_waktu)) return '0';
+        if (preg_match('/(\d+)\s*hari/i', $this->jangka_waktu, $matches)) {
+            return $matches[1];
+        }
+        return '0';
+    }
 }

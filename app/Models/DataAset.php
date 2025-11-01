@@ -34,7 +34,6 @@ class DataAset extends Model
     {
         return $this->belongsTo(DataMitra::class, 'id_mitra', 'id_mitra');
     }
-
     public function perjanjianSewa()
     {
         return $this->hasMany(PerjanjianSewa::class, 'id_aset', 'id_aset');

@@ -198,9 +198,9 @@ class PerjanjianSewaController extends Controller
         $h = (int) ($request->hari ?? 0);
 
         $parts = [];
-        if ($t) $parts[] = "$t Tahun";
-        if ($b) $parts[] = "$b Bulan";
-        if ($h) $parts[] = "$h Hari";
+        if ($t > 0) $parts[] = "$t Tahun";
+        if ($b > 0) $parts[] = "$b Bulan"; 
+        if ($h > 0) $parts[] = "$h Hari";
 
         $jangkawaktu = implode(' ', $parts) ?: '0 Hari';
 
