@@ -92,6 +92,37 @@ class DataMitra extends Model
             ? \Carbon\Carbon::parse($this->tgl_perjanjian)->format('Y-m-d'): null;
     }
 
+    public function getTglAnggaranDasarFormattedAttribute()
+    {
+        return $this->tgl_anggaran_dasar
+            ? \Carbon\Carbon::parse($this->tgl_anggaran_dasar)->format('Y-m-d'): null;
+    }
+    public function getTglPersetujuanKenmenhumDanHamFormattedAttribute()
+    {
+        return $this->tgl_persetujuan_kenmenhum_dan_ham
+            ? \Carbon\Carbon::parse($this->tgl_persetujuan_kenmenhum_dan_ham)->format('Y-m-d'): null;
+    }
+    public function getTglPenetapanPengadilanFormattedAttribute()
+    {
+        return $this->tgl_penetapan_pengadilan
+            ? \Carbon\Carbon::parse($this->tgl_penetapan_pengadilan)->format('Y-m-d'): null;
+    }
+    public function getTglIzinUsahaFormattedAttribute()
+    {
+        return $this->tgl_izin_usaha
+            ? \Carbon\Carbon::parse($this->tgl_izin_usaha)->format('Y-m-d'): null;
+    }
+    public function getTglSkDirjenPajakFormattedAttribute()
+    {
+        return $this->tgl_sk_dirjen_pajak
+            ? \Carbon\Carbon::parse($this->tgl_sk_dirjen_pajak)->format('Y-m-d'): null;
+    }
+    public function getTglSuratPengukuhanKenaPajakFormattedAttribute()
+    {
+        return $this->tgl_surat_pengukuhan_kena_pajak
+            ? \Carbon\Carbon::parse($this->tgl_surat_pengukuhan_kena_pajak)->format('Y-m-d'): null;
+    }
+
 
 
 }

@@ -13,29 +13,24 @@
         </div>
         <hr>
         <div class="card-body p-2">
-            <form class="biodata-form" method="POST" action="{{ url('pendaftaran/update/'.$dataps->id_perjanjian) }}" enctype="multipart/form-data">
+            <form class="biodata-form" method="POST" action="{{ url('pendaftaran/update/'.$dataps->id_perjanjian) }}"
+                enctype="multipart/form-data">
                 @csrf
-                <div class="row justify-content-start p-3">
-                    <div class="col-md-4">
-                        <div class="form-group text-center">
-                            <div class="btn-group" role="group" aria-label="Jenis Penyewa">
-                                <input type="radio" class="btn-check" name="jenis_penyewa" id="perorangan"
-                                    value="perorangan" checked>
-                                <label class="btn" for="perorangan">
-                                    <i class="bi bi-person-fill "></i>
-                                    Perorangan
-                                </label>
-
-                                <input type="radio" class="btn-check" name="jenis_penyewa" id="instansi"
-                                    value="instansi">
-                                <label class="btn" for="instansi">
-                                    <i class="bi bi-building "></i>
-                                    Instansi
-                                </label>
+                <div class="row justify-content-star">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="jenis penyewaan" class="form-label fw-medium"></label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input type="text" id="jenis penyewaan" name="jenis penyewaan" class="form-control"
+                                        placeholder="-" value="{{ old('Jenis', $dataps->dataMitra->Jenis ?? '') }}"
+                                        readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Data Pribadi -->
                 <div class="card mb-4">
@@ -50,7 +45,8 @@
                                 <div class="form-group">
                                     <label for="nama_lengkap" class="form-label fw-medium">Nama Lengkap</label>
                                     <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control"
-                                        placeholder="Masukkan nama lengkap" value="{{ old('nama', $dataps->dataMitra->nama ?? '') }}" readonly>
+                                        placeholder="Masukkan nama lengkap"
+                                        value="{{ old('nama', $dataps->dataMitra->nama ?? '') }}" readonly>
 
                                 </div>
                             </div>
@@ -58,7 +54,9 @@
                                 <div class="form-group">
                                     <label for="nik" class="form-label fw-medium">NIK</label>
                                     <input type="text" id="nik" name="nik" class="form-control"
-                                        placeholder="Masukkan NIK" value="{{ old('no_identitas', $dataps->dataMitra->no_identitas ?? '') }}" readonly>
+                                        placeholder="Masukkan NIK"
+                                        value="{{ old('no_identitas', $dataps->dataMitra->no_identitas ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +70,9 @@
                                             <i class="bi bi-calendar3"></i>
                                         </span>
                                         <input type="date" id="Masa_Berlaku_KTP" name="Masa_Berlaku_KTP"
-                                            class="form-control" value="{{ $dataps->dataMitra->masa_berlaku_identitas_formatted ?? '' }}" readonly>
+                                            class="form-control"
+                                            value="{{ $dataps->dataMitra->masa_berlaku_identitas_formatted ?? '' }}"
+                                            readonly>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,8 @@
                                 <div class="form-group">
                                     <label for="email" class="form-label fw-medium">Alamat E-mail</label>
                                     <input type="email" id="email" name="email" class="form-control"
-                                        placeholder="email@contoh.com" value="{{ old('email', $dataps->dataMitra->email ?? '') }}" readonly>
+                                        placeholder="email@contoh.com"
+                                        value="{{ old('email', $dataps->dataMitra->email ?? '') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +101,8 @@
                                 <div class="form-group">
                                     <label for="no_telepon" class="form-label fw-medium">No Telepon/WA</label>
                                     <input type="tel" id="no_telepon" name="no_telepon" class="form-control"
-                                        placeholder="08xxxxxxxxxx" value="{{ old('no_tlpn', $dataps->dataMitra->no_tlpn ?? '') }}" readonly>
+                                        placeholder="08xxxxxxxxxx"
+                                        value="{{ old('no_tlpn', $dataps->dataMitra->no_tlpn ?? '') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -112,7 +114,8 @@
                                             <i class="bi bi-calendar3"></i>
                                         </span>
                                         <input type="date" id="tanggal_perjanjian" name="tanggal_perjanjian"
-                                            class="form-control" value="{{ $dataps->dataMitra->tgl_perjanjian_formatted ?? '' }}" readonly>
+                                            class="form-control"
+                                            value="{{ $dataps->dataMitra->tgl_perjanjian_formatted ?? '' }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -124,8 +127,7 @@
                                     <label for="penyewa_berdasarkan" class="form-label fw-medium">Penyewa
                                         Berdasarkan</label>
                                     <input type="text" id="penyewa_berdasarkan" name="penyewa_berdasarkan"
-                                        class="form-control" placeholder="Berdasarkan..." value=""
-                                        readonly>
+                                        class="form-control" placeholder="Berdasarkan..." value="" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -173,7 +175,9 @@
                                 <div class="form-group">
                                     <label for="nama_perwakilan" class="form-label fw-medium">Nama Perwakilan</label>
                                     <input type="text" id="nama_perwakilan" name="nama_perwakilan" class="form-control"
-                                        placeholder="-" value="{{ old('nama_perwakilan', $dataps->dataMitra->nama_perwakilan ?? '') }}" readonly>
+                                        placeholder="-"
+                                        value="{{ old('nama_perwakilan', $dataps->dataMitra->nama_perwakilan ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -181,7 +185,8 @@
                                     <label for="perwakilan_selaku" class="form-label fw-medium">Perwakilan
                                         Selaku</label>
                                     <input type="text" id="perwakilan_selaku" name="perwakilan_selaku"
-                                        class="form-control" placeholder="-" value="{{ old('penyewa_selaku', $dataps->dataMitra->penyewa_selaku ?? '') }}"
+                                        class="form-control" placeholder="-"
+                                        value="{{ old('penyewa_selaku', $dataps->dataMitra->penyewa_selaku ?? '') }}"
                                         readonly>
                                 </div>
                             </div>
@@ -191,15 +196,17 @@
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="npwp" class="form-label fw-medium">NPWP</label>
-                                    <input type="text" id="npwp" name="npwp" class="form-control"
-                                        placeholder="-" value="{{ old('npwp', $dataps->dataMitra->npwp ?? '') }}" readonly>
+                                    <input type="text" id="npwp" name="npwp" class="form-control" placeholder="-"
+                                        value="{{ old('npwp', $dataps->dataMitra->npwp ?? '') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="kota_penyewa" class="form-label fw-medium">Kota Penyewa</label>
                                     <input type="text" id="kota_penyewa" name="kota_penyewa" class="form-control"
-                                        placeholder="-" value="{{ old('kota_penyewa', $dataps->dataMitra->kota_penyewa ?? '') }}" readonly>
+                                        placeholder="-"
+                                        value="{{ old('kota_penyewa', $dataps->dataMitra->kota_penyewa ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
                         </div>
@@ -209,14 +216,17 @@
                                 <div class="form-group">
                                     <label for="kode_pos" class="form-label fw-medium">Kode Pos</label>
                                     <input type="text" id="kode_pos" name="kode_pos" class="form-control"
-                                        placeholder="-" value="{{ old('kode_pos', $dataps->dataMitra->kode_pos ?? '') }}" readonly>
+                                        placeholder="-"
+                                        value="{{ old('kode_pos', $dataps->dataMitra->kode_pos ?? '') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="fax_penyewa" class="form-label fw-medium">FAX Penyewa</label>
                                     <input type="text" id="fax_penyewa" name="fax_penyewa" class="form-control"
-                                        placeholder="-" value="{{ old('fax_penyewa', $dataps->dataMitra->fax_penyewa ?? '') }}" readonly>
+                                        placeholder="-"
+                                        value="{{ old('fax_penyewa', $dataps->dataMitra->fax_penyewa ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +238,8 @@
                                         Pendirian</label>
                                     <input type="text" id="no_akte_pendirian" name="no_akte_pendirian"
                                         class="form-control" placeholder="-"
-                                        value="{{ old('no_akta_pendirian', $dataps->dataMitra->no_akta_pendirian ?? '') }}" readonly>
+                                        value="{{ old('no_akta_pendirian', $dataps->dataMitra->no_akta_pendirian ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
                         </div>
@@ -242,8 +253,10 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="Tanggal_Anggaran_Dasar" name="Tanggal_Anggaran_Dasar"
-                                            class="form-control" value="340413140998788001" readonly>
+                                        <input type="text" id="Tanggal_Anggaran_Dasar" name="Tanggal_Anggaran_Dasar"
+                                            placeholder="-" class="form-control"
+                                            value="{{ $dataps->dataMitra->tgl_anggaran_dasar_formatted ?? '' }}"
+                                            readonly>
                                     </div>
                                 </div>
                             </div>
@@ -253,7 +266,8 @@
                                         Terakhir</label>
                                     <input type="text" id="no_anggaran_dasar" name="no_anggaran_dasar"
                                         class="form-control" placeholder="-"
-                                        value="{{ old('no_anggaran_dasar', $dataps->dataMitra->no_anggaran_dasar ?? '') }}" readonly>
+                                        value="{{ old('no_anggaran_dasar', $dataps->dataMitra->no_anggaran_dasar ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
 
@@ -268,9 +282,11 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="Tanggal_Persetujuan_Kemenkum_dan_HAM"
+                                        <input type="text" id="Tanggal_Persetujuan_Kemenkum_dan_HAM"
                                             name="Tanggal_Persetujuan_Kemenkum_dan_HAM" class="form-control"
-                                            value="340413140998788001" readonly>
+                                            placeholder="-"
+                                            value="{{ $dataps->dataMitra->tgl_persetujuan_kenmenhum_dan_ham_formatted ?? '' }}"
+                                            readonly>
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +295,9 @@
                                     <label for="no_kemenkumham" class="form-label fw-medium">Nomor Kemenkum dan
                                         HAM</label>
                                     <input type="text" id="no_kemenkumham" name="no_kemenkumham" class="form-control"
-                                        placeholder="-" value="{{ old('no_kenmenhum_dan_ham', $dataps->dataMitra->no_kenmenhum_dan_ham ?? '') }}" readonly>
+                                        placeholder="-"
+                                        value="{{ old('no_kenmenhum_dan_ham', $dataps->dataMitra->no_kenmenhum_dan_ham ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
 
@@ -294,9 +312,10 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="Tanggal_Penetapan_Pengadilan_(CV)"
-                                            name="Tanggal_Penetapan_Pengadilan_(CV)" class="form-control"
-                                            value="340413140998788001" readonly>
+                                        <input type="text" id="Tanggal_Penetapan_Pengadilan"
+                                            name="Tanggal_Penetapan_Pengadilan" class="form-control" placeholder="-"
+                                            value="{{ $dataps->dataMitra->tgl_penetapan_pengadilan_formatted ?? '' }}"
+                                            readonly>
                                     </div>
                                 </div>
                             </div>
@@ -306,7 +325,8 @@
                                         Pengadilan (CV)</label>
                                     <input type="text" id="no_penetapan_pengadilan" name="no_penetapan_pengadilan"
                                         class="form-control" placeholder="-"
-                                        value="{{ old('no_penetapan_pengadilan', $dataps->dataMitra->no_penetapan_pengadilan ?? '') }}" readonly>
+                                        value="{{ old('no_penetapan_pengadilan', $dataps->dataMitra->no_penetapan_pengadilan ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
 
@@ -315,15 +335,15 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
-                                    <label for="tanggal_izin_berusaha" class="form-label fw-medium">Tanggal Nomor Izin
+                                    <label for="tanggal_izin_berusaha" class="form-label fw-medium">Tanggal Izin
                                         Berusaha</label>
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="Tanggal_Nomor_Izin_Berusaha"
-                                            name="Tanggal_Nomor_Izin_Berusaha" class="form-control"
-                                            value="340413140998788001" readonly>
+                                        <input type="text" id="Tanggal_Nomor_Izin_Berusaha"
+                                            name="Tanggal_Nomor_Izin_Berusaha" class="form-control" placeholder="-"
+                                            value="{{ $dataps->dataMitra->tgl_izin_usaha_formatted ?? '' }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -333,7 +353,8 @@
                                         Berusaha</label>
                                     <input type="text" id="no_izin_berusaha" name="no_izin_berusaha"
                                         class="form-control" placeholder="-"
-                                        value="{{ old('no_izin_berusaha', $dataps->dataMitra->no_izin_berusaha ?? '') }}" readonly>
+                                        value="{{ old('no_izin_berusaha', $dataps->dataMitra->no_izin_berusaha ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
 
@@ -348,9 +369,11 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="Tanggal_Surat_Keterangan_Terdaftar_Dirjen_Pajak"
+                                        <input type="text" id="Tanggal_Surat_Keterangan_Terdaftar_Dirjen_Pajak"
                                             name="Tanggal_Surat_Keterangan_Terdaftar_Dirjen_Pajak" class="form-control"
-                                            value="340413140998788001" readonly>
+                                            placeholder="-"
+                                            value="{{ $dataps->dataMitra->tgl_sk_dirjen_pajak_formatted ?? '' }}"
+                                            readonly>
                                     </div>
                                 </div>
                             </div>
@@ -360,7 +383,8 @@
                                         Terdaftar Dirjen Pajak</label>
                                     <input type="text" id="surat_keterangan_pajak" name="surat_keterangan_pajak"
                                         class="form-control" placeholder="-"
-                                        value="{{ old('sk_dirjen_pajak', $dataps->dataMitra->sk_dirjen_pajak ?? '') }}" readonly>
+                                        value="{{ old('sk_dirjen_pajak', $dataps->dataMitra->sk_dirjen_pajak ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
 
@@ -375,9 +399,11 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="Tanggal_Surat_Pengukuhan_Pengusaha_Kena_Pajak"
+                                        <input type="text" id="Tanggal_Surat_Pengukuhan_Pengusaha_Kena_Pajak"
                                             name="Tanggal_Surat_Pengukuhan_Pengusaha_Kena_Pajak" class="form-control"
-                                            value="340413140998788001" readonly>
+                                            placeholder="-"
+                                            value="{{ $dataps->dataMitra->tgl_surat_pengukuhan_kena_pajak_formatted ?? '' }}"
+                                            readonly>
                                     </div>
                                 </div>
                             </div>
@@ -387,7 +413,8 @@
                                         Pengusaha Kena Pajak</label>
                                     <input type="text" id="surat_pengukuhan_pkp" name="surat_pengukuhan_pkp"
                                         class="form-control" placeholder="-"
-                                        value="{{ old('surat_pengukuhan_kena_pajak', $dataps->dataMitra->surat_pengukuhan_kena_pajak ?? '') }}" readonly>
+                                        value="{{ old('surat_pengukuhan_kena_pajak', $dataps->dataMitra->surat_pengukuhan_kena_pajak ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
                         </div>
@@ -427,14 +454,17 @@
                                 <div class="form-group">
                                     <label for="npwp" class="form-label fw-medium">Luas Tanah</label>
                                     <input type="text" id="luas_tanah" name="npwp" class="form-control"
-                                        placeholder="Luas Tanah Dalan m" value="{{ old('luas_tanah', $dataps->dataAset->luas_tanah ?? '') }}" readonly>
+                                        placeholder="Luas Tanah Dalan m"
+                                        value="{{ old('luas_tanah', $dataps->dataAset->luas_tanah ?? '') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="luas_bangunan" class="form-label fw-medium">Luas Bangunan</label>
                                     <input type="text" id="luas_bangunan" name="luas_bangunan" class="form-control"
-                                        placeholder="Luas Bangunan Dalam m" value="{{ old('luas_bangunan', $dataps->dataAset->luas_bangunan ?? '') }}" readonly>
+                                        placeholder="Luas Bangunan Dalam m"
+                                        value="{{ old('luas_bangunan', $dataps->dataAset->luas_bangunan ?? '') }}"
+                                        readonly>
                                 </div>
                             </div>
                         </div>
@@ -446,15 +476,21 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <input type="text" id="tahun" name="tahun" class="form-control"
-                                                placeholder="Tahun" value="{{ $dataps->perjanjianSewa->jangka_waktu_tahun ?? '0' }}" readonly>
+                                                placeholder="Tahun"
+                                                value="{{ $dataps->perjanjianSewa->jangka_waktu_tahun ?? '0' }} / Tahun"
+                                                readonly>
                                         </div>
                                         <div class="col-4">
                                             <input type="text" id="bulan" name="bulan" class="form-control"
-                                                placeholder="Bulan" value="{{ $dataps->perjanjianSewa->jangka_waktu_bulan ?? '0' }}" readonly>
+                                                placeholder="Bulan"
+                                                value="{{ $dataps->perjanjianSewa->jangka_waktu_bulan ?? '0' }} / Bulan"
+                                                readonly>
                                         </div>
                                         <div class="col-4">
                                             <input type="text" id="hari" name="hari" class="form-control"
-                                                placeholder="Hari" value="{{ $dataps->perjanjianSewa->jangka_waktu_hari ?? '0' }}" readonly>
+                                                placeholder="Hari"
+                                                value="{{ $dataps->perjanjianSewa->jangka_waktu_hari ?? '0' }} / Hari"
+                                                readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -620,7 +656,7 @@
                     </div>
                 </div>
                 <div class="card mb-4 border-0 p-5">
-                    <div class="card-bodyy text-center pt-0"> 
+                    <div class="card-bodyy text-center pt-0">
                         <a href="{{ url('pendaftaran/perjanjian') }}" class="btn btn-dock px-5">
                             <i class="bi bi-file-earmark-text me-2"></i>DOKUMEN PERJANJIAN
                         </a>
@@ -666,25 +702,26 @@
                 <div class="card mb-4 border-0 p-5">
                     <div class="row row-list-perjanjian">
                         <div class="col-3">
-                            <a href="{{ url('pendaftaran/list_data') }}" class="btn btn-kembali px-5 text-decoration-none">
+                            <a href="{{ url('pendaftaran/list_data') }}"
+                                class="btn btn-kembali px-5 text-decoration-none">
                                 <i class="bi bi-arrow-left-circle me-2"></i>kembali
                             </a>
-                        </button>
+                            </button>
                         </div>
                         <div class="col-3">
                             <button type="button" class="btn btn-download px-5">
-                            <i class="bi bi-download me-2"></i>Download
-                        </button>
+                                <i class="bi bi-download me-2"></i>Download
+                            </button>
                         </div>
                         <div class="col-3">
                             <button type="button" class="btn btn-share px-5">
-                            <i class="bi bi-share me-2"></i>Share
-                        </button>
+                                <i class="bi bi-share me-2"></i>Share
+                            </button>
                         </div>
                         <div class="col-3">
                             <button type="button" class="btn btn-approved px-5">
-                            <i class="bi bi-check-circle me-2"></i>Approved
-                        </button>
+                                <i class="bi bi-check-circle me-2"></i>Approved
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -192,7 +192,6 @@ class PerjanjianSewaController extends Controller
 
     private function updatePerjanjianSewa(Request $request, $id_perjanjian)
     {
-        // Format jangka waktu seperti di PendaftaranController
         $t = (int) ($request->tahun ?? 0);
         $b = (int) ($request->bulan ?? 0);
         $h = (int) ($request->hari ?? 0);

@@ -66,26 +66,21 @@ class PerjanjianSewa extends Model
 
     public function getJangkaWaktuTahunAttribute()
     {
-        if (empty($this->jangka_waktu)) return '0';
-        if (preg_match('/(\d+)\s*tahun/i', $this->jangka_waktu, $matches)) {
+        if (preg_match('/(\d+)\s*Tahun/i', $this->jangka_waktu, $matches)) {
             return $matches[1];
         }
         return '0';
     }
-
     public function getJangkaWaktuBulanAttribute()
     {
-        if (empty($this->jangka_waktu)) return '0';
-        if (preg_match('/(\d+)\s*bulan/i', $this->jangka_waktu, $matches)) {
+        if (preg_match('/(\d+)\s*Bulan/i', $this->jangka_waktu, $matches)) {
             return $matches[1];
         }
         return '0';
     }
-
     public function getJangkaWaktuHariAttribute()
     {
-        if (empty($this->jangka_waktu)) return '0';
-        if (preg_match('/(\d+)\s*hari/i', $this->jangka_waktu, $matches)) {
+        if (preg_match('/(\d+)\s*Hari/i', $this->jangka_waktu, $matches)) {
             return $matches[1];
         }
         return '0';
