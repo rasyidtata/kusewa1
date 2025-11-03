@@ -477,19 +477,19 @@
                                         <div class="col-4">
                                             <input type="text" id="tahun" name="tahun" class="form-control"
                                                 placeholder="Tahun"
-                                                value="{{ $dataps->perjanjianSewa->jangka_waktu_tahun ?? '0' }} / Tahun"
+                                                value="{{ $dataps->jangka_waktu_tahun ?? '0' }} / Tahun"
                                                 readonly>
                                         </div>
                                         <div class="col-4">
                                             <input type="text" id="bulan" name="bulan" class="form-control"
                                                 placeholder="Bulan"
-                                                value="{{ $dataps->perjanjianSewa->jangka_waktu_bulan ?? '0' }} / Bulan"
+                                                value="{{ $dataps->jangka_waktu_bulan ?? '0' }} / Bulan"
                                                 readonly>
                                         </div>
                                         <div class="col-4">
                                             <input type="text" id="hari" name="hari" class="form-control"
                                                 placeholder="Hari"
-                                                value="{{ $dataps->perjanjianSewa->jangka_waktu_hari ?? '0' }} / Hari"
+                                                value="{{ $dataps->jangka_waktu_hari ?? '0' }} / Hari"
                                                 readonly>
                                         </div>
                                     </div>
@@ -506,8 +506,8 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="masa_awal_perjanjian" name="masa_awal_perjanjian"
-                                            class="form-control" value="340413140998788001" readonly>
+                                        <input type="text" id="masa_awal_perjanjian" name="masa_awal_perjanjian"
+                                            class="form-control" value="{{ $dataps->masa_awal_perjanjian_formatted ?? '' }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -519,8 +519,8 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="massa_akhir_perjanjian" name="massa_akhir_perjanjian"
-                                            class="form-control" value="340413140998788001" readonly>
+                                        <input type="text" id="masa_akhir_perjanjian" name="masa_akhir_perjanjian"
+                                            class="form-control" value="{{ $dataps->masa_akhir_perjanjian_formatted ?? '' }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -535,8 +535,8 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="massa_awal_pemanfaatan" name="massa_awal_pemanfaatan"
-                                            class="form-control" value="340413140998788001" readonly>
+                                        <input type="text" id="masa_awal_pemanfaatan" name="masa_awal_pemanfaatan"
+                                            class="form-control" value="{{ $dataps->masa_awal_manfaat_formatted ?? '' }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -549,7 +549,7 @@
                                             <i class="bi bi-calendar3"></i>
                                         </span>
                                         <input type="date" id="massa_Akhir_pemanfaatan" name="massa_Akhir_pemanfaatan"
-                                            class="form-control" value="340413140998788001" readonly>
+                                            class="form-control" value="{{ $dataps->masa_awal_manfaat_formatted ?? '' }}" readonly>
                                     </div>
                                 </div>
                             </div>
