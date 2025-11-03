@@ -571,7 +571,7 @@
                                 <div class="form-group">
                                     <label for="nama_perwakilan" class="form-label fw-medium">Harga Sewa</label>
                                     <input type="text" id="harga_sewa" name="harga_sewa" class="form-control"
-                                        placeholder="Rp." value="340413140998788001" readonly>
+                                        placeholder="Rp." value="Rp.{{ number_format($dataps->harga_sewa ?? 0, 0, ',', '.') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -579,7 +579,7 @@
                                     <label for="perwakilan_selaku" class="form-label fw-medium">Harga
                                         Pemanfaatan</label>
                                     <input type="text" id="harga_pemanfaatan" name="harga_pemanfaatan"
-                                        class="form-control" placeholder="Rp." value="340413140998788001" readonly>
+                                        class="form-control" placeholder="Rp." value="Rp.{{ number_format($dataps->harga_pemanfaatan ?? 0, 0, ',', '.') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -589,14 +589,14 @@
                                 <div class="form-group">
                                     <label for="npwp" class="form-label fw-medium">Biaya Admin</label>
                                     <input type="text" id="biaya_admin" name="biaya_admin" class="form-control"
-                                        placeholder="Rp." value="340413140998788001" readonly>
+                                        placeholder="Rp." value="Rp.{{ number_format($dataps->biaya_admin_ukur ?? 0, 0, ',', '.') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="com" class="form-label fw-medium">Cost Of Money</label>
                                     <input type="text" id="cost_of_money" name="cost_of_money" class="form-control"
-                                        placeholder="Rp." value="340413140998788001" readonly>
+                                        placeholder="Rp." value="Rp.{{ number_format($dataps->cost_of_money ?? 0, 0, ',', '.') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -606,7 +606,7 @@
                                 <div class="form-group">
                                     <label for="npwp" class="form-label fw-medium">Harga Sewa + Admin</label>
                                     <input type="text" id="harga_sewa_admin" name="harga_sewa_admin"
-                                        class="form-control" placeholder="Rp." value="340413140998788001" readonly>
+                                        class="form-control" placeholder="Rp." value="Rp.{{ number_format($dataps->harga_sewa_admin ?? 0, 0, ',', '.') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -614,7 +614,7 @@
                                     <label for="harga_sewa_admin" class="form-label fw-medium">Harga Sewa + Admin +
                                         COM</label>
                                     <input type="text" id="hagra_sewa_admin_com" name="hagra_sewa_admin_com"
-                                        class="form-control" placeholder="Rp." value="340413140998788001" readonly>
+                                        class="form-control" placeholder="Rp." value="Rp.{{ number_format($dataps->harga_sewa_admin_com ?? 0, 0, ',', '.') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -624,14 +624,14 @@
                                 <div class="form-group">
                                     <label for="npwp" class="form-label fw-medium">PPN 11%</label>
                                     <input type="text" id="ppn" name="ppn" class="form-control" placeholder="Rp."
-                                        value="340413140998788001" readonly>
+                                        value="Rp.{{ number_format($dataps->ppn_11_persen ?? 0, 0, ',', '.') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="total_harga" class="form-label fw-medium">Total Harga</label>
                                     <input type="text" id="total_harga" name="total_harga" class="form-control"
-                                        placeholder="Rp." value="340413140998788001" readonly>
+                                        placeholder="-" value="Rp.{{ number_format($dataps->total_harga ?? 0, 0, ',', '.') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -648,8 +648,7 @@
                                 <div class="form-group ">
                                     <label for="npwp" class="form-label fw-medium">Terbilang</label>
                                     <textarea id="terbilang" name="terbilang" class="form-control" rows="3"
-                                        placeholder="Tujuh ratus limapuluh ribu rupiah" value="340413140998788001"
-                                        readonly></textarea>
+                                        placeholder="-" readonly>{{ old('terbilang', $dataps->terbilang ?? '') }}</textarea>
                                 </div>
                             </div>
                         </div>
