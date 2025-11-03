@@ -85,4 +85,31 @@ class PerjanjianSewa extends Model
         }
         return '0';
     }
+
+
+
+
+    public function getMasaAwalPerjanjianFormattedAttribute()
+    {
+        return $this->masa_awal_perjanjian
+            ? \Carbon\Carbon::parse($this->masa_awal_perjanjian)->format('Y-m-d'): null;
+    }
+    public function getMasaAkhirPerjanjianFormattedAttribute()
+    {
+        return $this->masa_akhir_perjanjian
+            ? \Carbon\Carbon::parse($this->masa_akhir_perjanjian)->format('Y-m-d'): null;
+    }
+    public function getMasaAwalManfaatFormattedAttribute()
+    {
+        return $this->masa_awal_manfaat
+            ? \Carbon\Carbon::parse($this->masa_awal_manfaat)->format('Y-m-d'): null;
+    }
+    public function getMasaAkhirManfaatFormattedAttribute()
+    {
+        return $this->masa_akhir_manfaat
+            ? \Carbon\Carbon::parse($this->masa_akhir_manfaat)->format('Y-m-d'): null;
+    }
+
+    
 }
+ 
