@@ -18,8 +18,8 @@ class DataAset extends Model
     ];
     protected $hidden = [];
     protected $casts = [
-        'luas_tanah' => 'decimal:2',
-        'luas_bangunan' => 'decimal:2',
+        'luas_tanah' => 'integer',
+        'luas_bangunan' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',

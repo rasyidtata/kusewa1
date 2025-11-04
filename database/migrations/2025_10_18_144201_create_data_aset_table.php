@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('data_aset', function (Blueprint $table) {
             $table->id('id_aset');
             $table->text('lokasi');
-            $table->decimal('luas_tanah', 10, 0);
-            $table->decimal('luas_bangunan', 10, 0)->nullable();
+            $table->decimal('luas_tanah', 10, 2);
+            $table->decimal('luas_bangunan', 10, 2)->nullable();
             $table->string('penggunaan_objek', 200);
             $table->timestamps();
             $table->softDeletes();

@@ -77,8 +77,8 @@ class PerjanjianSewaController extends Controller
             // Data Aset - Step 2
             'alamat_asset' => 'required|string',
             'penggunaan_asset' => 'required|string',
-            'luas_tanah' => 'required|numeric|min:0',
-            'luas_bangunan' => 'required|numeric|min:0',
+            'luas_tanah' => 'required|integer|min:0',
+            'luas_bangunan' => 'required|integer|min:0',
             'tahun' => 'nullable|integer|min:0',
             'bulan' => 'nullable|integer|min:0|max:11',
             'hari' => 'nullable|integer|min:0|max:30',

@@ -455,7 +455,7 @@
                                     <label for="npwp" class="form-label fw-medium">Luas Tanah</label>
                                     <input type="text" id="luas_tanah" name="npwp" class="form-control"
                                         placeholder="Luas Tanah Dalan m"
-                                        value="{{ old('luas_tanah', $dataps->dataAset->luas_tanah ?? '') }}" readonly>
+                                        value="{{ old('luas_tanah', $dataps->dataAset->luas_tanah ?? '') }} m&sup2;" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -463,7 +463,7 @@
                                     <label for="luas_bangunan" class="form-label fw-medium">Luas Bangunan</label>
                                     <input type="text" id="luas_bangunan" name="luas_bangunan" class="form-control"
                                         placeholder="Luas Bangunan Dalam m"
-                                        value="{{ old('luas_bangunan', $dataps->dataAset->luas_bangunan ?? '') }}"
+                                        value="{{ old('luas_bangunan', $dataps->dataAset->luas_bangunan ?? '') }} m&sup2;"
                                         readonly>
                                 </div>
                             </div>
@@ -656,7 +656,7 @@
                 </div>
                 <div class="card mb-4 border-0 p-5">
                     <div class="card-bodyy text-center pt-0">
-                        <a href="{{ url('pendaftaran/perjanjian') }}" class="btn btn-dock px-5">
+                        <a href="{{ url('pendaftaran/perjanjian_aset') }}" class="btn btn-dock px-5">
                             <i class="bi bi-file-earmark-text me-2"></i>DOKUMEN PERJANJIAN
                         </a>
                     </div>

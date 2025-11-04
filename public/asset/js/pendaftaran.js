@@ -157,10 +157,15 @@ class MultiStepForm {
 
         if (jenisPenyewa === 'Perusahaan') {
             perusahaanFields.style.display = 'block';
+            const requiredFields = ['nama_perwakilan', 'npwp', 'kota_penyewa', 'kode_pos', 'perwakilan_selaku'];
             // Set required fields for perusahaan
             perusahaanFields.querySelectorAll('input, textarea').forEach(field => {
+            if (requiredFields.includes(field.name)) {
                 field.setAttribute('required', 'required');
-            });
+            } else {
+                field.removeAttribute('required');
+            }
+        });
         } else {
             perusahaanFields.style.display = 'none';
             // Remove required fields

@@ -13,7 +13,7 @@ Route::get("home/beranda", [HomeController::class, "beranda"])->name('home');
 Route::get("pendaftaran/form_data_diri", [HomeController::class, "form_pendaftaran"])->name('home');
 Route::get("pendaftaran/list_data", [HomeController::class, "list_data"])->name('home');
 Route::get("pendaftaran/list_perjanjian", [HomeController::class, "list_perjanjian"])->name('home');
-Route::get("pendaftaran/perjanjian", [HomeController::class, "perjanjian"])->name('home');
+Route::get("pendaftaran/perjanjian_aset", [HomeController::class, "perjanjian"])->name('home');
 
 Route::get("pendaftaran/list_data", [PerjanjianSewaController::class, "perjanjian_sewa"]);
 Route::get('/pendaftaran/list_perjanjian/{id_perjanjian}', [PerjanjianSewaController::class, 'edit'])->name('pendaftaran.edit');
