@@ -9,7 +9,6 @@
     <!-- CSS Assets -->
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/bootstrap-icons-1.8.3/bootstrap-icons.css') }}">
     <link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('asset/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('asset/css/dokumen.css') }}" rel="stylesheet">
     @yield('css_custom')
 </head>
@@ -43,12 +42,59 @@
 
     <div class="container">
         <div class="page">
+            <div class="konten-cover"> 
+                <div class="img cover-img">
+                    <img src="{{ asset('asset/img/logo_kai.png') }}" alt="Logo PT KAI">
+                </div>
+                <h6><strong>PERJANJIAN</strong></h6>
+                <div class="table cover-table ">
+                    <table class="table-cover">
+                        <tr>
+                            <td class="no"><strong>NOMOR</strong></td>
+                            <td class="ti"><strong>:</strong></td>
+                            <td class="isi" style="padding: 6px 0;">{{ $nomor_kontrak ?? '...........................................' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="no"><strong>NOMOR ASET</strong></td>
+                            <td class="ti"><strong>:</strong></td>
+                            <td class="isi">{{ $nomor_aset ?? '...........................................' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="no"><strong>TANGGAL</strong></td>
+                            <td class="ti"><strong>:</strong></td>
+                            <td class="isi">{{ $tanggal ?? '...........................................' }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <h6 class=" mt-5"><strong>ANTARA</strong></h6>
+                <h6 class=" mt-5"><strong>PT. KERETA API INDONESIA (Persero)</strong></h6>
+                <h6 class=" mt-5"><strong>DENGAN</strong></h6>
+                <h6 class=" mt-5"><strong>UNIVERSITAS ISLAM INDONESIA</strong></h6>
+                <h6 class=" mt-5"><strong>JL. KALIURANG KM. 14,5, KRAWITAN, UMBULMARTANI,
+                    KEC. NGEMPLAK, KABUPATEN SLEMAN,
+                    DAERAH ISTIMEWA YOGYAKARTA 55586</strong>
+                </h6>
+                <h6 class=" mt-5"><strong>TENTANG :<br>
+                    PERSEWAAN ASET MILIK PT. KERETA API INDONESIA (Persero)
+                    DI STASIUN BESAR YOGYAKARTA
+                    UNTUK SHOOTING DOKUMENTER LIVERY
+                    </strong>
+                </h6>
+                <h6 class="tgl-cover"><strong>MASA BERLAKU :<br>
+                    08 SEPTEMBER 2025 S.D 08 SEPTEMBER 2025
+                    </strong>
+                </h6>
+                <h6 class=" mt-5"><strong>2025</strong></h6>
+                
+            </div>
+        </div>
+        <div class="page">
             <div class="header header-dokumen">
                 <h1>LAMPIRAN I</h1>
-                <h2>PERJANJIAN SEWA MENYEWA ASET PT KAI</h2>
-                <p>NO. KAI :</p>
-                <p>NO. PENYEWA :</p>
-                <p>TANGGAL :</p>
+                <h1>PERJANJIAN SEWA MENYEWA ASET PT KAI</h1>
+                <p>NO. KAI :...........................................</p>
+                <p>NO. PENYEWA :...........................................</p>
+                <p>TANGGAL :...........................................</p>
             </div>
             <div class="konten">
                 <h2 style="text-align: center; text-transform: uppercase;">SYARAT DAN KETENTUAN PERJANJIAN SEWA
@@ -1187,7 +1233,8 @@
                     <div class="pasal">
                         <div class="pasal-title">LEMBAR<br>PERSETUJUAN</div>
                         <div class="pasal-content">
-                            <p> Dengan ini saya menyatakan setuju dengan ketentuan yang disebut dalam pasal-pasal diatas</p>
+                            <p> Dengan ini saya menyatakan setuju dengan ketentuan yang disebut dalam pasal-pasal diatas
+                            </p>
                         </div>
                     </div>
                     <div class="table-perjanjian">
@@ -1206,6 +1253,271 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="page">
+            <div class="header header-dokumen">
+                <h2>PERJANJIAN SEWA MENYEWA<br>ASET PT KERETA API INDONESIA (PERSERO)</h2>
+                <p>NO. KAI : ...........................................</p>
+                <p>NO. PENYEWA : ...........................................</p>
+                <p>TANGGAL : ...........................................</p>
+            </div>
+
+            <div class="konten konten-table1">
+                <p>Perjanjian Sewa Menyewa Aset PT Kereta Api Indonesia (Persero) (selanjutnya disebut “Perjanjian”)
+                    dibuat oleh dan antara PT Kereta Api Indonesia (Persero), selanjutnya disebut “KAI”, dalam hal ini
+                    diwakili oleh “BAMBANG RESPATIONO”, dalam kedudukan sebagai Executive Vice President berdasarkan
+                    Keputusan Direksi Nomor PER.U/KL.713/II/1/KA-2019 Tanggal 14 Februari 2019 dan PENYEWA, selanjutnya
+                    secara bersama-sama disebut “PARA PIHAK” dan masing-masing disebut “PIHAK”, mengikatkan diri dan
+                    menyepakati hal-hal sebagai berikut:</p>
+
+                <table class="table table-konten1">
+                    <thead>
+                        <tr>
+                            <th class="no">No.</th>
+                            <th class="sub">Substansi</th>
+                            <th class="ket">Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 1. PENYEWA -->
+                        <tr>
+                            <td rowspan="5">1.</td>
+                            <td><strong>PENYEWA</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>a. NAMA PENYEWA</td>
+                            <td>UNIVERSITAS ISLAM INDONESIA</td>
+                        </tr>
+                        <tr>
+                            <td>b. NAMA YANG MEWAKILI</td>
+                            <td>HANGGA FATHANA, S.IP., B.Int.St., M.A.<br>SELAKU: Sekretaris Eksekutif<br>BERDASARKAN:
+                                Surat Tugas Nomor 396/ST-Rek/SP/VI/2025</td>
+                        </tr>
+                        <tr>
+                            <td>c. ALAMAT</td>
+                            <td>JL. KALIURANG KM. 14,5, KRAWITAN, UMBULMARTANI, KEC. NGEMPLAK, KABUPATEN SLEMAN, DAERAH
+                                ISTIMEWA YOGYAKARTA 55586<br>KOTA: YOGYAKARTA<br>KODE POS: 55223</td>
+                        </tr>
+                        <tr>
+                            <td>d. TELEPON & EMAIL</td>
+                            <td>NO. 081931790007<br>EMAIL: —</td>
+                        </tr>
+
+                        <!-- 2. DOKUMEN PENYEWA -->
+                        <tr>
+                            <td rowspan="8">2.</td>
+                            <td><strong>DOKUMEN PENYEWA</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>a. IDENTITAS PENANDATANGAN (KTP/SIM/PASPOR)</td>
+                            <td>NO. 3402150710860003<br>MASA BERLAKU: SEUMUR HIDUP</td>
+                        </tr>
+                        <tr>
+                            <td>b. NPWP</td>
+                            <td>NO. 01.140.540.4-541.000</td>
+                        </tr>
+                        <tr>
+                            <td>c. IDENTITAS BADAN HUKUM/USAHA/INSTANSI</td>
+                            <td>NO. 02<br>TGL. 15 DESEMBER 2015</td>
+                        </tr>
+                        <tr>
+                            <td>d. PENGESAHAN / PERSETUJUAN / PENETAPAN</td>
+                            <td>NO. AHU-AH.01.06-0041468<br>TGL. 31 Agustus 2023</td>
+                        </tr>
+                        <tr>
+                            <td>e. NOMOR INDUK BERUSAHA dan/atau IZIN USAHA</td>
+                            <td>NO. 2909220019847<br>TGL. 29 September 2022</td>
+                        </tr>
+                        <tr>
+                            <td>f. SURAT KETERANGAN TERDAFTAR DIRJEN PAJAK</td>
+                            <td>NO. S-00492/SKT-WP-CT/KPP.2302/2025<br>TGL. 14 JANUARI 2025</td>
+                        </tr>
+                        <tr>
+                            <td>g. SURAT PENGUKUHAN PENGUSAHA KENA PAJAK</td>
+                            <td>NO. S-136/PKP/KPP.230203/2024<br>TGL. 2 JULI 2024</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="page">
+            <div class="konten konten-table1">
+                <table class="table table-konten1">
+                    <tbody>
+                        <tr>
+                            <th class="no"></th>
+                            <th class="sub"></th>
+                            <th class="ket"></th>
+                        </tr>
+                        <!-- 3. OBJEK SEWA -->
+                        <tr>
+                            <td rowspan="3">3.</td>
+                            <td><strong>OBJEK SEWA</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>a. LOKASI</td>
+                            <td>STASIUN BESAR YOGYAKARTA</td>
+                        </tr>
+                        <tr>
+                            <td>b. LUAS TANAH/BANGUNAN</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>c. PENGGUNAAN</td>
+                            <td>SHOOTING DOKUMENTER LIVERY</td>
+                        </tr>
+
+                        <!-- 4. STATUS PERJANJIAN -->
+                        <tr>
+                            <td>4.</td>
+                            <td><strong>STATUS PERJANJIAN</strong></td>
+                            <td>BARU</td>
+                        </tr>
+
+                        <!-- 5. JANGKA WAKTU -->
+                        <tr>
+                            <td rowspan="4">5.</td>
+                            <td><strong>JANGKA WAKTU</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>a. JANGKA WAKTU SEWA</td>
+                            <td>2 (DUA) JAM</td>
+                        </tr>
+                        <tr>
+                            <td>b. JANGKA WAKTU PERJANJIAN</td>
+                            <td>08 SEPTEMBER 2025 s.d 08 SEPTEMBER 2025</td>
+                        </tr>
+                        <tr>
+                            <td>MASA PEMANFAATAN</td>
+                            <td>—</td>
+                        </tr>
+
+                        <!-- 6. HARGA DAN PEMBAYARAN -->
+                        <tr>
+                            <td rowspan="3">6.</td>
+                            <td><strong>HARGA DAN TATA CARA PEMBAYARAN SEWA</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>TATA CARA PEMBAYARAN</td>
+                            <td>DIMUKA (LUNAS)</td>
+                        </tr>
+                        <tr>
+                            <td>a. NILAI SEWA<br>b. BIAYA MASA PEMANFAATAN<br>c. BIAYA ADMINISTRASI<br>d.
+                                PPN<br><strong>TOTAL HARGA</strong></td>
+                            <td>
+                                Rp. 5.000.000,-<br>
+                                Rp. -,-<br>
+                                Rp. -,-<br>
+                                Rp. 550.000,-<br>
+                                <strong>Rp. 5.550.000,-</strong><br>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>TERBILANG</td>
+                            <td>Lima Juta Lima Ratus Ribu Rupiah</td>
+                        </tr>
+
+                        <!-- 7. KORESPONDENSI -->
+                        <tr>
+                            <td rowspan="6">7.</td>
+                            <td><strong>KORESPONDENSI</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>a. KAI - ALAMAT</td>
+                            <td>JL LEMPUYANGAN NO 1 YOGYAKARTA</td>
+                        </tr>
+                        <tr>
+                            <td>- TELEPON</td>
+                            <td>(0274) 7124213</td>
+                        </tr>
+                        <tr>
+                            <td>- EMAIL</td>
+                            <td>Pengusahaan.aset6@kai.id / Pengusahaan.aset6@gmail.com</td>
+                        </tr>
+                        <tr>
+                            <td>b. PENYEWA - ALAMAT</td>
+                            <td>JL. KALIURANG KM. 14,5, KRAWITAN, UMBULMARTANI, KEC. NGEMPLAK, KABUPATEN SLEMAN, DAERAH
+                                ISTIMEWA YOGYAKARTA 55586</td>
+                        </tr>
+                        <tr>
+                            <td>- TELEPON & EMAIL</td>
+                            <td>NO. 081931790007<br>EMAIL: —</td>
+                        </tr>
+
+                        <!-- 8. PENYELESAIAN PERSELISIHAN -->
+                        <tr>
+                            <td>8.</td>
+                            <td><strong>PENYELESAIAN PERSELISIHAN</strong></td>
+                            <td>PENGADILAN NEGERI YOGYAKARTA</td>
+                        </tr>
+
+                        <!-- 9. KETENTUAN TAMBAHAN -->
+                        <tr>
+                            <td>9.</td>
+                            <td><strong>KETENTUAN TAMBAHAN</strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="page">
+            <div class="konten">
+                <p class="mt-4 text-align-justify">PARA PIHAK telah menyetujui Perjanjian ini harus dibaca bersama-sama dengan seluruh
+                                lampiran yang merupakan satu kesatuan yang tidak terpisahkan dari Perjanjian ini. Adapun
+                                lampiran-lampiran sebagaimana dimaksud adalah sebagai berikut:<br>
+                                a. Lampiran I : Syarat dan Ketentuan Perjanjian Sewa Menyewa Aset PT Kereta Api
+                                Indonesia (Persero).<br>
+                                b. Lampiran II : Gambar Situasi dan/atau Spesifik Teknis Objek Sewa.<br>
+                                c. Lampiran III : Harga dan Tata Cara Pembayaran Sewa.<br>
+                                d. Lampiran IV : Nomor Virtual Account.<br>
+                                Perjanjian ini dibuat 2 (dua) rangkap, yang ditandatangani PARA PIHAK dengan bermeterai
+                                cukup dan memiliki kekuatan hukum yang sama untuk masing-masing Pihak.
+                            </p>
+
+                <div class="row mt-5">
+                    <div class="col-6 text-center">
+                        <p><strong>UNIVERSITAS ISLAM <br>INDONESIA</strong></p>
+                        <p class="mt-5">HANGGA FATHANA, S.IP., B.Int.St.,
+                            M.A.<br>Sekretaris Eksekutif</p>
+                    </div>
+                    <div class="col-6 text-center">
+                        <p><strong>PT KERETA API INDONESIA (PERSERO)<br>DAERAH OPERASI 6 YOGYAKARTA</strong></p>
+                        <p class="mt-5">BAMBANG RESPATIONO<br>Executive Vice President</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tombol">
+            <div class="tombol-konten">
+                <p>jika anda telah membaca pilih salah satu dengan </p>
+            </div>
+            <div class="row row-tombol">
+                <div class="col-4 ">
+                    <button type="button" class="btn btn-back px-5">
+                        <i class="bi bi-arrow-left-circle me-2"></i>kembali
+                    </button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-tidak-setuju px-5">
+                        <i class="bi bi-delet me-2"></i>Tidak Setuju
+                    </button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-setuju px-5">
+                        <i class="bi bi-save me-2"></i>Setuju
+                    </button>
                 </div>
             </div>
         </div>

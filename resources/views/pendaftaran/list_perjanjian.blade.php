@@ -708,7 +708,7 @@
                             </button>
                         </div>
                         <div class="col-3">
-                            <button type="button" class="btn btn-download px-5">
+                            <button type="button" class="btn btn-download px-4">
                                 <i class="bi bi-download me-2"></i>Download
                             </button>
                         </div>
