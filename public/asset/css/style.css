@@ -244,8 +244,12 @@ body {
     color: #ffffff !important;
 }
 
-.list-group-item.dropdown .dropdown-toggle:hover {
-    color: #ffffff;
+.list-group-item.dropdown .dropdown-toggle:hover,
+.list-group-item.dropdown .dropdown-toggle:focus,
+.list-group-item.dropdown .dropdown-toggle:active,
+.list-group-item.dropdown .dropdown-toggle.active,
+.list-group-item.dropdown.show .dropdown-toggle {
+    color: #ffffff !important;
 }
 
 /*-----------------sidebar konten---------------*/

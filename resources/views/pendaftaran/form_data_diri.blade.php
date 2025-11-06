@@ -554,10 +554,13 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <div class="form-group">
-                                        <label for="harga_sewa" class="form-label fw-medium">Harga Sewa</label>
-                                        <input type="text" id="harga_sewa" name="harga_sewa" class="form-control"
-                                            placeholder="Rp." required>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="harga_sewa" class="form-label fw-medium">Harga Sewa</label>
+                                            <input type="text" id="harga_sewa_display" class="form-control"
+                                                placeholder="Masukan Angka">
+                                            <input type="hidden" id="harga_sewa" name="harga_sewa" required>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -659,4 +662,5 @@
 
 
 <script src="{{ asset('asset/js/pendaftaran.js') }}"></script>
+<script src="{{ asset('asset/js/custom.js') }}"></script>
 @endsection

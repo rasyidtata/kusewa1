@@ -46,13 +46,11 @@
                 <ul class="list-group sidebar-menu">
                     <li class="list-group-item"><a href="{{ url('home/beranda') }}">Home</a></li>
                     <li class="list-group-item dropdown">
-                        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="mitraDropdown" role="button" data-bs-toggle="dropdown">
                             Pendaftaran Mitra
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('pendaftaran/form_data_diri') }}">Form
-                                    Pendaftaran</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="mitraDropdown">
+                            <li><a class="dropdown-item" href="{{ url('pendaftaran/form_data_diri') }}">Form Pendaftaran</a></li>
                             <li><a class="dropdown-item" href="{{ url('pendaftaran/list_data') }}">List Data</a></li>
                         </ul>
                     </li>
@@ -69,7 +67,8 @@
         </div>
 
     </div>
-
+    <!-- JS Assets -->
+    <script src="{{ asset('asset/js/custom.js') }}"></script>
     <script src="{{ asset('asset/js/jquery-3.6.4.min.js') }}"></script>
     <script src="{{ asset('asset/js/bootstrap.bundle.min.js') }}"></script>
 

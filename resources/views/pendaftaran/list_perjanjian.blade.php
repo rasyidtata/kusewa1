@@ -127,7 +127,9 @@
                                     <label for="penyewa_berdasarkan" class="form-label fw-medium">Penyewa
                                         Berdasarkan</label>
                                     <input type="text" id="penyewa_berdasarkan" name="penyewa_berdasarkan"
-                                        class="form-control" placeholder="Berdasarkan..." value="" readonly>
+                                        class="form-control" placeholder="Berdasarkan" 
+                                        value="{{ old('penyewa_berdasarkan', $dataps->dataMitra->penyewa_berdasarkan ?? '') }}" 
+                                        readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">

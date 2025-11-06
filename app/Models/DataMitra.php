@@ -17,6 +17,7 @@ class DataMitra extends Model
         'nama',
         'email',
         'tgl_perjanjian',
+        'penyewa_berdasarkan',
         'masa_berlaku_identitas',
         'alamat',
         'no_tlpn',
