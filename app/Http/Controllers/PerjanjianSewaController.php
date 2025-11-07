@@ -43,6 +43,7 @@ class PerjanjianSewaController extends Controller
         $validator = Validator::make($request->all(), [
             // Data Diri - Step 1
             'jenis_penyewa' => 'required|in:Perorangan,Perusahaan',
+            'kategori' => 'required|in: Aset, Event',
             'nama_lengkap' => 'required|string|max:255',
             'nik' => 'required|string|max:20',
             'masa_berlaku_ktp' => 'required|date',
@@ -138,6 +139,7 @@ class PerjanjianSewaController extends Controller
     {
         $data = [
             'Jenis' => $request->jenis_penyewa,
+            'kategori' => $request->kategori,
             'nama' => $request->nama_lengkap,
             'no_identitas' => $request->nik,
             'masa_berlaku_identitas' => $request->masa_berlaku_ktp,
@@ -221,5 +223,16 @@ class PerjanjianSewaController extends Controller
         ];
 
         return PerjanjianSewa::where('id_perjanjian', $id_perjanjian)->update($data);
+    }
+    public function showPerjanjianDokumen($id_perjanjian)
+    {
+        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
+        $kategori = $dataps->dataMitra->kategori ?? '';
+        
+        if ($kategori === 'Aset') {
+            return view('pendaftaran.perjanjian_aset', compact('dataps'));
+        } else {
+            return view('pendaftaran.perjanjian_event', compact('dataps'));
+        }
     }
 }

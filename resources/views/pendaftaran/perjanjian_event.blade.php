@@ -42,7 +42,7 @@
 
     <div class="container">
         <div class="page">
-            <div class="konten-cover"> 
+            <div class="konten-cover">
                 <div class="img cover-img">
                     <img src="{{ asset('asset/img/logo_kai.png') }}" alt="Logo PT KAI">
                 </div>
@@ -52,7 +52,7 @@
                         <tr>
                             <td class="no"><strong>NOMOR</strong></td>
                             <td class="ti"><strong>:</strong></td>
-                            <td class="isi" style="padding: 6px 0;">{{ $nomor_kontrak ?? '...........................................' }}</td>
+                            <td class="isi">{{ $nomor_kontrak ??'...........................................' }}</td>
                         </tr>
                         <tr>
                             <td class="no"><strong>NOMOR ASET</strong></td>
@@ -62,30 +62,36 @@
                         <tr>
                             <td class="no"><strong>TANGGAL</strong></td>
                             <td class="ti"><strong>:</strong></td>
-                            <td class="isi">{{ $tanggal ?? '...........................................' }}</td>
+                            <td class="isi"><strong>{{ $dataps->masa_awal_perjanjian ?
+                                    strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_perjanjian)
+                                    ->translatedFormat('d F Y')) : '' }}</strong></td>
                         </tr>
                     </table>
                 </div>
                 <h6 class=" mt-5"><strong>ANTARA</strong></h6>
                 <h6 class=" mt-5"><strong>PT. KERETA API INDONESIA (Persero)</strong></h6>
                 <h6 class=" mt-5"><strong>DENGAN</strong></h6>
-                <h6 class=" mt-5"><strong>UNIVERSITAS ISLAM INDONESIA</strong></h6>
-                <h6 class=" mt-5"><strong>JL. KALIURANG KM. 14,5, KRAWITAN, UMBULMARTANI,
-                    KEC. NGEMPLAK, KABUPATEN SLEMAN,
-                    DAERAH ISTIMEWA YOGYAKARTA 55586</strong>
+                <h6 class=" mt-5"><strong>{{ strtoupper($dataps->dataMitra->nama ?? '') }}</strong></h6>
+                <h6 class=" mt-5"><strong>{{ strtoupper($dataps->dataMitra->alamat ?? '') }}</strong>
                 </h6>
                 <h6 class=" mt-5"><strong>TENTANG :<br>
-                    PERSEWAAN ASET MILIK PT. KERETA API INDONESIA (Persero)
-                    DI STASIUN BESAR YOGYAKARTA
-                    UNTUK SHOOTING DOKUMENTER LIVERY
+                        PERSEWAAN ASET MILIK PT. KERETA API INDONESIA (Persero)
+                        DI {{ strtoupper($dataps->dataAset->lokasi ?? '') }}
+                        UNTUK {{ strtoupper($dataps->dataAset->penggunaan_objek ?? '') }}
                     </strong>
                 </h6>
                 <h6 class="tgl-cover"><strong>MASA BERLAKU :<br>
-                    08 SEPTEMBER 2025 S.D 08 SEPTEMBER 2025
+                        {{ $dataps->masa_awal_perjanjian ?
+                        strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_awal_perjanjian)->translatedFormat('d
+                        F Y')) : '' }}
+                        s.d
+                        {{ $dataps->masa_akhir_perjanjian ?
+                        strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_akhir_perjanjian)->translatedFormat('d
+                        F Y')) : '' }}
                     </strong>
                 </h6>
                 <h6 class=" mt-5"><strong>2025</strong></h6>
-                
+
             </div>
         </div>
         <div class="page">
@@ -94,13 +100,18 @@
                 <h1>PERJANJIAN SEWA MENYEWA ASET PT KAI</h1>
                 <p>NO. KAI :...........................................</p>
                 <p>NO. PENYEWA :...........................................</p>
-                <p>TANGGAL :...........................................</p>
+                <p>TANGGAL : <strong>{{ $dataps->masa_awal_perjanjian ?
+                        strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_perjanjian)
+                        ->translatedFormat('d F Y')) : '' }}</strong></p>
             </div>
             <div class="konten">
                 <h2 style="text-align: center; text-transform: uppercase;">SYARAT DAN KETENTUAN PERJANJIAN SEWA
-                    MENYEWA<br>ASET PT KERETA API INDONESIA (PERSERO)</h2>
-                <p>Syarat dan Ketentuan Sewa Menyewa Aset PT Kereta Api Indonesia (Persero) (selanjutnya disebut "Syarat
-                    dan Ketentuan") ini telah disetujui dan disepakati oleh dan antara KAI dan PENYEWA yang merupakan
+                    MENYEWA<br>ASET
+                    PT KERETA API INDONESIA (PERSERO) UNTUK EVENT</h2>
+                <p>Syarat dan Ketentuan Sewa Menyewa Aset PT Kereta Api Indonesia (Persero) Untuk Event selanjutnya
+                    disebut
+                    "Syarat dan Ketentuan" ini telah disetujui dan disepakati oleh dan antara KAI dan PENYEWA yang
+                    merupakan
                     bagian yang tidak terpisahkan dengan Perjanjian.</p>
 
                 <div class="row row-isi-konten">
@@ -121,18 +132,15 @@
                                     <div class="definition-item">
                                         <span class="definition-term">1. Aset</span> adalah tanah, lahan, bangunan,
                                         ruang udara
-                                        yang berada di atas tanah, fasilitas penunjang, termasuk namun tidak terbatas
+                                        yang berada di atas lahan, fasilitas penunjang, termasuk namun tidak terbatas
                                         pada
                                         Tower, Reklame dan Utilitas lainnya yang berada di bawah penguasaan dan/atau
                                         kepemilikan
                                         KAI.
                                     </div>
                                     <div class="definition-item">
-                                        <span class="definition-term">2. Biaya Masa Pemanfaatan</span> adalah segala
-                                        kewajiban
-                                        pembayaran atas pemanfaatan Aset untuk periode waktu selama Masa Pemanfaatan
-                                        yang harus
-                                        dibayar oleh PENYEWA.
+                                        <span class="definition-term">2. Event</span> adalah aktivitas sementara yang
+                                        diselenggarakan oleh PENYEWA di Aset dan/atau Sarana milik KAI.
                                     </div>
                                     <div class="definition-item">
                                         <span class="definition-term">3. Fasilitas</span> adalah fasilitas pendukung
@@ -146,7 +154,7 @@
                                         dan
                                         menguasai barang-barang termasuk Sarana Milik Penyewa yang berada di atas Objek
                                         Sewa,
-                                        bila PENYEWA belum melakukan kewajibannya termasuk namun tidak terbatas pada
+                                        bila PENYEWA belum melaksanakan kewajibannya termasuk namun tidak terbatas pada
                                         mengembalikan Objek Sewa berdasarkan Perjanjian.
                                     </div>
                                     <div class="definition-item">
@@ -158,10 +166,10 @@
                                         atau hari libur nasional yang ditetapkan oleh pemerintah.
                                     </div>
                                     <div class="definition-item">
-                                        <span class="definition-term">7. Kepentingan Negara</span> adalah keperluan yang
-                                        dimiliki oleh negara guna meningkatkan kesejahteraan dan kemakmuran bangsa,
-                                        negara, dan
-                                        masyarakat.
+                                        <span class="definition-term">7. Nilai Sewa</span> adalah segala kewajiban
+                                        pembayaran
+                                        meliputi
+                                        tarif sewa dan/atau cost of money yang harus dibayar oleh PENYEWA.
                                     </div>
                                 </div>
                             </div>
@@ -172,64 +180,77 @@
                     <div class="col col-md-6">
                         <div class="definition-item">
                             <div class="definition-item">
-                                <span class="definition-term">8. Kepentingan KAI</span> adalah keperluan KAI
-                                dalam hal
-                                mendapat penugasan dari Pemerintah, membangun jalur baru dan/atau prasarana
-                                perkeretaapian atau untuk keperluan standar pelayanan minimum penumpang yang
-                                akan
-                                menggunakan sebagai dan/atau seluruh dari Objek Sewa.
-                            </div>
-                            <div class="definition-item">
-                                <span class="definition-term">9. Masa Pemanfaatan</span> adalah masa dimana
-                                PENYEWA
-                                tidak memiliki ikatan kerja sama dengan KAI namun telah memanfaatkan Aset.
-                            </div>
-                            <div class="definition-item">
-                                <span class="definition-term">10. Nilai Sewa</span> adalah segala kewajiban
-                                pembayaran
-                                meliputi tarif sewa, biaya ukur, administrasi, service charge dan/atau
-                                eskalasi/cost of
-                                money yang harus dibayar oleh PENYEWA.
-                            </div>
-                            <div class="definition-item">
-                                <span class="definition-term">11. Objek Sewa</span> adalah Aset KAI yang menjadi
-                                objek
-                                dalam Perjanjian ini dengan rincian lokasi, luas dan
-                                peruntukan/penggunaan/pemanfaatan
+                                <span class="definition-term">8. Objek Sewa</span> adalah Aset dan Sarana KAI yang
+                                menjadi Objek
+                                dalam Perjanjian ini dengan rincian lokasi, luas dan peruntukan/penggunaan/pemanfaatan
                                 sebagaimana diatur dalam Perjanjian.
                             </div>
                             <div class="definition-item">
-                                <span class="definition-term">12. Perjanjian</span> adalah Perjanjian Sewa
-                                Menyewa Aset
-                                PT Kereta Api Indonesia (Persero) yang dibuat oleh dan antara KAI dengan PENYEWA
-                                meliputi seluruh lampirannya.
+                                <span class="definition-term">9. Perjanjian</span> adalah Perjanjian Sewa Menyewa Aset
+                                PT Kereta
+                                Api Indonesia (Persero) Untuk Event yang dibuat oleh dan antara KAI dengan PENYEWA
+                                beserta
+                                seluruh lampirannya.
                             </div>
                             <div class="definition-item">
-                                <span class="definition-term">13. Sarana Milik Penyewa</span> adalah segala
-                                sesuatu/benda yang ditempatkan/dipasang/dibangun oleh PENYEWA pada Objek Sewa
-                                setelah
-                                mendapat persetujuan tertulis dari KAI sebagaimana diatur dalam Syarat dan
-                                Ketentuan
-                                ini.
+                                <span class="definition-term">10. Sarana Milik Penyewa</span> adalah segala
+                                sesuatu/benda yang
+                                ditempatkan/dipasang/dibangun oleh PENYEWA pada Objek Sewa setelah mendapat izin
+                                tertulis dari
+                                KAI sebagaimana diatur dalam Perjanjian ini.
                             </div>
                             <div class="definition-item">
-                                <span class="definition-term">14. Total Harga</span> adalah seluruh nilai yang
-                                harus
-                                dibayarkan oleh PENYEWA, meliputi Nilai Sewa, Biaya Masa Pemanfaatan, dan PPN.
+                                <span class="definition-term">11. Total Harga</span> adalah seluruh nilai yang harus
+                                dibayarkan
+                                oleh PENYEWA, meliputi Nilai Sewa dan PPN.
                             </div>
                             <div class="definition-item">
-                                <span class="definition-term">15. Virtual Account</span> adalah nomor rekening
-                                virtual
-                                yang dibuat oleh bank untuk diberikan kepada PENYEWA (badan usaha atau
-                                perorangan)
-                                sebagai rekening tujuan untuk melakukan pembayaran Total Harga sebagaimana
-                                dimaksud
-                                dalam lampiran IV Perjanjian.
-                            </div>
-                            <div class="pasal">
-                                <div class="pasal-title">PASAL 2<br>RUANG LINGKUP</div>
+                                <span class="definition-term">12. Virtual Account</span> adalah nomor rekening virtual
+                                yang
+                                dibuat oleh bank untuk diberikan kepada PENYEWA (badan usaha atau perorangan) sebagai
+                                rekening
+                                tujuan untuk melakukan pembayaran Harga Sewa sebagaimana dimaksud dalam Lampiran IV
+                                Perjanjian.
                             </div>
                         </div>
+                        <div class="pasal">
+                            <div class="pasal-title">PASAL 2<br>RUANG LINGKUP</div>
+                            <div class="pasal-content">
+                                <p>(1) KAI memiliki dan/atau menguasai Objek Sewa, dengan ini sepakat untuk menyewakan
+                                    Objek
+                                    Sewa tersebut kepada PENYEWA.</p>
+                                <p>(2) PENYEWA akan menggunakan Objek Sewa sesuai dengan Penggunaannya.</p>
+                                <p>(3) PENYEWA dapat memanfaatkan Objek Sewa setelah Perjanjian ditandatangani dan
+                                    melakukan
+                                    pembayaran sewa sebagaimana dimaksud dalam Perjanjian.</p>
+                                <p>(4) PENYEWA akan mengembalikan Objek Sewa kepada KAI setelah berakhirnya Perjanjian.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-ttd">
+                <div class="col-3">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th>KAI</th>
+                                    <th>PENYEWA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -239,67 +260,45 @@
                 <!-- Kolom Kiri -->
                 <div class="col col-md-6">
                     <div class="pasal">
-                        <div class="pasal-content">
-                            <p>(1) KAI memiliki dan/atau menguasai Objek Sewa, dengan ini sepakat untuk
-                                menyewakan
-                                Objek
-                                Sewa tersebut kepada PENYEWA.</p>
-                            <p>(2) PENYEWA akan menggunakan Objek Sewa sesuai dengan Penggunaannya.</p>
-                            <p>(3) PENYEWA dapat memanfaatkan Objek Sewa setelah Perjanjian ditandatangani dan
-                                melakukan
-                                pembayaran sewa sebagaimana dimaksud dalam Perjanjian.</p>
-                            <p>(4) Pemanfaatan Aset oleh PENYEWA yang dilakukan pada Masa Pemanfaatan akan
-                                dikenakan
-                                Biaya
-                                Masa Pemanfaatan.</p>
-                            <p>(5) PENYEWA akan mengembalikan Objek Sewa kepada KAI setelah berakhirnya
-                                Perjanjian.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="pasal">
                         <div class="pasal-title">PASAL 3<br>HAK DAN KEWAJIBAN KAI DAN PENYEWA</div>
                         <div class="pasal-content">
                             <p>(1) HAK KAI :</p>
-                            <p>a. menagih dan menerima pembayaran Total Harga dan/atau denda serta ganti rugi
-                                dari
-                                PENYEWA;
-                            <p>b. memberitahukan bahwa Perjanjian akan berakhir selambat-lambatnya 60 (enam puluh)
-                                Hari
-                                sebelumnya;</p>
-                            <p>c. menerima atau menolak permohonan perpanjangan Jangka Waktu Sewa oleh PENYEWA;</p>
-                            <p>d. memutus Perjanjian secara sepihak dalam hal terjadi kondisi sebagaimana diatur
-                                dalam
+                            <p>a. menagih dan menerima pembayaran Total Harga dan/atau denda dari PENYEWA;</p>
+                            <p>b. mendapatkan jaminan dari PENYEWA, bahwa Objek Sewa tidak dipergunakan untuk hal-hal
+                                yang
+                                melanggar kesusilaan, kepatutan, ketertiban dan kepentingan umum;</p>
+                            <p>c. memutus Perjanjian secara sepihak dalam hal terjadi kondisi sebagaimana diatur dalam
                                 Perjanjian;</p>
-                            <p>e. menerima pengembalian Objek Sewa pada saat berakhirnya Perjanjian, sesuai dengan
-                                Syarat
-                                dan Ketentuan sebagaimana diatur dalam Perjanjian; dan</p>
-                            <p>f. melaksanakan Hak Retensi terhadap PENYEWA, apabila PENYEWA belum melaksanakan
+                            <p>d. menerima kembali Objek Sewa pada saat berakhirnya Perjanjian, sesuai dengan Syarat dan
+                                Ketentuan sebagaimana diatur dalam Perjanjian ini; dan</p>
+                            <p>e. melaksanakan Hak Retensi terhadap PENYEWA apabila, PENYEWA belum melaksanakan
                                 kewajibannya
-                                termasuk namun tidak terbatas pada mengembalikan Objek Sewa berdasarkan Perjanjian.
-                            </p>
+                                termasuk namun tidak terbatas pada mengembalikan Objek Sewa berdasarkan Perjanjian.</p>
 
                             <p>(2) KEWAJIBAN KAI:</p>
-                            <p>a. menyerahkan pemanfaatan Objek Sewa kepada PENYEWA setelah pembayaran diterima;</p>
-                            <p>b. memberitahukan kepada PENYEWA apabila KAI akan menggunakan Objek Sewa untuk
-                                Kepentingan
-                                Negara dan/atau Kepentingan KAI; dan</p>
-                            <p>c. mengembalikan sisa pembayaran yang dihitung secara proporsional apabila Perjanjian
-                                berakhir karena Objek Sewa akan dipergunakan oleh Kepentingan Negara dan/atau
-                                Kepentingan
-                                KAI.</p>
+                            <p>Menyerahkan pemanfaatan Objek Sewa kepada PENYEWA setelah pembayaran diterima.</p>
 
                             <p>(3) HAK PENYEWA:</p>
-                            <p>a. menggunakan Objek Sewa sesuai dengan Penggunaannya sebagaimana diatur dalam
-                                Perjanjian
-                                ini; dan</p>
-                            <p>b. menerima sisa pembayaran yang dihitung secara proporsional apabila Perjanjian
-                                berakhir
-                                karena Objek Sewa akan dipergunakan oleh Kepentingan Negara dan/atau Kepentingan
-                                KAI.
+                            <p>Menggunakan Objek Sewa sesuai dengan Penggunaan sebagaimana diatur dalam Perjanjian.</p>
+                            <p>(4) KEWAJIBAN PENYEWA:</p>
+                            <p>a. membayar Total Harga, denda, ganti rugi dan/atau biaya lain sebagaimana dimaksud dalam
+                                Perjanjian kepada KAI;</p>
+                            <p>b. mendahulukan pembayaran-pembayaran apapun yang terhutang berdasarkan Perjanjian
+                                daripada
+                                pembayaran lainnya yang karena apapun juga wajib dibayar oleh PENYEWA terhadap siapapun;
                             </p>
-
-
+                            <p>c. memiliki segala perizinan, pendaftaran, pelaporan dan/atau pemberitahuan secara
+                                berkesinambungan dari Pihak yang berwenang yang berkaitan dengan kegiatan usaha pada
+                                dan/atau
+                                penggunaan Objek Sewa dengan biaya sepenuhnya merupakan tanggung jawab PENYEWA, dan
+                                bertanggung
+                                jawab sepenuhnya apabila timbul tuntutan pihak lain terkait perizinan dimaksud;</p>
+                            <p>d. memelihara, merawat, menjaga keamanan, ketertiban, dan mengamankan Objek Sewa;</p>
+                            <p>e. membayar pajak-pajak dan biaya-biaya lainnya sesuai peraturan yang berlaku atas
+                                penggunaan
+                                Objek Sewa terhitung sejak berlakunya Perjanjian sampai dengan berakhirnya Perjanjian,
+                                termasuk
+                                namun tidak terbatas pada listrik dan iuran lainnya;</p>
                         </div>
                     </div>
                 </div>
@@ -308,66 +307,76 @@
                 <div class="col col-md-6">
                     <div class="pasal">
                         <div class="pasal-content">
-                            <p>(4) KEWAJIBAN PENYEWA:</p>
-                            <p>a. membayar Total Harga, denda, ganti rugi dan/atau biaya lain sebagaimana dimaksud
-                                dalam
-                                Perjanjian kepada KAI;</p>
-                            <p>b. mendahulukan pembayaran-pembayaran apapun yang terhutang berdasarkan Perjanjian
-                                daripada
-                                pembayaran lainnya yang karena apapun juga wajib dibayar oleh PENYEWA terhadap
-                                siapapun;
-                            </p>
-                            <p>c. memiliki segala perizinan, pendaftaran, pelaporan dan/atau pemberitahuan secara
-                                berkesinambungan dari pihak yang berwenang yang berkaitan dengan kegiatan usaha pada
-                                dan/atau penggunaan Objek Sewa dengan biaya sepenuhnya merupakan tanggung jawab
-                                PENYEWA,
-                                dan
-                                bertanggung jawab sepenuhnya apabila timbul tuntutan pihak lain terkait perizinan
-                                dimaksud;
-                            </p>
-                            <p>d. memelihara, merawat, menjaga keamanan, ketertiban, dan mengamankan Objek Sewa;</p>
-                            <p>e. membayar pajak-pajak dan biaya-biaya lainnya sesuai peraturan yang berlaku atas
-                                penggunaan
-                                Objek Sewa terhitung sejak berlakunya Perjanjian sampai dengan berakhirnya
-                                Perjanjian,
-                                termasuk namun tidak terbatas pada Pajak Bumi dan Bangunan (PBB), listrik dan iuran
-                                lainnya;
-                            </p>
-                            <p>f. menyerahkan bukti setor pembayaran Pajak Bumi dan Bangunan (PBB), listrik dan
-                                iuran
-                                lainnya kepada KAI;</p>
-
-                        </div>
-                    </div>
-                    <div class="pasal">
-                        <div class="pasal-content">
-                            <p>g. menanggung biaya pemasangan Fasilitas pada Objek Sewa;</p>
-                            <p>h. memasang perlengkapan standar keamanan dan keselamatan pada Objek Sewa;</p>
-                            <p>i. bertanggung jawab apabila terjadi kerusakan/gangguan yang ditimbulkan dari
-                                penggunaan
-                                Objek Sewa oleh PENYEWA;</p>
-                            <p>j. bertanggung jawab dan membebaskan KAI dari segala tanggung jawab dan biaya yang
-                                timbul,
-                                dalam hal adanya tuntutan dan/atau gugatan kepada KAI dari pihak lain akibat dari
-                                perbuatan
-                                dan/atau penggunaan PENYEWA atas Objek Sewa;</p>
-                            <p>k. mengembalikan Objek Sewa sebagaimana diatur dalam Perjanjian; dan</p>
-                            <p>l. menaati segala ketentuan dalam Perjanjian dan peraturan yang berlaku, termasuk
-                                tapi
-                                tidak
-                                terbatas pada peraturan yang berlaku di lingkungan KAI yang berkaitan dengan
-                                sewa-menyewa.
-                            </p>
+                            <p>f. memasang perlengkapan standar keamanan dan keselamatan pada Objek Sewa;</p>
+                            <p>g. bertanggung jawab apabila terjadi kerusakan/gangguan yang ditimbulkan dari penggunaan
+                                Objek
+                                Sewa oleh PENYEWA;</p>
+                            <p>h. bertanggung jawab dan membebaskan KAI dari segala tanggung jawab dan biaya yang
+                                timbul, dalam
+                                hal adanya tuntutan dan/atau gugatan kepada KAI dari pihak lain akibat dari perbuatan
+                                dan/atau
+                                penggunaan PENYEWA atas Objek Sewa;</p>
+                            <p>i. mengembalikan Objek Sewa sebagaimana diatur dalam Perjanjian; dan</p>
+                            <p>j. menaati segala ketentuan dalam Perjanjian dan peraturan perundang-undangan yang
+                                berlaku,
+                                termasuk tapi tidak terbatas pada peraturan yang berlaku di lingkungan KAI yang
+                                berkaitan dengan
+                                sewa-menyewa.</p>
                         </div>
                     </div>
                     <div class="pasal">
                         <div class="pasal-title">PASAL 4<br>LARANGAN</div>
                         <div class="pasal-content">
                             <p>(1) PENYEWA dilarang melakukan hal-hal sebagai berikut:</p>
-                            <p>a. menggunakan Objek Sewa untuk hal-hal yang melanggar peraturan perundang-undangan
-                                yang
-                                berlaku;</p>
+                            <p>a. menggunakan Objek Sewa untuk hal-hal yang melanggar peraturan perundang-undangan yang
+                                berlaku;
+                            </p>
+                            <p>b. melakukan tindakan apapun dengan maksud untuk mengalihkan kepemilikan Objek Sewa;</p>
+                            <p>c. menjaminkan atau membebani Objek Sewa, Fasilitas dan Sarana milik Penyewa dengan Hak
+                                Tanggungan atau jaminan kebendaan lainnya;</p>
+                            <p>d. melakukan kegiatan yang dapat mengganggu operasional Kereta Api dan/atau
+                                memanfaatkan/merusak
+                                Sarana, Prasarana KAI yang berada di sekitar Objek Sewa;</p>
+                            <p>e. melakukan kegiatan yang dapat mengganggu pelayanan penumpang sehingga menimbulkan
+                                komplain
+                                dari pihak lain dan/atau penumpang, dalam hal Objek Sewa berlokasi di area stasiun;
+                                dan/atau</p>
+                            <p>f. menggunakan kompor gas/Kompor BBM/kayu bakar/arang dalam hal Objek Sewa berlokasi di
+                                area
+                                stasiun dan kantor KAI.</p>
+                            <p>(2) Tanpa Persetujuan tertulis dari KAI, PENYEWA dilarang melakukan hal-hal sebagai
+                                berikut:</p>
+                            <p>a. menyerahkan/mengalihkan, menyewakan kembali atau dengan kata lain melepaskan seluruh
+                                atau
+                                sebagian dari penguasaan Objek Sewa atau bagian darinya;</p>
+                            <p>b. menggunakan Objek Sewa tidak sesuai dengan Penggunaan sebagaimana dimaksud dalam
+                                Perjanjian;
+                            </p>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-ttd">
+                <div class="col-3">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th>KAI</th>
+                                    <th>PENYEWA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -378,128 +387,127 @@
                 <div class="col col-md-6">
                     <div class="pasal">
                         <div class="pasal-content">
-                            <p>b. melakukan tindakan apapun dengan maksud untuk mengalihkan kepemilikan Objek Sewa;
-                            </p>
-                            <p>c. menjaminkan atau membebani Objek Sewa, Fasilitas dan Sarana milik Penyewa dengan
-                                Hak
-                                Tanggungan atau jaminan kebendaan lainnya;</p>
-                            <p>d. melakukan kegiatan yang dapat mengganggu operasional Kereta Api dan/atau
-                                memanfaatkan/merusak sarana dan prasarana KAI yang berada di sekitar Objek Sewa;</p>
-                            <p>e. melakukan kegiatan yang dapat mengganggu pelayanan penumpang sehingga menimbulkan
-                                komplain
-                                dan/atau kerugian dari pihak lain dan/atau penumpang, dalam hal Objek Sewa berlokasi
-                                di
-                                area
-                                stasiun; dan/atau</p>
-                            <p>f. menggunakan kompor gas/Kompor BBM/kayu bakar/arang dalam hal Objek Sewa berlokasi
-                                di
-                                area
-                                stasiun dan kantor KAI.</p>
-
-                            <p>(2) Tanpa Persetujuan tertulis dari KAI, PENYEWA dilarang melakukan hal-hal sebagai
-                                berikut:
-                            </p>
-                            <p>a. menyerahkan/mengalihkan, menyewakan kembali atau dengan kata lain melepaskan
-                                seluruh
-                                atau
-                                sebagian dari penguasaan Objek Sewa atau bagian darinya;</p>
-                            <p>b. menggunakan Objek Sewa tidak sesuai dengan Penggunaan sebagaimana dimaksud dalam
-                                Perjanjian;</p>
-                            <p>c. menggunakan Objek Sewa untuk fasilitas umum dan/atau fasilitas sosial;</p>
-                            <p>d. menjual atau mengalihkan Sarana Milik Penyewa;</p>
-                            <p>e. menambah, mengubah dan/atau mendirikan bangunan dan/atau Fasilitas; dan/atau</p>
-                            <p>f. melakukan komersialisasi periklanan dan sejenisnya pada seluruh Objek Sewa.</p>
+                            <p>c. menambah, mengubah dan/atau mendirikan bangunan dan/atau Fasilitas; dan/atau</p>
+                            <p>d. melakukan komersialisasi periklanan dan sejenisnya pada seluruh Objek Sewa.</p>
                         </div>
                     </div>
                     <div class="pasal">
                         <div class="pasal-title">PASAL 5<br>TATA CARA PEMBAYARAN</div>
                         <div class="pasal-content">
                             <p>(1) KAI akan menerbitkan tagihan/invoice setelah penandatanganan Perjanjian.</p>
-                            <p>(2) Pembayaran Total Harga dilakukan PENYEWA dengan transfer ke Virtual Account
-                                dengan
-                                ketentuan sebagai berikut:</p>
-                            <p>a. untuk pembayaran lunas di muka dilakukan paling lambat 14 (empat belas) Hari Kerja
-                                sejak
-                                tagihan/invoice diterbitkan;</p>
-                            <p>b. untuk pembayaran secara bertahap:</p>
-                            <p style="margin-left: 20px;">1) pembayaran tahap pertama dilakukan paling lambat 14
-                                (empat
-                                belas) Hari Kerja sejak tagihan/invoice diterbitkan;</p>
-                            <p style="margin-left: 20px;">2) pembayaran tahap kedua dan selanjutnya dilakukan sesuai
-                                dengan
-                                tanggal pembayaran sebagaimana ditentukan dalam Lampiran III Perjanjian; dan</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kolom Kanan -->
-                <div class="col col-md-6">
-                    <div class="pasal">
-                        <div class="pasal-content">
-                            <p style="margin-left: 20px;">3) tagihan/invoice akan diterbitkan sebelum tanggal
+                            <p>(2) Untuk pembayaran lunas di muka dilakukan paling lambat 1 (satu) Hari Kerja sejak
+                                tagihan/invoice diterbitkan.</p>
+                            <p>(3) Untuk pembayaran secara bertahap:</p>
+                            <p>a. pembayaran tahap pertama dilakukan paling lambat 1 (satu) Hari Kerja sejak
+                                tagihan/invoice
+                                diterbitkan;</p>
+                            <p>b. pembayaran tahap kedua dan selanjutnya dilakukan sesuai dengan tanggal pembayaran
+                                sebagaimana
+                                ditentukan dalam Lampiran III Perjanjian; dan</p>
+                            <p>c. tagihan/invoice akan diterbitkan sebelum tanggal pembayaran sebagaimana diatur dalam
+                                Lampiran
+                                III Perjanjian.</p>
+                            <p>(4) Apabila PENYEWA melakukan pembayaran tidak sesuai dengan ketentuan sebagaimana diatur
+                                dalam
+                                Perjanjian, maka pembayaran tersebut dianggap tidak sah, PENYEWA bertanggung jawab
+                                sepenuhnya
+                                atas segala akibat yang timbul karena hal tersebut, dan PENYEWA tetap melakukan
                                 pembayaran
-                                sebagaimana diatur dalam Lampiran III Perjanjian.</p>
-                            <p>(3) Apabila PENYEWA melakukan pembayaran tidak sesuai dengan ketentuan sebagaimana
-                                diatur
-                                dalam Perjanjian, maka pembayaran tersebut dianggap tidak sah, PENYEWA bertanggung
-                                jawab
-                                sepenuhnya atas segala akibat yang timbul karena hal tersebut, dan PENYEWA tetap
-                                melakukan
-                                pembayaran kembali kepada KAI sebagaimana ditentukan dalam Perjanjian.</p>
-                            <p>(4) Seluruh biaya transfer terkait dengan pembayaran Total Harga menjadi beban dan
-                                tanggung
-                                jawab PENYEWA.</p>
+                                kembali kepada KAI sebagaimana ditentukan dalam Perjanjian.</p>
+                            <p>(5) Seluruh biaya transfer terkait dengan pembayaran Total Harga menjadi beban dan
+                                tanggung jawab
+                                PENYEWA.</p>
                         </div>
                     </div>
                     <div class="pasal">
                         <div class="pasal-title">PASAL 6<br>PAJAK DAN BIAYA LAINNYA</div>
                         <div class="pasal-content">
-                            <p>(1) PARA PIHAK memahami dan sepakat untuk mematuhi peraturan perundang-undangan
-                                yang
+                            <p>(1) PARA PIHAK memahami dan sepakat untuk mematuhi peraturan perundang-undangan yang
                                 berlaku
-                                dibidang perpajakan terkait dengan ruang lingkup Perjanjian dan bertanggung
-                                jawab
-                                atas
-                                kewajiban pembayaran pajak masing-masing dan/atau persyaratan administrasi
-                                lainnya
-                                yang
-                                berkaitan dengan pajak tersebut secara tepat waktu.</p>
-                            <p>(2) Dalam hal Objek Sewa berlokasi di luar area stasiun dan kantor KAI, Pajak
-                                Bumi
-                                dan
-                                Bangunan (PBB) atas Objek Sewa menjadi beban dan tanggung jawab PENYEWA.</p>
-                            <p>(3) PENYEWA wajib menyerahkan tanda bukti setor/pembayaran pajak yang menjadi
+                                dibidang perpajakan terkait dengan ruang lingkup Perjanjian dan bertanggung jawab atas
                                 kewajiban
-                                PENYEWA.</p>
-                            <p>(4) PENYEWA harus telah melunasi semua hutang pajak yang menjadi beban PENYEWA
-                                pada
-                                saat
+                                pembayaran pajak masing-masing dan/atau persyaratan administrasi lainnya yang berkaitan
+                                dengan
+                                pajak tersebut secara tepat waktu.</p>
+                            <p>(2) PENYEWA harus telah melunasi semua hutang pajak yang menjadi beban PENYEWA pada saat
                                 berakhirnya Perjanjian.</p>
-                            <p>(5) Seluruh ongkos dan biaya-biaya Fasilitas lainnya yang berhubungan dengan
-                                penggunaan Objek
-                                Sewa termasuk namun tidak terbatas pada biaya-biaya lain untuk
-                                penataan/relokasi,
-                                berperkara
-                                di Pengadilan maupun untuk eksekusi, biaya untuk menagih hutang serta seluruh
-                                biaya
-                                yang
-                                menjadi tanggungan PENYEWA, dibayar oleh PENYEWA.</p>
-                            <p>(6) Apabila KAI telah membayar terlebih dahulu untuk semua biaya sebagaimana
-                                dimaksud
-                                pada
-                                ayat (5), maka PENYEWA mengakui segala jumlah tersebut sebagai tambahan atas
-                                kewajiban
-                                pembayaran.</p>
+                            <p>(3) Seluruh ongkos dan biaya-biaya Fasilitas lainnya yang bertalian dengan penggunaan
+                                Objek Sewa
+                                termasuk namun tidak terbatas pada biaya-biaya lain untuk penataan/relokasi,</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan -->
+                <div class="col col-md-6">
+                    <div class="pasal">
+                        <div class="pasal-content">
+                            <p> berperkaradi Pengadilan maupun untuk eksekusi, biaya untuk menagih
+                                hutang serta seluruh biaya yang menjadi
+                                tanggungan PENYEWA, dibayar oleh PENYEWA.</p>
+                            <p>(4) Apabila KAI telah membayar terlebih dahulu untuk semua biaya sebagaimana dimaksud
+                                pada ayat
+                                (2), maka PENYEWA mengakui segala jumlah tersebut sebagai tambahan atas kewajiban
+                                pembayaran.
+                            </p>
                         </div>
                     </div>
                     <div class="pasal">
                         <div class="pasal-title">PASAL 7<br>SARANA MILIK PENYEWA</div>
                         <div class="pasal-content">
-                            <p>(1) PENYEWA dengan biaya dan tanggung jawabnya sendiri dapat melengkapi Objek Sewa
+                            <p>(1) PENYEWA dengan biaya dan tanggung jawabnya sendiri dapat melengkapi Objek Sewa dengan
+                                Sarana
+                                Milik Penyewa yang sesuai dengan sifat usaha, setelah mendapatkan persetujuan dari KAI.
+                            </p>
+                            <p>(2) Semua material Sarana Milik Penyewa yang dipasang harus dibuat dari bahan berkualitas
+                                baik,
+                                dan tetap memperhatikan aspek keselamatan dan keindahan, sekurang-kurangnya sesuai
                                 dengan
-                                Sarana Milik Penyewa yang sesuai dengan sifat usaha, setelah mendapatkan persetujuan
-                                tertulis dari KAI.</p>
+                                standar yang ditetapkan oleh KAI, serta memenuhi perizinan yang dipersyaratkan peraturan
+                                perundang-undangan dan/atau persyaratan yang diwajibkan oleh instansi yang berwenang.
+                            </p>
                         </div>
+                    </div>
+                    <div class="pasal">
+                        <div class="pasal-title">PASAL 8<br>PERAWATAN DAN PEMELIHARAAN OBJEK SEWA</div>
+                        <div class="pasal-content">
+                            <p>(1) Selama berlakunya Perjanjian PENYEWA berkewajiban untuk menjaga kebersihan memelihara
+                                Objek
+                                Sewa sebaik-baiknya dari segala kerusakan yang timbul sebagai akibat dari kesalahan
+                                PENYEWA
+                                dan/atau orang lain yang menjadi tanggungannya dan pula kerusakan-kerusakan yang menurut
+                                hukum
+                                dan kebiasaan menjadi tanggungan PENYEWA terkecuali kerusakan-kerusakan itu bukan
+                                disebabkan
+                                oleh kelalaiannya atau kesalahan PENYEWA dan/atau orang lain.</p>
+                            <p>(2) Apabila PENYEWA tidak melakukan pemeliharaan sebagaimana dimaksud ayat (1) KAI akan
+                                menunjuk
+                                pihak lain dan biaya atas pemeliharaan tersebut menjadi tanggung jawab PENYEWA.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-ttd">
+                <div class="col-3">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th>KAI</th>
+                                    <th>PENYEWA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -509,182 +517,52 @@
                 <!-- Kolom Kiri -->
                 <div class="col col-md-6">
                     <div class="pasal">
+                        <div class="pasal-title">PASAL 9<br>PENGAWASAN DAN PEMERIKSAAN</div>
                         <div class="pasal-content">
-                            <p>(2) Semua material Sarana Milik Penyewa yang dipasang harus dibuat dari bahan
-                                berkualitas
-                                baik, dan tetap memperhatikan aspek keselamatan dan keindahan, sekurang-kurangnya
-                                sesuai
-                                dengan standar yang ditetapkan oleh KAI, serta memenuhi perizinan yang
-                                dipersyaratkan
-                                peraturan perundang-undangan dan/atau persyaratan yang diwajibkan oleh instansi yang
-                                berwenang.</p>
-                            <p>(3) Sarana Milik Penyewa sebagaimana dimaksud pada ayat (1) dapat disewakan kepada
-                                pihak
-                                lain
-                                dengan ketentuan tidak melebihi jangka waktu Perjanjian dan terlebih dahulu
-                                mendapatkan
-                                persetujuan tertulis dari KAI.</p>
-                        </div>
-                    </div>
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 8<br>PERAMBAHAN LUAS OBJEK SEWA</div>
-                        <div class="pasal-content">
-                            <p>(1) Apabila PENYEWA akan melakukan penambahan luas Objek Sewa, maka PENYEWA wajib
-                                mengajukan
-                                permohonan secara tertulis kepada KAI.</p>
-                            <p>(2) KAI akan melakukan pengukuran dan penghitungan Nilai Sewa kembali atas Objek Sewa
-                                dan
-                                PENYEWA dikenakan biaya ukur untuk setiap penambahan luas Objek Sewa.</p>
-                            <p>(3) Penambahan luas Objek Sewa sebagaimana dimaksud pada ayat (1) dan (2) selanjutnya
-                                akan
-                                dituangkan dalam Addendum Perjanjian.</p>
-                        </div>
-                    </div>
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 9<br>PERAWATAN DAN PEMELIHARAAN OBJEK SEWA</div>
-                        <div class="pasal-content">
-                            <p>(1) PENYEWA berkewajiban untuk merawat dan memelihara Objek Sewa sebaik-baiknya dari
-                                segala
-                                kerusakan yang timbul.</p>
-                            <p>(2) Apabila PENYEWA tidak melakukan perawatan dan pemeliharaan sebagaimana dimaksud
-                                ayat
-                                (1),
-                                KAI dapat menunjuk pihak lain dan biaya atas perawatan dan pemeliharaan tersebut
-                                menjadi
-                                tanggung jawab PENYEWA.</p>
-                        </div>
-                    </div>
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 10<br>ASURANSI</div>
-                        <div class="pasal-content">
-                            <p>(1) Setiap saat dan jika dianggap perlu oleh KAI, KAI dapat meminta dan mewajibkan
-                                kepada
-                                PENYEWA untuk mengasuransikan Objek Sewa, baik terhadap bahaya kebakaran maupun
-                                bahaya
-                                kerusakan lain.</p>
-                            <p>(2) Perusahaan asuransi yang akan digunakan oleh PENYEWA wajib disetujui oleh KAI.
-                            </p>
-                            <p>(3) Besarnya tanggungan asuransi sebagaimana tersebut diatas, ditentukan oleh PARA
-                                PIHAK.
-                            </p>
-                            <p>(4) Premi asuransi menjadi beban PENYEWA.</p>
-                            <p>(5) Bukti Polis Asuransi diserahkan kepada KAI.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kolom Kanan -->
-                <div class="col col-md-6">
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 11<br>PENGAWASAN DAN PEMERIKSAAN</div>
-                        <div class="pasal-content">
-                            <p>(1) KAI dapat melakukan pengawasan dan pemeriksaan atas pelaksanaan Perjanjian,
-                                termasuk
-                                namun tidak terbatas pada hal-hal:</p>
-                        </div>
-                    </div>
-                    <div class="pasal">
-                        <div class="pasal-content">
-                            <p>a. melakukan pengawasan atas pelaksanaan kewajiban PENYEWA berdasarkan Perjanjian;
-                            </p>
-                            <p>b. melakukan pemeriksaan atas dokumen perizinan dan/atau kondisi fisik Objek Sewa
-                                baik
+                            <p>(1) KAI dapat melakukan pengawasan dan pemeriksaan atas pelaksanaan Perjanjian, termasuk
+                                namun
+                                tidak terbatas pada hal-hal:</p>
+                            <p>a. melakukan pengawasan atas pelaksanaan kewajiban PENYEWA berdasarkan Perjanjian;</p>
+                            <p>b. melakukan pemeriksaan atas dokumen perizinan dan/atau kondisi fisik Objek Sewa baik
                                 secara
                                 berkala maupun sewaktu-waktu; dan/atau</p>
                             <p>c. melakukan pengecekan pada Objek Sewa pada saat berakhirnya Perjanjian.</p>
-                            <p>(2) Pengawasan atas pelaksanaan Perjanjian dilaksanakan oleh KAI dalam hal ini
-                                dilakukan
-                                oleh:</p>
-                            <p>a. pimpinan unit yang membidangi komersialisasi Aset Daop/Divre/Subdivre/LRT
-                                Jabodebek
+                            <p>(2) Pengawasan atas pelaksanaan Perjanjian dilaksanakan oleh KAI dalam hal ini dilakukan
+                                oleh:
+                            </p>
+                            <p>a. pimpinan unit yang membidangi komersialisasi Aset Daop/Divre/Subdivre/LRT Jabodebek
                                 tempat
                                 kedudukan Objek Sewa; atau</p>
-                            <p>b. pimpinan unit yang membidangi penjagaan Aset Daop/Divre/Subdivre/LRT Jabodebek
-                                tempat
+                            <p>b. pimpinan unit yang membidangi penjagaan Aset Daop/Divre/Subdivre/LRT Jabodebek tempat
                                 kedudukan Objek Sewa.</p>
-                            <p>(3) Apabila setelah dilakukan pengawasan dan pemeriksaan ditemukan indikasi adanya
-                                pelanggaran terhadap Perjanjian, KAI dapat melakukan hal-hal antara lain:</p>
+                            <p>Apabila setelah dilakukan pengawasan dan pemeriksaan ditemukan indikasi adanya
+                                pelanggaran
+                                terhadap Perjanjian, KAI dapat melakukan hal-hal antara lain:</p>
                             <p>a. memberitahukan secara tertulis hasil pengawasan dan pemeriksaan, berupa saran dan
                                 masukan
                                 untuk perbaikan; dan/atau</p>
-                            <p>b. memberikan surat peringatan sebagaimana dimaksud dalam Pasal 13, apabila saran dan
+                            <p>b. memberikan surat peringatan sebagaimana dimaksud pada Pasal 10, apabila saran dan
                                 masukan
                                 sebagaimana dimaksud huruf a tidak dilakukan oleh PENYEWA.</p>
                         </div>
                     </div>
                     <div class="pasal">
-                        <div class="pasal-title">PASAL 12<br>PENGGUNAAN OBJEK SEWA UNTUK KEPENTINGAN NEGARA DAN/ATAU
-                            KEPENTINGAN KAI</div>
+                        <div class="pasal-title">PASAL 10<br>SANKSI</div>
                         <div class="pasal-content">
-                            <p>(1) Apabila ada Kepentingan Negara dan/atau Kepentingan KAI yang akan menggunakan
-                                sebagian
-                                dan/atau seluruh dari Objek Sewa, maka KAI akan memberitahukan secara tertulis
-                                kepada
-                                PENYEWA selambat-lambatnya 30 (tiga puluh) Hari sebelum pemutusan Perjanjian.</p>
-                            <p>(2) Dalam hal KAI akan mempergunakan sebagian atau seluruh Objek Sewa, maka KAI dapat
-                                mengakhiri Perjanjian secara sepihak dan KAI akan mengembalikan sisa pembayaran atas
-                                jangka
-                                waktu sewa yang belum dijalani tetapi telah dibayar penuh oleh PENYEWA, yang
-                                dihitung
-                                secara
-                                proporsional.</p>
-                            <p>(3) Perjanjian berakhir sejak tanggal diterbitkan surat pemutusan Perjanjian oleh
-                                KAI.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="page">
-            <div class="row row-isi-konten">
-                <!-- Kolom Kiri -->
-                <div class="col col-md-6">
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 13<br>SANKSI</div>
-                        <div class="pasal-content">
-                            <p>(1) Apabila PENYEWA tidak memenuhi ketentuan Perjanjian ini, maka:</p>
-                            <p>a. KAI memberikan surat peringatan sebanyak 3 (tiga) kali berturut-turut dengan tenggang
-                                waktu masing-masing 7 (tujuh) Hari;</p>
+                            <p>(1) Apabila PENYEWA tidak memenuhi ketentuan Perjanjian, maka:</p>
+                            <p>a. KAI memberikan surat peringatan sebanyak 1 (satu) kali;</p>
                             <p>b. apabila setelah diberikan surat peringatan sebagaimana dimaksud huruf a di atas,
                                 tetapi
                                 PENYEWA tetap tidak memenuhi kewajiban dan/atau tetap melanggar larangan, maka KAI
-                                berhak
-                                untuk memutus Perjanjian secara sepihak dan menuntut pembayaran sekaligus lunas kepada
-                                PENYEWA atas Total Harga, denda dan ganti rugi yang masih terhutang.</p>
-                            <p>(2) Dalam hal adanya keterlambatan pembayaran Total Harga, maka PENYEWA dikenakan denda
-                                sebesar 2‰ (dua perseribu) per hari dari Total Harga terutang yang telah jatuh tempo
-                                tidak
-                                termasuk PPN.</p>
-                            <p>(3) PENYEWA wajib membayar denda keterlambatan pembayaran tersebut di atas, meskipun
-                                PENYEWA
-                                telah melakukan pembayaran Total Harga dalam masa pemberian surat peringatan sebagaimana
-                                dimaksud ayat (1) huruf a.</p>
-                            <p>(4) Selain pengenaan denda sebagaimana dimaksud, KAI juga dapat menutup sementara akses
-                                masuk
-                                Objek Sewa dan PENYEWA dengan cara apapun dilarang untuk masuk dan memanfaatkan Objek
-                                Sewa.
-                            </p>
-                            <p>(5) Dengan adanya penutupan sementara sebagaimana dimaksud pada ayat (4) di atas, tidak
-                                menambah Jangka Waktu Perjanjian.</p>
-                            <p>(6) PENYEWA wajib membayar ganti rugi kepada KAI, apabila terjadi kerusakan/gangguan yang
-                                ditimbulkan atas tindakan PENYEWA, antara lain sebagai berikut:</p>
-                            <p>a. kegiatan pembangunan/penempatan/pemasangan dan/atau penanaman Sarana Milik Penyewa
-                                pada
-                                Objek Sewa;</p>
-                            <p>b. penggunaan Objek Sewa oleh PENYEWA;</p>
-                            <p>c. kesalahan dan/atau kelalaian PENYEWA; dan/atau</p>
-                            <p>d. pengosongan/pembongkaran Sarana Milik Penyewa dan barang-barang lain yang berada di
+                                berhak untuk
+                                memutus Perjanjian secara sepihak dan menuntut pembayaran sekaligus lunas kepada PENYEWA
                                 atas
-                                Objek Sewa.</p>
-                            <p>(7) Atas kerusakan/gangguan sebagaimana dimaksud pada ayat (6) diatas, KAI akan melakukan
-                                investigasi dan perhitungan untuk menentukan besaran ganti rugi yang harus dipenuhi
-                                PENYEWA.
+                                Total Harga, denda dan ganti rugi yang masih terhutang.</p>
+                            <p>(2) Dalam hal adanya keterlambatan pembayaran Total Harga, maka PENYEWA dikenakan denda
+                                sebesar
+                                2‰ (dua perseribu) per hari dari Total Harga terutang yang telah jatuh tempo tidak
+                                termasuk PPN.
                             </p>
-                            <p>(8) Dalam hal kerusakan/gangguan sebagaimana dimaksud ayat (6) diatas mengakibatkan
-                                kerugian
-                                bagi pihak lain, maka PENYEWA bertanggung jawab dan membebaskan KAI dari segala klaim,
-                                gugatan, dan/atau tuntutan dari Pihak manapun kepada KAI.</p>
                         </div>
                     </div>
                 </div>
@@ -692,10 +570,41 @@
                 <!-- Kolom Kanan -->
                 <div class="col col-md-6">
                     <div class="pasal">
+
                         <div class="pasal-content">
+                            <p>(3) PENYEWA wajib membayar denda keterlambatan pembayaran tersebut diatas, meskipun
+                                PENYEWA telah
+                                melakukan pembayaran Total Harga dalam masa pemberian surat peringatan sebagaimana
+                                dimaksud pada
+                                ayat (1) huruf a.</p>
+                            <p>(4) Selain pengenaan denda sebagaimana dimaksud, KAI juga dapat menutup sementara akses
+                                masuk
+                                Objek Sewa dan PENYEWA dengan cara apapun dilarang untuk masuk dan memanfaatkan Objek
+                                Sewa.</p>
+                            <p>(5) Dengan adanya penutupan sementara sebagaimana dimaksud pada ayat (4) diatas, tidak
+                                menambah
+                                Jangka Waktu Perjanjian.</p>
+                            <p>(6) PENYEWA wajib membayar ganti rugi kepada KAI, apabila terjadi kerusakan/gangguan yang
+                                ditimbulkan atas tindakan PENYEWA, antara lain sebagai berikut:</p>
+                            <p>a. kegiatan pembangunan/penempatan/pemasangan dan/atau penanaman Sarana Milik Penyewa
+                                pada Objek
+                                Sewa;</p>
+                            <p>b. penggunaan Objek Sewa oleh PENYEWA;</p>
+                            <p>c. kesalahan dan/atau kelalaian PENYEWA; dan/atau</p>
+                            <p>d. pengosongan/pembongkaran Sarana Milik Penyewa dan barang-barang lain yang berada di
+                                atas Objek
+                                Sewa.</p>
+                            <p>(7) Atas kerusakan/gangguan sebagaimana dimaksud pada ayat (6) diatas, KAI akan melakukan
+                                investigasi dan perhitungan untuk menentukan besaran ganti rugi yang harus dipenuhi
+                                PENYEWA.</p>
+                            <p>(8) Dalam hal kerusakan/gangguan sebagaimana dimaksud pada ayat (6) diatas mengakibatkan
+                                kerugian
+                                bagi pihak lain, maka PENYEWA bertanggung jawab dan membebaskan KAI dari segala klaim,
+                                gugatan,
+                                dan/atau tuntutan dari Pihak manapun kepada KAI.</p>
                             <p>(9) Seluruh biaya serta akibat yang timbul dari dikenakannya denda dan ganti rugi,
                                 menjadi
-                                tanggung jawab PENYEWA kepentingannya.</p>
+                                tanggung jawab PENYEWA sepenuhnya.</p>
                             <p>(10) Pembayaran denda dan/atau ganti rugi, dibayarkan oleh PENYEWA dengan cara transfer
                                 ke
                                 rekening Virtual Account berdasarkan tagihan yang diterbitkan KAI.</p>
@@ -704,106 +613,78 @@
                                 PENYEWA.</p>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row row-ttd">
+                <div class="col-3">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th>KAI</th>
+                                    <th>PENYEWA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page">
+            <div class="row row-isi-konten">
+                <!-- Kolom Kiri -->
+                <div class="col col-md-6">
                     <div class="pasal">
-                        <div class="pasal-title">PASAL 14<br>BERAKHIRNYA PERJANJIAN</div>
+                        <div class="pasal-title">PASAL 11<br>BERAKHIRNYA PERJANJIAN</div>
                         <div class="pasal-content">
                             <p>(1) Perjanjian dapat berakhir antara lain disebabkan oleh hal-hal sebagai berikut:</p>
-                            <p>a. berakhirnya Jangka Waktu Perjanjian;</p>
+                            <p>a. berakhirnya jangka waktu Perjanjian;</p>
                             <p>b. PARA PIHAK sepakat untuk mengakhiri Perjanjian sebelum Jangka Waktu Perjanjian
-                                berakhir;
-                            </p>
+                                berakhir;</p>
                             <p>c. salah satu PIHAK mengalami force majeure dan hasil perundingan memutuskan Perjanjian
                                 tidak
                                 dapat dilanjutkan, dengan ketentuan sebagaimana diatur dalam Perjanjian; dan/atau</p>
                             <p>d. pengakhiran Perjanjian secara sepihak oleh KAI.</p>
-                            <p>(2) Pengakhiran Perjanjian sebagaimana dimaksud ayat (1) huruf b dan c di atas dituangkan
+                            <p>(2) Pengakhiran Perjanjian sebagaimana dimaksud pada ayat (1) huruf b dan c diatas
+                                dituangkan
                                 dalam Berita Acara yang ditandatangani oleh KAI dan PENYEWA.</p>
-                            <p>(3) Perjanjian dapat diakhiri secara sepihak oleh KAI antara lain disebabkan oleh hal-hal
-                                sebagai berikut:</p>
-                            <p>a. Objek Sewa akan dipergunakan untuk Kepentingan Negara dan/atau Kepentingan KAI dengan
-                                ketentuan sebagaimana diatur dalam Pasal 12; dan/atau</p>
-                            <p>b. apabila PENYEWA telah melanggar Perjanjian atau peraturan perundang-undangan yang
-                                berlaku.
-                            </p>
-                            <p>(4) Pengakhiran Perjanjian karena hal-hal sebagaimana dimaksud ayat (1) huruf d
-                                dilaksanakan
-                                dengan surat pemutusan Perjanjian dari KAI dengan tata cara sebagaimana dimaksud
-                                Perjanjian.
-                            </p>
-                            <p>(5) Berakhirnya Perjanjian sebagaimana dimaksud ayat (1) diatas, tidak menghilangkan
+                            <p>(3) Perjanjian dapat diakhiri secara sepihak oleh KAI sebagaimana dimaksud pada ayat (1)
+                                huruf d
+                                apabila PENYEWA telah melanggar Perjanjian atau peraturan perundang-undangan yang
+                                berlaku.</p>
+                            <p>(4) Pengakhiran Perjanjian sebagaimana dimaksud pada ayat (1) huruf d dilaksanakan dengan
+                                surat
+                                pemutusan Perjanjian dari KAI dengan tata cara sebagaimana dimaksud Perjanjian.</p>
+                            <p>(5) Berakhirnya Perjanjian sebagaimana dimaksud pada ayat (1) diatas, tidak menghilangkan
                                 kewajiban pembayaran sewa, pajak-pajak, denda dan/atau ganti rugi dari bekas PENYEWA
-                                yang
-                                akan dihitung secara proporsional, dan selanjutnya KAI akan menerbitkan surat penagihan
-                                atas
+                                yang akan
+                                dihitung secara proporsional, dan selanjutnya KAI akan menerbitkan surat penagihan atas
                                 kewajiban tersebut kepada bekas PENYEWA.</p>
                             <p>(6) Dalam hal terjadi pengakhiran Perjanjian karena PENYEWA melakukan wanprestasi
                                 dan/atau
                                 permintaan pengakhiran dari PENYEWA maka Total Harga yang telah dibayarkan tetapi belum
-                                dijalani oleh PENYEWA menjadi milik KAI.</p>
+                                dijalani
+                                oleh PENYEWA menjadi milik KAI.</p>
                             <p>(7) KAI tidak memiliki kewajiban apapun untuk memenuhi/menaati Perjanjian dan/atau
-                                kesepakatan yang dibuat antara PENYEWA dengan pihak lainnya </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="page">
-            <div class="row row-isi-konten">
-                <!-- Kolom Kiri -->
-                <div class="col col-md-6">
-                    <div class="pasal">
-                        <div class="pasal-content">
-                            <p>terkait Objek Sewa oleh
-                                karenanya PENYEWA bertanggung jawab kepentingannya dan membebaskan KAI atas tuntutan,
-                                gugatan, kerugian dari pihak manapun kepada KAI yang ditimbulkan karena pengakhiran
-                                Perjanjian secara sepihak oleh KAI.</p>
+                                kesepakatan
+                                yang dibuat antara PENYEWA dengan pihak lainnya terkait Objek Sewa oleh karenanya
+                                PENYEWA
+                                bertanggung jawab sepenuhnya dan membebaskan KAI atas tuntutan, gugatan, kerugian dari
+                                pihak
+                                manapun kepada KAI yang ditimbulkan karena pengakhiran Perjanjian secara sepihak oleh
+                                KAI.</p>
                             <p>(8) PARA PIHAK sepakat untuk mengesampingkan ketentuan Pasal dalam 1266 dan 1267
-                                KUHPerdata.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 15<br>PERPANJANGAN PERJANJIAN</div>
-                        <div class="pasal-content">
-                            <p>(1) Dalam hal Jangka Waktu Perjanjian berakhir sebagaimana Pasal 14 ayat (1) huruf a dan
-                                PENYEWA bermaksud memperpanjang Perjanjian, maka PENYEWA wajib memberikan maklumat
-                                tersebut
-                                kepada KAI secara tertulis yang paling lambat diterima oleh KAI 30 (tiga puluh) Hari
-                                sebelum
-                                Jangka Waktu Perjanjian berakhir.</p>
-                            <p>(2) Dalam hal PENYEWA mengajukan permohonan perpanjangan masa sewa setelah jangka waktu
-                                sebagaimana dimaksud pada ayat (1) terlampaui, maka PENYEWA dianggap tidak mengajukan
-                                permohonan perpanjangan Perjanjian dan Perjanjian berakhir sesuai Jangka Waktu yang
-                                telah
-                                ditetapkan.</p>
-                            <p>(3) Dengan tidak diajukannya permohonan perpanjangan Perjanjian oleh PENYEWA yang
-                                mengakibatkan Perjanjian berakhir sesuai Jangka Waktu yang telah ditetapkan, maka KAI
-                                berhak
-                                untuk menawarkan Objek Sewa untuk periode persewaan yang baru kepada PIHAK LAIN meskipun
-                                Jangka Waktu Perjanjian belum berakhir.</p>
-                            <p>(4) Permohonan perpanjangan Jangka Waktu Perjanjian sebagaimana tersebut pada ayat (1)
-                                tidak
-                                memberikan hak eksklusif kepada PENYEWA untuk mendapat prioritas utama, maka apabila
-                                dalam
-                                jangka waktu 30 (tiga puluh) Hari sebelum jangka waktu Perjanjian berakhir terdapat
-                                lebih
-                                dari 1 (satu) calon PENYEWA yang berminat terhadap lokasi Objek Sewa yang dimanfaatkan
-                                oleh
-                                PENYEWA, maka KAI berhak melakukan proses pemilihan calon PENYEWA berikutnya sesuai
-                                dengan
-                                mekanisme dan ketentuan yang berlaku di lingkungan KAI.</p>
-                        </div>
-                    </div>
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 16<br>PENGEMBALIAN OBJEK SEWA</div>
-                        <div class="pasal-content">
-                            <p>(1) Dengan berakhirnya Perjanjian sebagaimana dimaksud dalam Pasal 14 ayat (1), kecuali
-                                berakhirnya Perjanjian untuk alasan Kepentingan Negara dan/atau Kepentingan KAI, maka
-                                PENYEWA seketika wajib mengosongkan Objek Sewa dari Sarana Milik Penyewa dan
-                                barang-barang
-                                lain yang berada di atas Objek Sewa serta menyerahkan Objek Sewa kepada KAI dalam
-                                keadaan
-                                baik dengan kondisi sekurang-kurangnya seperti</p>
+                                KUHPerdata.</p>
                         </div>
                     </div>
                 </div>
@@ -811,136 +692,148 @@
                 <!-- Kolom Kanan -->
                 <div class="col col-md-6">
                     <div class="pasal">
+                        <div class="pasal-title">PASAL 12<br>PENGEMBALIAN OBJEK SEWA</div>
                         <div class="pasal-content">
-                            <p> saat dimulainya Perjanjian, kecuali
-                                kemunduran karena usia dan atau kondisi setelah dilakukan perubahan sesuai ketentuan
-                                yang
-                                diatur dalam Perjanjian.</p>
-                            <p>(2) Dengan berakhirnya Perjanjian karena Kepentingan Negara dan/atau Kepentingan KAI
-                                sebagaimana dimaksud dalam Pasal 14 ayat (3) huruf a, maka PENYEWA wajib mengosongkan
-                                Objek
-                                Sewa dari Sarana Milik Penyewa dan barang-barang lain yang berada di atas Objek Sewa
-                                serta
-                                menyerahkan Objek Sewa kepada KAI dalam keadaan baik dengan kondisi sekurang-kurangnya
-                                seperti saat dimulainya Perjanjian, kecuali kemunduran karena usia dan atau kondisi
-                                setelah
-                                dilakukan perubahan sesuai ketentuan yang diatur dalam Perjanjian dengan jangka waktu 30
-                                (tiga puluh) Hari sejak tanggal surat pemutusan Perjanjian.</p>
-                            <p>(3) Pelaksanaan dan biaya pengosongan/pembongkaran Sarana Milik Penyewa dan barang-barang
-                                lain yang berada di atas Objek Sewa dilakukan oleh PENYEWA sesuai dengan prosedur dan
-                                ketentuan yang berlaku dilingkungan KAI dengan memperhatikan kondisi sarana, prasarana
+                            <p>(1) Dengan berakhirnya jangka waktu sewa yang telah ditetapkan, maka paling lambat pada
+                                tanggal
+                                berakhirnya Perjanjian PENYEWA wajib mengosongkan Objek Sewa dari Sarana Milik Penyewa
                                 dan
-                                aset KAI.</p>
-                            <p>(4) Apabila pengosongan/pembongkaran Sarana Milik Penyewa dan barang-barang lain yang
-                                berada
-                                di atas Objek Sewa tidak sesuai dengan ketentuan sebagaimana dimaksud ayat (3) maka
+                                barang-barang lain yang berada di atas Objek Sewa serta menyerahkan Objek Sewa kepada
+                                KAI dalam
+                                keadaan baik dengan kondisi sekurang-kurangnya seperti saat dimulainya Perjanjian.</p>
+                            <p>(2) Pelaksanaan dan biaya pengosongan/pembongkaran Sarana Milik Penyewa dan barang-barang
+                                lain
+                                yang berada di atas Objek Sewa dilakukan oleh PENYEWA sesuai dengan prosedur dan
+                                ketentuan yang
+                                berlaku dilingkungan KAI dengan memperhatikan kondisi sarana, prasarana dan aset KAI.
+                            </p>
+                            <p>(3) Apabila pengosongan/pembongkaran Sarana Milik Penyewa dan barang-barang lain yang
+                                berada di
+                                atas Objek Sewa tidak sesuai dengan ketentuan sebagaimana dimaksud pada ayat (2) maka
                                 PENYEWA
                                 bertanggungjawab untuk mengganti segala kerugian KAI dan pihak lain yang timbul dari
-                                kegiatan</p>
-                            <p>pengosongan dan pembongkaran Sarana Milik Penyewa dan barang-barang lain yang bukan milik
-                                KAI
-                                sebagaimana diatur dalam Pasal 13 ayat (6) dan (7).</p>
-                            <p>(5) Apabila PENYEWA tidak melaksanakan ketentuan sebagaimana dimaksud pada ayat (1), (2)
+                                kegiatan
+                                pengosongan dan pembongkaran Sarana Milik Penyewa sebagaimana diatur pada Pasal 10 ayat
+                                (6) dan
+                                (7).</p>
+                            <p>(4) Apabila PENYEWA tidak melaksanakan ketentuan sebagaimana dimaksud pada ayat (1) dan
+                                (2), maka
+                                PENYEWA menyerahkan haknya atas Sarana Milik Penyewa yang masih berada pada Objek Sewa,
                                 dan
-                                (3), maka PENYEWA menyerahkan haknya atas Sarana milik Penyewa yang masih berada pada
-                                Objek
-                                Sewa, dan oleh karenanya Sarana Milik Penyewa tersebut menjadi milik KAI tanpa
-                                diperlukan
-                                dokumen/surat-surat lebih lanjut.</p>
-                            <p>(6) KAI dapat mengalihkan, menggunakan dan membongkar Sarana milik Penyewa sebagaimana
-                                dimaksud ayat (5) diatas dan PENYEWA tidak dapat mengajukan klaim atau menuntut ganti
-                                rugi
-                                atas hal tersebut.</p>
-                            <p>(7) Hak KAI untuk melakukan sendiri pengosongan Objek Sewa berikut segala sesuatu yang
-                                berada
-                                di atas Objek Sewa adalah merupakan bagian yang tidak terpisahkan dari Perjanjian,
-                                sehingga
-                                untuk itu suatu Surat Kuasa Khusus tidak diperlukan lagi.</p>
-                            <p>(8) Setelah penyerahan Objek Sewa, PENYEWA tidak berhak untuk mengajukan tuntutan
-                                pembayaran
-                                pengganti lainnya dari biaya-biaya yang mungkin telah dikeluarkannya selama
-                                berlangsungnya
-                                Perjanjian untuk hal apa pun terkait Objek Sewa.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="page">
-            <div class="row row-isi-konten">
-                <!-- Kolom Kiri -->
-                <div class="col col-md-6">
-                    <div class="pasal">
-                        <div class="pasal-content">
-                            <p>(9) Kewajiban pengembalian Objek Sewa sebagaimana diatur pada ayat-ayat tersebut di atas
+                                dengan sendirinya menjadi milik KAI tanpa diperlukan dokumen/surat-surat lebih lanjut.
+                            </p>
+                            <p>(5) KAI dapat mengalihkan, menggunakan dan membongkar Sarana milik Penyewa sebagaimana
+                                dimaksud
+                                pada ayat (4) diatas dan PENYEWA tidak dapat menuntut ganti rugi atas hal tersebut.</p>
+                            <p>(6) Hak KAI untuk melakukan sendiri pengosongan Objek Sewa berikut segala sesuatu yang
+                                berada di
+                                atas Objek Sewa adalah merupakan bagian yang tidak terpisahkan dari Perjanjian, sehingga
+                                untuk
+                                itu suatu Surat Kuasa Khusus tidak diperlukan lagi.</p>
+                            <p>(7) Setelah penyerahan Objek Sewa atau sesudahnya PENYEWA tidak berhak untuk mengajukan
+                                tuntutan
+                                pembayaran pengganti lainnya dari biaya-biaya yang mungkin telah dikeluarkannya selama
+                                berlangsungnya Perjanjian untuk hal apa pun terkait Objek Sewa.</p>
+                            <p>(8) Kewajiban pengembalian Objek Sewa sebagaimana diatur pada ayat-ayat tersebut di atas
                                 akan
                                 tetap berlaku meskipun Perjanjian telah berakhir atau diakhiri.</p>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row row-ttd">
+                <div class="col-3">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th>KAI</th>
+                                    <th>PENYEWA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page">
+            <div class="row row-isi-konten">
+                <!-- Kolom Kiri -->
+                <div class="col col-md-6">
                     <div class="pasal">
-                        <div class="pasal-title">PASAL 17<br>HUKUM YANG BERLAKU DAN PENYELESAIAN PERSELISIHAN</div>
+                        <div class="pasal-title">PASAL 13<br>HUKUM YANG BERLAKU DAN PENYELESAIAN PERSELISIHAN</div>
                         <div class="pasal-content">
                             <p>(1) Perjanjian diatur dan ditafsirkan sesuai dengan hukum yang berlaku di Republik
-                                Indonesia.
-                            </p>
+                                Indonesia.</p>
                             <p>(2) Apabila terjadi perselisihan atau perbedaan pendapat dalam pelaksanaan Perjanjian,
                                 akan
                                 diselesaikan melalui musyawarah untuk mufakat.</p>
                             <p>(3) Apabila penyelesaian sebagaimana dimaksud pada ayat (2) gagal, maka PARA PIHAK
-                                sepakat
-                                untuk menyelesaikan dengan melalui Pengadilan Negeri sebagaimana dimaksud dalam
-                                Perjanjian.
+                                sepakat untuk
+                                menyelesaikan dengan melalui Pengadilan Negeri sebagaimana dimaksud dalam Perjanjian.
                             </p>
                             <p>(4) Dalam hal PARA PIHAK, sedang dalam proses penyelesaian perselisihan sebagaimana
-                                dimaksud
-                                pada ayat (2) atau ayat (3) maka PARA PIHAK tetap melaksanakan segala ketentuan
-                                sebagaimana
-                                diatur dalam Perjanjian kecuali disepakati lain oleh PARA PIHAK.</p>
+                                dimaksud pada
+                                ayat (2) atau ayat (3) maka PARA PIHAK tetap melaksanakan segala ketentuan sebagaimana
+                                diatur
+                                dalam Perjanjian kecuali disepakati lain oleh PARA PIHAK.</p>
                         </div>
                     </div>
                     <div class="pasal">
-                        <div class="pasal-title">PASAL 18<br>FORCE MAJEURE</div>
+                        <div class="pasal-title">PASAL 14<br>FORCE MAJEURE</div>
                         <div class="pasal-content">
                             <p>(1) Tidak satu PIHAK pun bertanggung jawab atas keterlambatan atau kegagalan pelaksanaan
-                                suatu kewajiban yang ditentukan dalam Perjanjian, jika hal itu disebabkan oleh atau
-                                timbul
-                                karena sesuatu kejadian atau keadaan yang memaksa (force majeure) yakni
-                                peristiwa-peristiwa
-                                di luar kekuasaan manusia yang menghambat pelaksanaan Perjanjian antara lain bencana
-                                alam,
-                                Pandemi, blockade, keadaan perang, pemogokan atau gangguan perburuhan lain, kerusuhan
-                                atau
-                                kegaduhan masyarakat yang tidak disebabkan oleh kelalaian dari PIHAK yang menuntut suatu
-                                keuntungan dari Pasal ini atau oleh Kebijakan Pemerintah atau oleh suatu sebab yang
-                                berada
-                                di luar kekuasaan PIHAK yang terkena, baik keadaan yang serupa atau tidak, dengan
-                                sebab-sebab tertentu.</p>
+                                suatu
+                                kewajiban yang ditentukan dalam Perjanjian jika hal itu disebabkan oleh atau timbul
+                                karena
+                                sesuatu kejadian atau keadaan yang memaksa (force majeure) yakni peristiwa-peristiwa di
+                                luar
+                                kekuasaan manusia yang menghambat pelaksanaan Perjanjian antara lain bencana alam,
+                                Pandemi,
+                                blockade, keadaan perang, pemogokan atau gangguan perburuhan lain, kerusuhan atau
+                                kegaduhan
+                                masyarakat yang tidak disebabkan oleh kelalaian dari PIHAK yang menuntut suatu
+                                keuntungan dari
+                                Pasal ini atau oleh Kebijakan Pemerintah atau oleh suatu sebab yang berada di luar
+                                kekuasaan
+                                PIHAK yang terkena, baik keadaan yang serupa atau tidak, dengan sebab-sebab tertentu.
+                            </p>
                             <p>(2) PIHAK yang mengalami keadaan force majeure wajib memberitahukan kepada pihak lainnya
-                                dalam Perjanjian selambat-lambatnya 7 (tujuh) Hari setelah terjadinya force majeure,
-                                disertai Pernyataan tertulis dari instansi yang berwenang/Pemerintah Setempat.</p>
+                                dalam
+                                Perjanjian selambat-lambatnya 1 (satu) Hari setelah terjadinya force majeure, disertai
+                                Pernyataan tertulis dari instansi yang berwenang/Pemerintah Setempat.</p>
                             <p>(3) Apabila dalam jangka waktu sebagaimana ditetapkan pada ayat (2), PIHAK yang tertimpa
-                                force majeure tidak memberitahukan kepada pihak lainnya force majeure yang dialaminya,
-                                maka
-                                force majeure tersebut dianggap tidak pernah ada, dan PARA PIHAK tetap menjalankan hak
-                                dan
+                                force
+                                majeure tidak memberitahukan kepada pihak lainnya force majeure yang dialaminya, maka
+                                force
+                                majeure tersebut dianggap tidak pernah ada, dan PARA PIHAK tetap menjalankan hak dan
                                 kewajibannya sebagaimana diatur dalam Perjanjian.</p>
 
                         </div>
                     </div>
-
                 </div>
 
                 <!-- Kolom Kanan -->
                 <div class="col col-md-6">
                     <div class="pasal">
                         <div class="pasal-content">
-                            <p>(4) Apabila dalam waktu 7 (tujuh) Hari setelah pihak lainnya menerima pemberitahuan
+                            <p>(4) Apabila dalam waktu 1 (satu) Hari setelah pihak lainnya menerima pemberitahuan
                                 tentang
                                 terjadinya force majeure tersebut atau menerima surat keterangan dari instansi
-                                berwenang,
-                                belum memberikan tanggapan, maka PIHAK yang menerima pemberitahuan dianggap telah
-                                menyetujui
-                                keadaan force majeure tersebut.</p>
+                                berwenang, belum
+                                memberikan tanggapan, maka PIHAK yang menerima pemberitahuan dianggap telah menyetujui
+                                keadaan
+                                force majeure tersebut.</p>
                             <p>(5) PIHAK yang tertimpa force majeure sedapat mungkin untuk berusaha memperbaiki keadaan
                                 yang
                                 menjadi penyebab kegagalan atau penundaan pemenuhan kewajiban dan akan melanjutkan
@@ -949,254 +842,104 @@
                             <p>(6) Sejak disetujuinya force majeure oleh pihak lainnya PARA PIHAK segera berunding untuk
                                 menentukan penyelesaian selanjutnya yang dituangkan dalam Addendum Perjanjian yang
                                 merupakan
-                                satu kesatuan dan bagian tak terpisahkan dari Perjanjian. Dalam hal keadaan force
-                                majeure
+                                satu kesatuan dan bagian tak terpisahkan dari Perjanjian. </p>
+                            <p>(7)Dalam hal keadaan force majeure
                                 tersebut tidak dapat diselesaikan dengan perundingan antara PARA PIHAK, maka Perjanjian
-                                dapat diakhiri sesuai ketentuan tentang Berakhirnya Perjanjian.</p>
-                            <p>(7) Segala biaya dan/atau kerugian yang diderita oleh PIHAK yang mengalami force majeure
-                                tidak menjadi beban dan/atau tanggung jawab pihak lainnya.</p>
-                        </div>
-                    </div>
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 19<br>PRINSIP KETERPISAHAN</div>
-                        <div class="pasal-content">
-                            <p>Apabila suatu ketentuan dari Perjanjian ini atau bagian darinya dinyatakan tidak sah,
+                                dapat
+                                diakhiri sesuai ketentuan tentang Berakhirnya Perjanjian.</p>
+                            <p>(8) Segala biaya dan/atau kerugian yang diderita oleh PIHAK yang mengalami force majeure
                                 tidak
-                                berlaku, tidak dapat dilaksanakan, bertentangan dengan Peraturan yang Berlaku, atau
-                                tidak
-                                sesuai dengan kebijakan umum berdasarkan Peraturan yang Berlaku, maka ketidakabsahan,
-                                ketidakberlakuan, tidak dapat dilaksanakannya, pertentangan, atau ketidaksesuaian
-                                tersebut
-                                hanya berlaku terhadap ketentuan tersebut atau bagian dari ketentuan tersebut, sedangkan
-                                keabsahan, keberlakuan, dan pelaksanaan bagian lain dari ketentuan tersebut serta
-                                ketentuan-ketentuan lain dari Perjanjian ini tidak terpengaruh atau terganggu dan
-                                karenanya
-                                tetap berlaku secara penuh dan sah. Dalam hal demikian, Para Pihak wajib menandatangani
-                                dokumen-dokumen yang diperlukan untuk membuat agar ketentuan atau bagian darinya yang
-                                tidak
-                                sah, tidak berlaku, tidak dapat dilaksanakan, bertentangan, atau tidak sesuai tersebut
-                                menjadi sah, berlaku, atau dapat dijalankan, atau untuk memberlakukan ketentuan atau
-                                ketentuan-ketentuan baru yang mengembalikan Perjanjian ini sedekat mungkin dengan apa
-                                yang
-                                dlinginkan/dikehendaki oleh PARA PIHAK dengan atau melalui ketentuan yang semula serta
-                                maksud/tujuan dari ketentuan tersebut.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="page">
-            <div class="row row-isi-konten">
-                <!-- Kolom Kiri -->
-                <div class="col col-md-6">
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 20<br>KERAHASIAAN</div>
-                        <div class="pasal-content">
-                            <p>(1) PENYEWA menjamin akan menjaga kerahasiaan setiap data/keterangan dan
-                                informasi-informasi
-                                lain yang berkaitan dengan Perjanjian dan tidak akan menginformasikan kepada Pihak lain
-                                yang
-                                tidak berkepentingan dengan alasan apapun juga selama dan sesudah berakhirnya
-                                Perjanjian,
-                                kecuali hal-hal yang merupakan milik umum (public domain) atau diharuskan dibuka
-                                berdasarkan
-                                ketentuan Peraturan Perundang-undangan yang berlaku.</p>
-                            <p>(2) PENYEWA menjamin untuk menyimpan asli maupun salinan dari dokumen/surat-surat dalam
-                                bentuk apapun sebagai pertinggal dan akan senantiasa menjaga kerahasiaannya selama dan
-                                sesudah berakhirnya Perjanjian.</p>
-                        </div>
-                    </div>
-
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 21<br>KORESPONDENSI</div>
-                        <div class="pasal-content">
-                            <p>(1) Semua pemberitahuan dari KAI kepada PENYEWA atau sebaliknya baik tertulis, telepon,
-                                maupun e-mail, dialamatkan kepada Korespondensi masing-masing.</p>
-                            <p>(2) Surat menyurat atau pemberitahuan-pemberitahuan secara tertulis tersebut dianggap
-                                telah
-                                diterima dalam waktu 3 (tiga) Hari setelah dimasukkan ke dalam Pos tercatat, atau 3
-                                (tiga)
-                                Hari sejak diserahkan kepada perusahaan ekspedisi (kurir)/kurir intern dari
-                                masing-masing
-                                PIHAK.</p>
-                            <p>(3) Perubahan penggunaan alamat dan media komunikasi lainnya wajib diberitahukan dalam
-                                jangka
-                                waktu sekurang-kurangnya 14 (empat belas) Hari sebelum dilakukan perubahan tersebut.</p>
-                        </div>
-                    </div>
-
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 22<br>PENUNDAAN PELAKSANAAN PERJANJIAN</div>
-                        <div class="pasal-content">
-                            <p>(1) Salah satu PIHAK dapat melakukan penundaan terhadap pelaksanaan Perjanjian untuk
-                                mencegah
-                                potensi kerugian, apabila terdapat indikasi penyimpangan dan/atau kecurangan berupa
-                                manipulasi harga (mark up dan/atau mark down), proyek fiktif, pemalsuan identitas,
-                                syarat
-                                umum dan administrasi yang disepakati berdasarkan evaluasi yang dilakukan oleh pihak
-                                independent yang ditunjuk berdasarkan kesepakatan PARA PIHAK.</p>
-                            <p>(2) Penundaan sebagaimana dimaksud pada ayat (1) disampaikan secara tertulis kepada pihak
-                                lainnya dan berlaku efektif sampai dengan adanya Hasil Audit/Pemeriksaan oleh Pihak
-                                Independent yang selanjutnya dinyatakan dalam Berita Acara.</p>
-                            <p>(3) Segala risiko dan biaya yang timbul akibat penundaan Perjanjian, menjadi beban dan
-                                tanggung jawab masing-masing PIHAK.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kolom Kanan -->
-                <div class="col col-md-6">
-                    <div class="pasal">
-                        <div class="pasal-title">PASAL 23<br>PERNYATAAN DAN JAMINAN</div>
-                        <div class="pasal-content">
-                            <p>PENYEWA menyatakan dan menjamin bahwa:</p>
-                            <p>(1) PENYEWA mengakui bahwa pihak yang menandatangani dan/atau memparaf sebagian atau
-                                seluruh
-                                Perjanjian adalah pihak yang berwenang.</p>
-                            <p>(2) PENYEWA tidak berada dalam keadaan pailit dan/atau tidak berada dalam keadaan
-                                wanprestasi
-                                atau mempunyai tunggakan kepada KAI.</p>
-                            <p>(3) PENYEWA tidak terlibat dalam sengketa, atau terdapat proses persidangan atau proses
-                                penyelesaian sengketa lainnya, atau dalam keadaan yang dapat menimbulkan sengketa, yang
-                                dapat mempengaruhi kemampuan PENYEWA untuk melaksanakan dan mematuhi kewajibannya
-                                berdasarkan Perjanjian dan/atau mempengaruhi keabsahan Perjanjian.</p>
-                            <p>(4) PENYEWA menjamin kebenaran dan menyetujui menyerahkan identitas/data diri/data
-                                perusahaan
-                                yang diperlukan untuk keperluan Perjanjian.</p>
-                            <p>(5) PENYEWA telah memenuhi/melakukan semua tindakan, persyaratan dan/atau dokumen-dokumen
-                                yang dibutuhkan bagi PENYEWA untuk:</p>
-                            <p>a. secara sah menandatangani, melaksanakan sepenuhnya serta mematuhi seluruh Syarat dan
-                                Ketentuan Perjanjian ini;</p>
-                            <p>b. membuat Perjanjian dapat diterima dalam pengadilan dari yurisdiksi pendiriannya; dan
-                            </p>
-                            <p>c. memastikan kelanjutan izin usahanya yang telah diperoleh, telah diselesaikan dan/atau
-                                dipenuhi oleh PENYEWA.</p>
-                            <p>(6) PENYEWA akan menyerahkan Objek Sewa kepada KAI dalam keadaan baik dengan kondisi
-                                sekurang-kurangnya seperti saat dimulainya Perjanjian terhitung sejak tanggal
-                                pelaksanaan
-                                dari Perjanjian berakhir.</p>
-                            <p>(7) PENYEWA akan memastikan untuk melaksanakan dan menyerahkan kepada KAI sebelum, pada
-                                saat,
-                                atau setelah tanggal pelaksanaan dari Perjanjian, atas setiap dokumen tambahan,
-                                Perjanjian,
-                                atau sertifikasi yang dipandang penting dan diperlukan dalam rangka menjalankan
-                                ketentuan-ketentuan dalam Perjanjian.</p>
-                            <p>(8) PENYEWA telah cukup memahami berbagai peraturan dan kewajiban normatif lainnya yang
-                                terkait, dan memenuhi atau mematuhi seluruh peraturan yang dikeluarkan KAI terkait
-                                dengan
-                                pelaksanaan Perjanjian, serta ketentuan dan peraturan perundang-undangan yang berlaku.
-                            </p>
-                            <p>(9) PENYEWA menjamin bahwa penggunaan Objek Sewa oleh PENYEWA sesuai Penggunaannya
-                                sebagaimana diatur dalam Ketentuan Sewa Menyewa</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="page">
-            <div class="row row-isi-konten">
-                <!-- Kolom Kiri -->
-                <div class="col col-md-6">
-                    <div class="pasal">
-                        <div class="pasal-content">
-                            <p> dan memenuhi Syarat dan Ketentuan
-                                Perjanjian
-                                ini sebagai berikut:</p>
-                            <p>a. tidak mengganggu dan/atau merusak sarana, prasarana dan Aset KAI yang berada di
-                                sekitar
-                                Objek Sewa;</p>
-                            <p>b. tidak dipergunakan untuk hal-hal yang melanggar kesusilaan, kepatutan, ketertiban dan
-                                kepentingan umum; dan</p>
-                            <p>c. tidak mengganggu operasional kereta api.</p>
-                            <p>(10) PENYEWA membebaskan KAI dari segala gugatan, tuntutan dan/atau risiko yang timbul
-                                dari
-                                pihak manapun tuntutan pihak lain dan bertanggung jawab sepenuhnya atas segala gugatan,
-                                tuntutan dan/atau risiko yang timbul kepada pihak lain dan/atau lingkungan di sekitarnya
-                                apabila terjadi kerusakan dan kerugian dari segala akibat yang timbul atas penggunaan
-                                Objek
-                                Sewa yang ditimbulkan dari segala hal yang berkaitan dengan pemanfaatan Objek Sewa.</p>
-                            <p>(11) PENYEWA tidak akan melakukan perbuatan apapun yang dapat mengakibatkan hilangnya hak
-                                kepemilikan/penguasaan dari KAI atas Objek Sewa oleh sebuah/alasan apapun.</p>
-                            <p>(12) Setiap pernyataan dan jaminan tersebut di atas dibuat dengan sebenar-benarnya, tanpa
-                                menyembunyikan fakta dan hal material apapun, dan dengan demikian PENYEWA akan
-                                bertanggung
-                                jawab sepenuhnya atas kebenaran dari hal-hal yang telah dinyatakan di atas, demikian
-                                pula
-                                akan bersedia bertanggung jawab baik secara perdata maupun pidana, apabila pernyataan
-                                dan
-                                jaminan ini tidak sesuai dengan keadaan sebenarnya.</p>
-                            <p>(13) Bahwa dengan ditandatanganinya Perjanjian, PENYEWA telah membaca dan mengerti
-                                seluruh
-                                ketentuan dan syarat yang disepakati dalam Perjanjian, dan dengan suatu itikad baik akan
-                                melaksanakan semua ketentuan dan syarat dalam Perjanjian sesuai dengan peraturan
-                                perundang-undangan yang berlaku.</p>
-                            <p>(14) Selama Perjanjian berlangsung PENYEWA tidak akan mengajukan tuntutan pidana dan/atau
-                                gugatan perdata serta upaya hukum lainnya yang berkaitan Objek Sewa sebagaimana yang
-                                dimaksud dalam Perjanjian.</p>
+                                menjadi beban dan/atau tanggung jawab pihak lainnya.</p>
                         </div>
                     </div>
                     <div class="pasal">
+                        <div class="pasal-title">PASAL 15<br>ANTI SUAP, ANTI KORUPSI DAN PENCUCIAN UANG</div>
                         <div class="pasal-content">
-                            <div class="pasal">
-                                <div class="pasal-title">PASAL 24<br>ANTI SUAP, ANTI KORUPSI DAN PENCUCIAN UANG</div>
-                                <div class="pasal-content">
-                                    <p>(1) PARA PIHAK dengan ini menyatakan dan menjamin bahwa tidak ada pembayaran atau
-                                        bentuk
-                                        manfaat lain atau perlakuan khusus lainnya yang telah atau akan ditawarkan,
-                                        dijanjikan
-                                        atau
-                                        diberikan, baik secara langsung maupun tidak langsung, kepada pejabat publik,
-                                        baik untuk
-                                        pejabat publik itu sendiri maupun untuk orang atau badan lain, dengan maksud
-                                        untuk
-                                        mempengaruhi </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kolom Kanan -->
-                <div class="col col-md-6">
-                    <div class="pasal">
-                        <div class="pasal-content">
-                            <p> tindakan/keputusan resminya, atau agar ia menggunakan pengaruhnya terhadap
-                                suatu badan atau institusi pemerintah, atau untuk memuluskan/memastikan diperolehnya
-                                suatu
-                                manfaat secara tidak patut atau tidak sah terkait dengan bisnis PARA PIHAK.</p>
+                            <p>(1) PARA PIHAK dengan ini menyatakan dan menjamin bahwa tidak ada pembayaran atau bentuk
+                                manfaat
+                                lain atau perlakuan khusus lainnya yang telah atau akan ditawarkan, dijanjikan atau
+                                diberikan,
+                                baik secara langsung maupun tidak langsung, kepada pejabat publik, baik untuk pejabat
+                                publik itu
+                                sendiri maupun untuk orang atau badan lain, dengan maksud untuk mempengaruhi
+                                tindakan/keputusan
+                                resminya, atau agar ia menggunakan pengaruhnya terhadap suatu badan atau institusi
+                                pemerintah,
+                                atau untuk memuluskan/memastikan diperolehnya suatu manfaat secara tidak patut atau
+                                tidak sah
+                                terkait dengan bisnis PARA PIHAK.</p>
                             <p>(2) PARA PIHAK dengan ini menyatakan dan menjamin bahwa tidak ada pembayaran atau bentuk
-                                manfaat lain atau perlakuan khusus yang telah atau akan dijanjikan, ditawarkan atau
-                                diberikan kepada pihak swasta dengan maksud untuk mempengaruhi suatu tindakan, atau
-                                memuluskan/memastikan diperolehnya suatu manfaat secara tidak patut terkait dengan
-                                bisnis
-                                PARA PIHAK.</p>
-                            <p>(3) PARA PIHAK dengan ini menyatakan dan menjamin bahwa di antara PARA PIHAK tidak ada
-                                pembayaran atau bentuk manfaat lain atau perlakuan khusus yang telah atau akan
-                                dijanjikan,
-                                ditawarkan atau diberikan dari satu Pihak kepada Pihak lainnya (termasuk kepada keluarga
-                                masing-masing Pihak) dengan maksud untuk memperkaya diri sendiri/orang lain dan dapat
-                                mempengaruhi suatu tindakan atau memuluskan/memastikan diperolehnya suatu manfaat secara
-                                tidak patut terkait dengan bisnis PARA PIHAK.</p>
-                            <p>(4) PARA PIHAK dengan ini menyatakan dan menjamin bahwa ia dan/atau seluruh pemegang
-                                saham
-                                langsungnya, termasuk direktur, dewan komisaris, pejabat, karyawan ini telah mengetahui
-                                dan
-                                memahami tentang undang-undang, pembatasan-pembatasan dan prinsip-prinsip anti suap,
-                                anti
-                                korupsi dan anti pencucian uang, dan oleh karena itu setuju untuk mengambil
-                                langkah-langkah
-                                yang tepat untuk menjamin kepatuhan orang-orang tersebut dalam melaksanakan kewajibannya
-                                sebagaimana diatur dalam Perjanjian ini.</p>
+                                manfaat
+                                lain atau perlakuan khusus yang telah atau akan dijanjikan, ditawarkan atau diberikan
+                                kepada
+                                pihak swasta dengan maksud untuk mempengaruhi suatu tindakan, atau memuluskan/memastikan
+                                diperolehnya suatu manfaat secara tidak patut terkait dengan bisnis PARA PIHAK.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-ttd">
+                <div class="col-3">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th>KAI</th>
+                                    <th>PENYEWA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page">
+            <div class="row row-isi-konten">
+                <!-- Kolom Kiri -->
+                <div class="col col-md-6">
+                    <div class="pasal">
+                        <div class="pasal-content">
+                            <p>(3) PARA PIHAK dengan ini menyatakan dan menjamin
+                                bahwa di antara PARA PIHAK tidak ada pembayaran
+                                atau bentuk manfaat lain atau perlakuan khusus yang
+                                telah atau akan dijanjikan, ditawarkan atau diberikan
+                                dari satu Pihak kepada Pihak lainnya (termasuk kepada
+                                keluarga masing-masing Pihak) dengan maksud untuk
+                                memperkaya diri sendiri/orang lain dan dapat mempengaruhi suatu
+                                tindakan atau memuluskan/memastikan diperolehnya suatu manfaat
+                                secara tidak patut terkait dengan bisnis PARA PIHAK. </p>
+                            <p>(4) PARA PIHAK dengan ini menyatakan dan menjamin
+                                bahwa ia dan/atau seluruh pemegang saham
+                                langsungnya, termasuk direktur, dewan komisaris,
+                                pejabat, karyawan ini telah mengetahui dan memahami
+                                tentang undang-undang, pembatasan-pembatasan dan
+                                prinsip-prinsip anti suap, anti korupsi dan anti
+                                pencucian uang, dan oleh karena itu setuju untuk
+                                mengambil langkah-langkah yang tepat untuk
+                                menjamin kepatuhan orang-orang tersebut dalam
+                                melaksanakan kewajibannya sebagaimana diatur dalam
+                                Perjanjian. </p>
                         </div>
                     </div>
                     <div class="pasal">
-                        <div class="pasal-title">PASAL 25<br>KETENTUAN LAIN-LAIN</div>
+                        <div class="pasal-title">PASAL 16<br>KETENTUAN LAIN-LAIN</div>
                         <div class="pasal-content">
                             <p>(1) Apabila terdapat perubahan dan tambahan atas Perjanjian, maka perubahan dan tambahan
-                                tersebut akan mengikat PARA PIHAK sepanjang dibuat secara tertulis dan dibuatkan
-                                Addendum
-                                yang ditandatangani oleh PARA PIHAK, yang merupakan bagian yang tidak terpisahkan dengan
-                                Perjanjian.</p>
+                                tersebut
+                                akan mengikat PARA PIHAK sepanjang dibuat secara tertulis dan dibuatkan Addendum yang
+                                ditandatangani oleh PARA PIHAK, yang merupakan bagian yang tidak terpisahkan dengan
+                                Perjanjian.
+                            </p>
                             <p>(2) Semua lampiran dalam Perjanjian atau yang akan dibuat kemudian oleh PARA PIHAK
                                 merupakan
                                 bagian yang tidak terpisahkan dari Perjanjian.</p>
@@ -1205,25 +948,6 @@
                                 (assignee) dalam hal terjadi penunjukan, pengalihan hak, merger, akuisisi, perubahan
                                 nama
                                 dan/atau perubahan kepemilikan saham KAI.</p>
-                            <p>(4) Dalam hal terdapat perubahan berdasarkan hasil reviu instansi yang berwenang sesuai
-                                ketentuan peraturan perundang-undangan, PARA PIHAK wajib </p>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="page">
-            <div class="row row-isi-konten">
-                <!-- Kolom Kiri -->
-                <div class="col col-md-6">
-                    <div class="pasal">
-                        <div class="pasal-content">
-                            <p> menyesuaikan ketentuan dalam
-                                Perjanjian ini yang dituangkan dalam Adendum Perjanjian.</p>
-                            <p>(5) PARA PIHAK sepakat untuk melaksanakan Perjanjian dengan rasa penuh tanggung jawab
-                                dengan
-                                didasari kepentingan bersama.</p>
                         </div>
                     </div>
                 </div>
@@ -1231,24 +955,37 @@
                 <!-- Kolom Kanan -->
                 <div class="col col-md-6">
                     <div class="pasal">
-                        <div class="pasal-title">LEMBAR<br>PERSETUJUAN</div>
                         <div class="pasal-content">
-                            <p> Dengan ini saya menyatakan setuju dengan ketentuan yang disebut dalam pasal-pasal diatas
-                            </p>
+                            <p>(4) Dalam hal terdapat perubahan berdasarkan hasil reviu instansi yang berwenang sesuai
+                                ketentuan
+                                peraturan perundang-undangan, PARA PIHAK wajib menyesuaikan ketentuan dalam Perjanjian
+                                ini yang
+                                dituangkan dalam Adendum Perjanjian.</p>
+                            <p>(5) PARA PIHAK sepakat untuk melaksanakan Perjanjian dengan rasa penuh tanggung jawab
+                                dengan
+                                didasari kepentingan bersama.</p>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row row-ttd">
+                <div class="col-3">
                     <div class="table-perjanjian">
                         <table class="kotak-table">
                             <thead>
                                 <tr>
                                     <th>KAI</th>
-                                    <th>penyewa</th>
+                                    <th>PENYEWA</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td> </td>
-                                    <td> </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1261,7 +998,9 @@
                 <h2>PERJANJIAN SEWA MENYEWA<br>ASET PT KERETA API INDONESIA (PERSERO)</h2>
                 <p>NO. KAI : ...........................................</p>
                 <p>NO. PENYEWA : ...........................................</p>
-                <p>TANGGAL : ...........................................</p>
+                <p>TANGGAL : <strong>{{ $dataps->masa_awal_perjanjian ?
+                        strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_perjanjian)
+                        ->translatedFormat('d F Y')) : '' }}</strong></p>
             </div>
 
             <div class="konten konten-table1">
@@ -1289,21 +1028,24 @@
                         </tr>
                         <tr>
                             <td>a. NAMA PENYEWA</td>
-                            <td>UNIVERSITAS ISLAM INDONESIA</td>
+                            <td>{{ strtoupper($dataps->dataMitra->nama ?? '') }}</td>
                         </tr>
                         <tr>
                             <td>b. NAMA YANG MEWAKILI</td>
-                            <td>HANGGA FATHANA, S.IP., B.Int.St., M.A.<br>SELAKU: Sekretaris Eksekutif<br>BERDASARKAN:
-                                Surat Tugas Nomor 396/ST-Rek/SP/VI/2025</td>
+                            <td>{{ strtoupper($dataps->dataMitra->nama_perwakilan) ?? '' }}<br>
+                                SELAKU: {{ strtoupper($dataps->dataMitra->penyewa_selaku ?? '') }}<br>
+                                BERDASARKAN: {{ strtoupper($dataps->dataMitra->penyewa_berdasarkan ?? '') }}</td>
                         </tr>
                         <tr>
                             <td>c. ALAMAT</td>
-                            <td>JL. KALIURANG KM. 14,5, KRAWITAN, UMBULMARTANI, KEC. NGEMPLAK, KABUPATEN SLEMAN, DAERAH
-                                ISTIMEWA YOGYAKARTA 55586<br>KOTA: YOGYAKARTA<br>KODE POS: 55223</td>
+                            <td>{{ strtoupper($dataps->dataMitra->alamat ?? '') }}<br>
+                                KOTA: {{ strtoupper($dataps->dataMitra->kota_penyewa ?? '') }}<br>
+                                KODE POS: {{ $dataps->dataMitra->kode_pos ?? '' }}</td>
                         </tr>
                         <tr>
                             <td>d. TELEPON & EMAIL</td>
-                            <td>NO. 081931790007<br>EMAIL: —</td>
+                            <td>NO. {{ $dataps->dataMitra->no_tlpn ?? '' }}<br>
+                                EMAIL: {{ $dataps->dataMitra->email ?? '' }}</td>
                         </tr>
 
                         <!-- 2. DOKUMEN PENYEWA -->
@@ -1314,34 +1056,79 @@
                         </tr>
                         <tr>
                             <td>a. IDENTITAS PENANDATANGAN (KTP/SIM/PASPOR)</td>
-                            <td>NO. 3402150710860003<br>MASA BERLAKU: SEUMUR HIDUP</td>
+                            <td>NO. {{ $dataps->dataMitra->no_identitas ?? '' }}<br>MASA BERLAKU: SEUMUR HIDUP</td>
                         </tr>
                         <tr>
                             <td>b. NPWP</td>
-                            <td>NO. 01.140.540.4-541.000</td>
+                            <td>NO. {{ $dataps->dataMitra->npwp ?? '' }}</td>
                         </tr>
                         <tr>
                             <td>c. IDENTITAS BADAN HUKUM/USAHA/INSTANSI</td>
-                            <td>NO. 02<br>TGL. 15 DESEMBER 2015</td>
+                            <td>
+                                NO. {{ $dataps->dataMitra->no_anggaran_dasar ?? '' }}<br>
+                                TGL. {{ $dataps->dataMitra->tgl_anggaran_dasar ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_anggaran_dasar)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                         <tr>
                             <td>d. PENGESAHAN / PERSETUJUAN / PENETAPAN</td>
-                            <td>NO. AHU-AH.01.06-0041468<br>TGL. 31 Agustus 2023</td>
+                            <td>NO. {{ $dataps->dataMitra->no_kenmenhum_dan_ham ?? '' }}<br>
+                                TGL. {{ $dataps->dataMitra->tgl_persetujuan_kenmenhum_dan_ham ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_persetujuan_kenmenhum_dan_ham)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                         <tr>
                             <td>e. NOMOR INDUK BERUSAHA dan/atau IZIN USAHA</td>
-                            <td>NO. 2909220019847<br>TGL. 29 September 2022</td>
+                            <td>NO. {{ $dataps->dataMitra->no_izin_berusaha ?? '' }}<br>
+                                TGL. {{ $dataps->dataMitra->tgl_izin_usaha ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_izin_usaha)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                         <tr>
                             <td>f. SURAT KETERANGAN TERDAFTAR DIRJEN PAJAK</td>
-                            <td>NO. S-00492/SKT-WP-CT/KPP.2302/2025<br>TGL. 14 JANUARI 2025</td>
+                            <td>NO. {{ $dataps->dataMitra->sk_dirjen_pajak ?? '' }}<br>
+                                TGL. {{ $dataps->dataMitra->tgl_sk_dirjen_pajak ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_sk_dirjen_pajak)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                         <tr>
                             <td>g. SURAT PENGUKUHAN PENGUSAHA KENA PAJAK</td>
-                            <td>NO. S-136/PKP/KPP.230203/2024<br>TGL. 2 JULI 2024</td>
+                            <td>NO. {{ $dataps->dataMitra->surat_pengukuhan_kena_pajak ?? '' }}<br>
+                                TGL. {{ $dataps->dataMitra->tgl_surat_pengukuhan_kena_pajak ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_surat_pengukuhan_kena_pajak)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="row row-ttd">
+                <div class="col-3">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th>KAI</th>
+                                    <th>PENYEWA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="page">
@@ -1361,16 +1148,16 @@
                         </tr>
                         <tr>
                             <td>a. LOKASI</td>
-                            <td>STASIUN BESAR YOGYAKARTA</td>
+                            <td>{{strtoupper($dataps->dataAset->lokasi ?? '') }}</td>
                         </tr>
                         <tr>
                             <td>b. LUAS TANAH/BANGUNAN</td>
-                            <td>—</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td>c. PENGGUNAAN</td>
-                            <td>SHOOTING DOKUMENTER LIVERY</td>
+                            <td>{{ strtoupper($dataps->dataAset->penggunaan_objek ?? '') }}</td>
                         </tr>
 
                         <!-- 4. STATUS PERJANJIAN -->
@@ -1388,15 +1175,31 @@
                         </tr>
                         <tr>
                             <td>a. JANGKA WAKTU SEWA</td>
-                            <td>2 (DUA) JAM</td>
+                            <td>{{ strtoupper($dataps->jangka_waktu ?? '') }}</td>
                         </tr>
                         <tr>
                             <td>b. JANGKA WAKTU PERJANJIAN</td>
-                            <td>08 SEPTEMBER 2025 s.d 08 SEPTEMBER 2025</td>
+                            <td>
+                                {{ $dataps->masa_awal_perjanjian ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_awal_perjanjian)->translatedFormat('d
+                                F Y')) : '' }}
+                                s.d
+                                {{ $dataps->masa_akhir_perjanjian ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_akhir_perjanjian)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                         <tr>
                             <td>MASA PEMANFAATAN</td>
-                            <td>—</td>
+                            <td>
+                                {{ $dataps->masa_awal_manfaat ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_awal_manfaat)->translatedFormat('d
+                                F Y')) : '' }}
+                                s.d
+                                {{ $dataps->masa_akhir_manfaat ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_akhir_manfaat)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
 
                         <!-- 6. HARGA DAN PEMBAYARAN -->
@@ -1413,18 +1216,17 @@
                             <td>a. NILAI SEWA<br>b. BIAYA MASA PEMANFAATAN<br>c. BIAYA ADMINISTRASI<br>d.
                                 PPN<br><strong>TOTAL HARGA</strong></td>
                             <td>
-                                Rp. 5.000.000,-<br>
-                                Rp. -,-<br>
-                                Rp. -,-<br>
-                                Rp. 550.000,-<br>
-                                <strong>Rp. 5.550.000,-</strong><br>
-                                
+                                Rp. {{ number_format($dataps->harga_sewa ?? 0, 0, ',', '.') }},-<br>
+                                Rp. {{ number_format($dataps->harga_sewa ?? 0, 0, ',', '.') }},-<br>
+                                Rp. {{ number_format($dataps->biaya_admin_ukur ?? 0, 0, ',', '.') }},-<br>
+                                Rp. {{ number_format($dataps->ppn_11_persen ?? 0, 0, ',', '.') }},-<br>
+                                <strong>Rp. {{ number_format($dataps->total_harga ?? 0, 0, ',', '.') }},-</strong><br>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td>TERBILANG</td>
-                            <td>Lima Juta Lima Ratus Ribu Rupiah</td>
+                            <td>{{ $dataps->terbilang ?? '' }}</td>
                         </tr>
 
                         <!-- 7. KORESPONDENSI -->
@@ -1447,12 +1249,12 @@
                         </tr>
                         <tr>
                             <td>b. PENYEWA - ALAMAT</td>
-                            <td>JL. KALIURANG KM. 14,5, KRAWITAN, UMBULMARTANI, KEC. NGEMPLAK, KABUPATEN SLEMAN, DAERAH
-                                ISTIMEWA YOGYAKARTA 55586</td>
+                            <td>{{ strtoupper($dataps->dataMitra->alamat ?? '') }}</td>
                         </tr>
                         <tr>
                             <td>- TELEPON & EMAIL</td>
-                            <td>NO. 081931790007<br>EMAIL: —</td>
+                            <td>NO. {{ $dataps->dataMitra->no_tlpn ?? '' }}<br>
+                                EMAIL: {{ $dataps->dataMitra->email ?? '' }}</td>
                         </tr>
 
                         <!-- 8. PENYELESAIAN PERSELISIHAN -->
@@ -1471,20 +1273,45 @@
                     </tbody>
                 </table>
             </div>
+            <div class="row row-ttd">
+                <div class="col-3">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th>KAI</th>
+                                    <th>PENYEWA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="page">
             <div class="konten">
-                <p class="mt-4 text-align-justify">PARA PIHAK telah menyetujui Perjanjian ini harus dibaca bersama-sama dengan seluruh
-                                lampiran yang merupakan satu kesatuan yang tidak terpisahkan dari Perjanjian ini. Adapun
-                                lampiran-lampiran sebagaimana dimaksud adalah sebagai berikut:<br>
-                                a. Lampiran I : Syarat dan Ketentuan Perjanjian Sewa Menyewa Aset PT Kereta Api
-                                Indonesia (Persero).<br>
-                                b. Lampiran II : Gambar Situasi dan/atau Spesifik Teknis Objek Sewa.<br>
-                                c. Lampiran III : Harga dan Tata Cara Pembayaran Sewa.<br>
-                                d. Lampiran IV : Nomor Virtual Account.<br>
-                                Perjanjian ini dibuat 2 (dua) rangkap, yang ditandatangani PARA PIHAK dengan bermeterai
-                                cukup dan memiliki kekuatan hukum yang sama untuk masing-masing Pihak.
-                            </p>
+                <p class="mt-4 text-align-justify">PARA PIHAK telah menyetujui Perjanjian ini harus dibaca bersama-sama
+                    dengan seluruh
+                    lampiran yang merupakan satu kesatuan yang tidak terpisahkan dari Perjanjian ini. Adapun
+                    lampiran-lampiran sebagaimana dimaksud adalah sebagai berikut:<br>
+                    a. Lampiran I : Syarat dan Ketentuan Perjanjian Sewa Menyewa Aset PT Kereta Api
+                    Indonesia (Persero).<br>
+                    b. Lampiran II : Gambar Situasi dan/atau Spesifik Teknis Objek Sewa.<br>
+                    c. Lampiran III : Harga dan Tata Cara Pembayaran Sewa.<br>
+                    d. Lampiran IV : Nomor Virtual Account.<br>
+                    Perjanjian ini dibuat 2 (dua) rangkap, yang ditandatangani PARA PIHAK dengan bermeterai
+                    cukup dan memiliki kekuatan hukum yang sama untuk masing-masing Pihak.
+                </p>
 
                 <div class="row mt-5">
                     <div class="col-6 text-center">

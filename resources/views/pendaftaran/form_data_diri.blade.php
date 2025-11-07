@@ -28,6 +28,7 @@
                     <div class="row justify-content-start p-3">
                         <div class="col-md-4">
                             <div class="form-group text-center">
+                                <label for="jenis" class="form-label fw-medium">Jenis Persewaan</label>
                                 <div class="btn-group" role="group" aria-label="Jenis Penyewa">
                                     <input type="radio" class="btn-check" name="jenis_penyewa" id="Perorangan"
                                         value="Perorangan" >
@@ -45,6 +46,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-3 mb-2">
+                            <div class="form-group text-center">
+                                <label for="kategori" class="form-label fw-medium">Kategori</label>
+                                <select id="kategori" name="kategori" class="form-control kategori-border" required>
+                                    <option value="" disabled selected>-- Pilih Kategori --</option>
+                                    <option value="Aset">Aset</option>
+                                    <option value="Event">Event</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Data Pribadi -->
@@ -60,14 +71,14 @@
                                     <div class="form-group">
                                         <label for="nama_lengkap" class="form-label fw-medium">Nama Lengkap</label>
                                         <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control"
-                                            placeholder="Masukkan nama lengkap" required>
+                                            placeholder="-- Masukkan nama lengkap --" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="nik" class="form-label fw-medium">NIK</label>
                                         <input type="text" id="nik" name="nik" class="form-control"
-                                            placeholder="Masukkan NIK" required>
+                                            placeholder="-- Masukkan NIK --" required>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +101,7 @@
                                     <div class="form-group">
                                         <label for="email" class="form-label fw-medium">Alamat E-mail</label>
                                         <input type="email" id="email" name="email" class="form-control"
-                                            placeholder="email@contoh.com" required>
+                                            placeholder="-- Masukan alamat email --" required>
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +121,7 @@
                                     <div class="form-group">
                                         <label for="no_telepon" class="form-label fw-medium">No Telepon/WA</label>
                                         <input type="tel" id="no_telepon" name="no_telepon" class="form-control"
-                                            placeholder="08xxxxxxxxxx" required>
+                                            placeholder="-- Masukan No.Hp/Wa --" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -134,14 +145,14 @@
                                         <label for="penyewa_berdasarkan" class="form-label fw-medium">Penyewa
                                             Berdasarkan</label>
                                         <input type="text" id="penyewa_berdasarkan" name="penyewa_berdasarkan"
-                                            class="form-control" placeholder="Berdasarkan..." required>
+                                            class="form-control" placeholder="-- Masukan tanda bukti KTP/dll --" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="alamat" class="form-label fw-medium">Alamat</label>
                                         <textarea id="alamat" name="alamat" class="form-control" rows="3"
-                                            placeholder="Masukkan alamat lengkap" required></textarea>
+                                            placeholder="-- Masukkan alamat lengkap --" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +193,7 @@
                                         <label for="nama_perwakilan" class="form-label fw-medium">Nama
                                             Perwakilan</label>
                                         <input type="text" id="nama_perwakilan" name="nama_perwakilan"
-                                            class="form-control" placeholder="Nama perwakilan perusahaan">
+                                            class="form-control" placeholder="-- Nama perwakilan perusahaan --">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -190,7 +201,7 @@
                                         <label for="perwakilan_selaku" class="form-label fw-medium">Perwakilan
                                             Selaku</label>
                                         <input type="text" id="perwakilan_selaku" name="perwakilan_selaku"
-                                            class="form-control" placeholder="Jabatan perwakilan">
+                                            class="form-control" placeholder="-- Jabatan perwakilan --">
                                     </div>
                                 </div>
                             </div>
@@ -200,14 +211,14 @@
                                     <div class="form-group">
                                         <label for="npwp" class="form-label fw-medium">NPWP</label>
                                         <input type="text" id="npwp" name="npwp" class="form-control"
-                                            placeholder="Nomor NPWP perusahaan">
+                                            placeholder="-- Nomor NPWP perusahaan --">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="kota_penyewa" class="form-label fw-medium">Kota Penyewa</label>
                                         <input type="text" id="kota_penyewa" name="kota_penyewa" class="form-control"
-                                            placeholder="Kota domisili perusahaan">
+                                            placeholder="-- Kota domisili perusahaan --">
                                     </div>
                                 </div>
                             </div>
@@ -217,14 +228,14 @@
                                     <div class="form-group">
                                         <label for="kode_pos" class="form-label fw-medium">Kode Pos</label>
                                         <input type="text" id="kode_pos" name="kode_pos" class="form-control"
-                                            placeholder="Kode pos">
+                                            placeholder="-- Kode pos --">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="fax_penyewa" class="form-label fw-medium">FAX Penyewa</label>
                                         <input type="text" id="fax_penyewa" name="fax_penyewa" class="form-control"
-                                            placeholder="Nomor fax perusahaan">
+                                            placeholder="-- Nomor fax perusahaan --">
                                     </div>
                                 </div>
                             </div>
@@ -235,7 +246,7 @@
                                         <label for="no_akte_pendirian" class="form-label fw-medium">Nomor Akte
                                             Pendirian</label>
                                         <input type="text" id="no_akte_pendirian" name="no_akte_pendirian"
-                                            class="form-control" placeholder="Nomor akte pendirian">
+                                            class="form-control" placeholder="-- Nomor akte pendirian --">
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +257,7 @@
                                         <label for="no_anggaran_dasar" class="form-label fw-medium">Nomor Anggaran Dasar
                                             Terakhir</label>
                                         <input type="text" id="no_anggaran_dasar" name="no_anggaran_dasar"
-                                            class="form-control" placeholder="Nomor anggaran dasar">
+                                            class="form-control" placeholder="-- Nomor anggaran dasar --">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -270,7 +281,7 @@
                                         <label for="no_kemenkumham" class="form-label fw-medium">Nomor Kemenkum dan
                                             HAM</label>
                                         <input type="text" id="no_kemenkumham" name="no_kemenkumham"
-                                            class="form-control" placeholder="Nomor Kemenkumham">
+                                            class="form-control" placeholder="-- Nomor Kemenkumham --">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -294,7 +305,7 @@
                                         <label for="no_penetapan_pengadilan" class="form-label fw-medium">Nomor
                                             Penetapan Pengadilan (CV)</label>
                                         <input type="text" id="no_penetapan_pengadilan" name="no_penetapan_pengadilan"
-                                            class="form-control" placeholder="Nomor penetapan pengadilan">
+                                            class="form-control" placeholder="-- Nomor penetapan pengadilan --">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -318,7 +329,7 @@
                                         <label for="no_izin_berusaha" class="form-label fw-medium">Nomor Izin
                                             Berusaha</label>
                                         <input type="text" id="no_izin_berusaha" name="no_izin_berusaha"
-                                            class="form-control" placeholder="Nomor izin berusaha">
+                                            class="form-control" placeholder="-- Nomor izin berusaha --">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -342,7 +353,7 @@
                                         <label for="surat_keterangan_pajak" class="form-label fw-medium">Surat
                                             Keterangan Terdaftar Dirjen Pajak</label>
                                         <input type="text" id="surat_keterangan_pajak" name="surat_keterangan_pajak"
-                                            class="form-control" placeholder="Nomor surat keterangan">
+                                            class="form-control" placeholder="-- Nomor surat keterangan --">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -367,7 +378,7 @@
                                         <label for="surat_pengukuhan_pkp" class="form-label fw-medium">Surat Pengukuhan
                                             Pengusaha Kena Pajak</label>
                                         <input type="text" id="surat_pengukuhan_pkp" name="surat_pengukuhan_pkp"
-                                            class="form-control" placeholder="Nomor surat pengukuhan PKP">
+                                            class="form-control" placeholder="-- Nomor surat pengukuhan PKP --">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -417,7 +428,7 @@
                                         <label for="alamat_asset" class="form-label fw-medium">Alamat Lokasi
                                             Aset</label>
                                         <textarea id="alamat_asset" name="alamat_asset" class="form-control" rows="3"
-                                            placeholder="Masukkan alamat lengkap" required></textarea>
+                                            placeholder="-- Masukkan alamat lengkap --" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -425,7 +436,7 @@
                                         <label for="penggunaan_asset" class="form-label fw-medium">Penggunaan Lokasi
                                             Aset</label>
                                         <textarea id="penggunaan_asset" name="penggunaan_asset" class="form-control"
-                                            rows="3" placeholder="Masukkan alamat lengkap" required></textarea>
+                                            rows="3" placeholder="-- Masukkan alamat lengkap --" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -435,14 +446,14 @@
                                     <div class="form-group">
                                         <label for="luas_tanah" class="form-label fw-medium">Luas Tanah</label>
                                         <input type="text" id="luas_tanah" name="luas_tanah" class="form-control"
-                                            placeholder="Luas Tanah Dalan m" required>
+                                            placeholder="-- Luas Tanah Dalan m&sup2; --" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="luas_bangunan" class="form-label fw-medium">Luas Bangunan</label>
                                         <input type="text" id="luas_bangunan" name="luas_bangunan" class="form-control"
-                                            placeholder="Luas Bangunan Dalam m" required>
+                                            placeholder="-- Luas Bangunan Dalam m&sup2; --" required>
                                     </div>
                                 </div>
                             </div>
@@ -454,14 +465,14 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <input type="text" id="tahun" name="tahun" class="form-control"
-                                                    placeholder="Tahun">
+                                                    placeholder="-- Tahun --">
                                             </div>
                                             <div class="col-4">
                                                 <input type="text" id="bulan" name="bulan" class="form-control"
-                                                    placeholder="Bulan">
+                                                    placeholder="-- Bulan --">
                                             </div>
                                             <div class="col-4">
-                                                <input type="text" id="hari" name="hari" class="form-control"
+                                                <input type="text" id="-- hari --" name="hari" class="form-control"
                                                     placeholder="Hari">
                                             </div>
                                         </div>
@@ -558,7 +569,7 @@
                                         <div class="form-group">
                                             <label for="harga_sewa" class="form-label fw-medium">Harga Sewa</label>
                                             <input type="text" id="harga_sewa_display" class="form-control"
-                                                placeholder="Masukan Angka">
+                                                placeholder="-- Masukan harga sewa --" required>
                                             <input type="hidden" id="harga_sewa" name="harga_sewa" required>
                                         </div>
                                     </div>
@@ -568,7 +579,7 @@
                                         <label for="harga_pemanfaatan" class="form-label fw-medium">Harga
                                             Pemanfaatan</label>
                                         <input type="text" id="harga_pemanfaatan" name="harga_pemanfaatan"
-                                            class="form-control" placeholder="Rp.">
+                                            class="form-control" placeholder="-- Masukan harga pemanfaatan --" required>
                                     </div>
                                 </div>
                             </div>
@@ -578,14 +589,14 @@
                                     <div class="form-group">
                                         <label for="biaya_admin" class="form-label fw-medium">Biaya Admin</label>
                                         <input type="text" id="biaya_admin" name="biaya_admin" class="form-control"
-                                            placeholder="Rp." required>
+                                            placeholder="-- Masukan biaya admin --" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="cost_of_money" class="form-label fw-medium">Cost Of Money</label>
                                         <input type="text" id="cost_of_money" name="cost_of_money" class="form-control"
-                                            placeholder="Rp.">
+                                            placeholder="-- Masukan biaya COM --" required>
                                     </div>
                                 </div>
                             </div>

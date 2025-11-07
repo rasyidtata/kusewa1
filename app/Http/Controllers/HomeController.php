@@ -28,7 +28,7 @@ class HomeController extends Controller
 
     public function perjanjian()
     {
-        return view("pendaftaran.perjanjian_aset");
+        return view("pendaftaran.perjanjian_event");
     }
 }
 

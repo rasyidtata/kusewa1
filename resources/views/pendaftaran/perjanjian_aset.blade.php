@@ -42,7 +42,7 @@
 
     <div class="container">
         <div class="page">
-            <div class="konten-cover"> 
+            <div class="konten-cover">
                 <div class="img cover-img">
                     <img src="{{ asset('asset/img/logo_kai.png') }}" alt="Logo PT KAI">
                 </div>
@@ -52,7 +52,7 @@
                         <tr>
                             <td class="no"><strong>NOMOR</strong></td>
                             <td class="ti"><strong>:</strong></td>
-                            <td class="isi" style="padding: 6px 0;">{{ $nomor_kontrak ?? '...........................................' }}</td>
+                            <td class="isi">{{ $nomor_kontrak ??'...........................................' }}</td>
                         </tr>
                         <tr>
                             <td class="no"><strong>NOMOR ASET</strong></td>
@@ -62,32 +62,39 @@
                         <tr>
                             <td class="no"><strong>TANGGAL</strong></td>
                             <td class="ti"><strong>:</strong></td>
-                            <td class="isi">{{ $tanggal ?? '...........................................' }}</td>
+                            <td class="isi"><strong>{{ $dataps->masa_awal_perjanjian ?
+                                    strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_perjanjian)
+                                    ->translatedFormat('d F Y')) : '' }}</strong></td>
                         </tr>
                     </table>
                 </div>
                 <h6 class=" mt-5"><strong>ANTARA</strong></h6>
                 <h6 class=" mt-5"><strong>PT. KERETA API INDONESIA (Persero)</strong></h6>
                 <h6 class=" mt-5"><strong>DENGAN</strong></h6>
-                <h6 class=" mt-5"><strong>UNIVERSITAS ISLAM INDONESIA</strong></h6>
-                <h6 class=" mt-5"><strong>JL. KALIURANG KM. 14,5, KRAWITAN, UMBULMARTANI,
-                    KEC. NGEMPLAK, KABUPATEN SLEMAN,
-                    DAERAH ISTIMEWA YOGYAKARTA 55586</strong>
+                <h6 class=" mt-5"><strong>{{ strtoupper($dataps->dataMitra->nama ?? '') }}</strong></h6>
+                <h6 class=" mt-5"><strong>{{ strtoupper($dataps->dataMitra->alamat ?? '') }}</strong>
                 </h6>
                 <h6 class=" mt-5"><strong>TENTANG :<br>
-                    PERSEWAAN ASET MILIK PT. KERETA API INDONESIA (Persero)
-                    DI STASIUN BESAR YOGYAKARTA
-                    UNTUK SHOOTING DOKUMENTER LIVERY
+                        PERSEWAAN ASET MILIK PT. KERETA API INDONESIA (Persero)
+                        DI {{ strtoupper($dataps->dataAset->lokasi ?? '') }}
+                        UNTUK {{ strtoupper($dataps->dataAset->penggunaan_objek ?? '') }}
                     </strong>
                 </h6>
                 <h6 class="tgl-cover"><strong>MASA BERLAKU :<br>
-                    08 SEPTEMBER 2025 S.D 08 SEPTEMBER 2025
+                        {{ $dataps->masa_awal_perjanjian ?
+                        strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_awal_perjanjian)->translatedFormat('d
+                        F Y')) : '' }}
+                        s.d
+                        {{ $dataps->masa_akhir_perjanjian ?
+                        strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_akhir_perjanjian)->translatedFormat('d
+                        F Y')) : '' }}
                     </strong>
                 </h6>
                 <h6 class=" mt-5"><strong>2025</strong></h6>
-                
+
             </div>
         </div>
+
         <div class="page">
             <div class="header header-dokumen">
                 <h1>LAMPIRAN I</h1>
@@ -1261,7 +1268,9 @@
                 <h2>PERJANJIAN SEWA MENYEWA<br>ASET PT KERETA API INDONESIA (PERSERO)</h2>
                 <p>NO. KAI : ...........................................</p>
                 <p>NO. PENYEWA : ...........................................</p>
-                <p>TANGGAL : ...........................................</p>
+                <p>TANGGAL : <strong>{{ $dataps->masa_awal_perjanjian ?
+                        strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_perjanjian)
+                        ->translatedFormat('d F Y')) : '' }}</strong></p>
             </div>
 
             <div class="konten konten-table1">
@@ -1289,21 +1298,24 @@
                         </tr>
                         <tr>
                             <td>a. NAMA PENYEWA</td>
-                            <td>UNIVERSITAS ISLAM INDONESIA</td>
+                            <td>{{ strtoupper($dataps->dataMitra->nama ?? '') }}</td>
                         </tr>
                         <tr>
                             <td>b. NAMA YANG MEWAKILI</td>
-                            <td>HANGGA FATHANA, S.IP., B.Int.St., M.A.<br>SELAKU: Sekretaris Eksekutif<br>BERDASARKAN:
-                                Surat Tugas Nomor 396/ST-Rek/SP/VI/2025</td>
+                            <td>{{ strtoupper($dataps->dataMitra->nama_perwakilan) ?? '' }}<br>
+                                SELAKU: {{ strtoupper($dataps->dataMitra->penyewa_selaku ?? '') }}<br>
+                                BERDASARKAN: {{ strtoupper($dataps->dataMitra->penyewa_berdasarkan ?? '') }}</td>
                         </tr>
                         <tr>
                             <td>c. ALAMAT</td>
-                            <td>JL. KALIURANG KM. 14,5, KRAWITAN, UMBULMARTANI, KEC. NGEMPLAK, KABUPATEN SLEMAN, DAERAH
-                                ISTIMEWA YOGYAKARTA 55586<br>KOTA: YOGYAKARTA<br>KODE POS: 55223</td>
+                            <td>{{ strtoupper($dataps->dataMitra->alamat ?? '') }}<br>
+                                KOTA: {{ strtoupper($dataps->dataMitra->kota_penyewa ?? '') }}<br>
+                                KODE POS: {{ $dataps->dataMitra->kode_pos ?? '' }}</td>
                         </tr>
                         <tr>
                             <td>d. TELEPON & EMAIL</td>
-                            <td>NO. 081931790007<br>EMAIL: —</td>
+                            <td>NO. {{ $dataps->dataMitra->no_tlpn ?? '' }}<br>
+                                EMAIL: {{ $dataps->dataMitra->email ?? '' }}</td>
                         </tr>
 
                         <!-- 2. DOKUMEN PENYEWA -->
@@ -1314,34 +1326,79 @@
                         </tr>
                         <tr>
                             <td>a. IDENTITAS PENANDATANGAN (KTP/SIM/PASPOR)</td>
-                            <td>NO. 3402150710860003<br>MASA BERLAKU: SEUMUR HIDUP</td>
+                            <td>NO. {{ $dataps->dataMitra->no_identitas ?? '' }}<br>MASA BERLAKU: SEUMUR HIDUP</td>
                         </tr>
                         <tr>
                             <td>b. NPWP</td>
-                            <td>NO. 01.140.540.4-541.000</td>
+                            <td>NO. {{ $dataps->dataMitra->npwp ?? '' }}</td>
                         </tr>
                         <tr>
                             <td>c. IDENTITAS BADAN HUKUM/USAHA/INSTANSI</td>
-                            <td>NO. 02<br>TGL. 15 DESEMBER 2015</td>
+                            <td>
+                                NO. {{ $dataps->dataMitra->no_anggaran_dasar ?? '' }}<br>
+                                TGL. {{ $dataps->dataMitra->tgl_anggaran_dasar ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_anggaran_dasar)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                         <tr>
                             <td>d. PENGESAHAN / PERSETUJUAN / PENETAPAN</td>
-                            <td>NO. AHU-AH.01.06-0041468<br>TGL. 31 Agustus 2023</td>
+                            <td>NO. {{ $dataps->dataMitra->no_kenmenhum_dan_ham ?? '' }}<br>
+                                TGL. {{ $dataps->dataMitra->tgl_persetujuan_kenmenhum_dan_ham ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_persetujuan_kenmenhum_dan_ham)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                         <tr>
                             <td>e. NOMOR INDUK BERUSAHA dan/atau IZIN USAHA</td>
-                            <td>NO. 2909220019847<br>TGL. 29 September 2022</td>
+                            <td>NO. {{ $dataps->dataMitra->no_izin_berusaha ?? '' }}<br>
+                                TGL. {{ $dataps->dataMitra->tgl_izin_usaha ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_izin_usaha)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                         <tr>
                             <td>f. SURAT KETERANGAN TERDAFTAR DIRJEN PAJAK</td>
-                            <td>NO. S-00492/SKT-WP-CT/KPP.2302/2025<br>TGL. 14 JANUARI 2025</td>
+                            <td>NO. {{ $dataps->dataMitra->sk_dirjen_pajak ?? '' }}<br>
+                                TGL. {{ $dataps->dataMitra->tgl_sk_dirjen_pajak ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_sk_dirjen_pajak)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                         <tr>
                             <td>g. SURAT PENGUKUHAN PENGUSAHA KENA PAJAK</td>
-                            <td>NO. S-136/PKP/KPP.230203/2024<br>TGL. 2 JULI 2024</td>
+                            <td>NO. {{ $dataps->dataMitra->surat_pengukuhan_kena_pajak ?? '' }}<br>
+                                TGL. {{ $dataps->dataMitra->tgl_surat_pengukuhan_kena_pajak ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->tgl_surat_pengukuhan_kena_pajak)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="row row-ttd">
+                <div class="col-3">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th>KAI</th>
+                                    <th>PENYEWA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="page">
@@ -1361,16 +1418,16 @@
                         </tr>
                         <tr>
                             <td>a. LOKASI</td>
-                            <td>STASIUN BESAR YOGYAKARTA</td>
+                            <td>{{strtoupper($dataps->dataAset->lokasi ?? '') }}</td>
                         </tr>
                         <tr>
                             <td>b. LUAS TANAH/BANGUNAN</td>
-                            <td>—</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td>c. PENGGUNAAN</td>
-                            <td>SHOOTING DOKUMENTER LIVERY</td>
+                            <td>{{ strtoupper($dataps->dataAset->penggunaan_objek ?? '') }}</td>
                         </tr>
 
                         <!-- 4. STATUS PERJANJIAN -->
@@ -1388,15 +1445,31 @@
                         </tr>
                         <tr>
                             <td>a. JANGKA WAKTU SEWA</td>
-                            <td>2 (DUA) JAM</td>
+                            <td>{{ strtoupper($dataps->jangka_waktu ?? '') }}</td>
                         </tr>
                         <tr>
                             <td>b. JANGKA WAKTU PERJANJIAN</td>
-                            <td>08 SEPTEMBER 2025 s.d 08 SEPTEMBER 2025</td>
+                            <td>
+                                {{ $dataps->masa_awal_perjanjian ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_awal_perjanjian)->translatedFormat('d
+                                F Y')) : '' }}
+                                s.d
+                                {{ $dataps->masa_akhir_perjanjian ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_akhir_perjanjian)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
                         <tr>
                             <td>MASA PEMANFAATAN</td>
-                            <td>—</td>
+                            <td>
+                                {{ $dataps->masa_awal_manfaat ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_awal_manfaat)->translatedFormat('d
+                                F Y')) : '' }}
+                                s.d
+                                {{ $dataps->masa_akhir_manfaat ?
+                                strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_akhir_manfaat)->translatedFormat('d
+                                F Y')) : '' }}
+                            </td>
                         </tr>
 
                         <!-- 6. HARGA DAN PEMBAYARAN -->
@@ -1413,18 +1486,17 @@
                             <td>a. NILAI SEWA<br>b. BIAYA MASA PEMANFAATAN<br>c. BIAYA ADMINISTRASI<br>d.
                                 PPN<br><strong>TOTAL HARGA</strong></td>
                             <td>
-                                Rp. 5.000.000,-<br>
-                                Rp. -,-<br>
-                                Rp. -,-<br>
-                                Rp. 550.000,-<br>
-                                <strong>Rp. 5.550.000,-</strong><br>
-                                
+                                Rp. {{ number_format($dataps->harga_sewa ?? 0, 0, ',', '.') }},-<br>
+                                Rp. {{ number_format($dataps->harga_sewa ?? 0, 0, ',', '.') }},-<br>
+                                Rp. {{ number_format($dataps->biaya_admin_ukur ?? 0, 0, ',', '.') }},-<br>
+                                Rp. {{ number_format($dataps->ppn_11_persen ?? 0, 0, ',', '.') }},-<br>
+                                <strong>Rp. {{ number_format($dataps->total_harga ?? 0, 0, ',', '.') }},-</strong><br>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td>TERBILANG</td>
-                            <td>Lima Juta Lima Ratus Ribu Rupiah</td>
+                            <td>{{ $dataps->terbilang ?? '' }}</td>
                         </tr>
 
                         <!-- 7. KORESPONDENSI -->
@@ -1447,12 +1519,12 @@
                         </tr>
                         <tr>
                             <td>b. PENYEWA - ALAMAT</td>
-                            <td>JL. KALIURANG KM. 14,5, KRAWITAN, UMBULMARTANI, KEC. NGEMPLAK, KABUPATEN SLEMAN, DAERAH
-                                ISTIMEWA YOGYAKARTA 55586</td>
+                            <td>{{ strtoupper($dataps->dataMitra->alamat ?? '') }}</td>
                         </tr>
                         <tr>
                             <td>- TELEPON & EMAIL</td>
-                            <td>NO. 081931790007<br>EMAIL: —</td>
+                            <td>NO. {{ $dataps->dataMitra->no_tlpn ?? '' }}<br>
+                                EMAIL: {{ $dataps->dataMitra->email ?? '' }}</td>
                         </tr>
 
                         <!-- 8. PENYELESAIAN PERSELISIHAN -->
@@ -1471,20 +1543,45 @@
                     </tbody>
                 </table>
             </div>
+            <div class="row row-ttd">
+                <div class="col-3">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th>KAI</th>
+                                    <th>PENYEWA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="page">
             <div class="konten">
-                <p class="mt-4 text-align-justify">PARA PIHAK telah menyetujui Perjanjian ini harus dibaca bersama-sama dengan seluruh
-                                lampiran yang merupakan satu kesatuan yang tidak terpisahkan dari Perjanjian ini. Adapun
-                                lampiran-lampiran sebagaimana dimaksud adalah sebagai berikut:<br>
-                                a. Lampiran I : Syarat dan Ketentuan Perjanjian Sewa Menyewa Aset PT Kereta Api
-                                Indonesia (Persero).<br>
-                                b. Lampiran II : Gambar Situasi dan/atau Spesifik Teknis Objek Sewa.<br>
-                                c. Lampiran III : Harga dan Tata Cara Pembayaran Sewa.<br>
-                                d. Lampiran IV : Nomor Virtual Account.<br>
-                                Perjanjian ini dibuat 2 (dua) rangkap, yang ditandatangani PARA PIHAK dengan bermeterai
-                                cukup dan memiliki kekuatan hukum yang sama untuk masing-masing Pihak.
-                            </p>
+                <p class="mt-4 text-align-justify">PARA PIHAK telah menyetujui Perjanjian ini harus dibaca bersama-sama
+                    dengan seluruh
+                    lampiran yang merupakan satu kesatuan yang tidak terpisahkan dari Perjanjian ini. Adapun
+                    lampiran-lampiran sebagaimana dimaksud adalah sebagai berikut:<br>
+                    a. Lampiran I : Syarat dan Ketentuan Perjanjian Sewa Menyewa Aset PT Kereta Api
+                    Indonesia (Persero).<br>
+                    b. Lampiran II : Gambar Situasi dan/atau Spesifik Teknis Objek Sewa.<br>
+                    c. Lampiran III : Harga dan Tata Cara Pembayaran Sewa.<br>
+                    d. Lampiran IV : Nomor Virtual Account.<br>
+                    Perjanjian ini dibuat 2 (dua) rangkap, yang ditandatangani PARA PIHAK dengan bermeterai
+                    cukup dan memiliki kekuatan hukum yang sama untuk masing-masing Pihak.
+                </p>
 
                 <div class="row mt-5">
                     <div class="col-6 text-center">

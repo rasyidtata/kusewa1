@@ -26,6 +26,11 @@
                                         placeholder="-" value="{{ old('Jenis', $dataps->dataMitra->Jenis ?? '') }}"
                                         readonly>
                                 </div>
+                                <div class="col-4">
+                                    <input type="text" id="jenis penyewaan" name="jenis penyewaan" class="form-control"
+                                        placeholder="-" value="{{ old('kategori', $dataps->dataMitra->kategori ?? '') }}"
+                                        readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -658,7 +663,7 @@
                 </div>
                 <div class="card mb-4 border-0 p-5">
                     <div class="card-bodyy text-center pt-0">
-                        <a href="{{ url('pendaftaran/perjanjian_aset') }}" class="btn btn-dock px-5">
+                        <a href="{{ url('pendaftaran/perjanjian_dokumen/'.$dataps->id_perjanjian) }}" class="btn btn-dock px-5" target="_blank">
                             <i class="bi bi-file-earmark-text me-2"></i>DOKUMEN PERJANJIAN
                         </a>
                     </div>

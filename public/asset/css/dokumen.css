@@ -291,44 +291,6 @@ body {
 
 
 
-
-.table-perjanjian {
-    margin-top: 20px;
-    border: 1px solid #ddd;
-}
-
-.kotak-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #ddd; 
-}
-
-
-
-.kotak-table th {
-    padding: 12px 15px;
-    text-align: center;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-
-
-.kotak-table td {
-    padding: 15px;
-    text-align: center;
-    height: 80px;
-    vertical-align: middle;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd; 
-}
-
-
-
-
 /*============================== konten table perjanjian =========================*/
 /*----- 1 -----*/
 .konten-table1 .table-konten1{
@@ -393,4 +355,38 @@ body {
 .col-4 .btn-setuju:hover{
     background-color: rgb(42, 85, 165);
     color: #ffffff;
+}
+
+
+/*============================== tabel ttd event dan aset =========================*/
+.row-ttd {
+    text-align: end;
+    align-items: end;
+    justify-content: end;
+    font-size: 10px;
+}
+.kotak-table {
+    border: 1px solid #797979;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.kotak-table th,
+.kotak-table td {
+    border: 1px solid #797979;
+    padding: 2px;
+    text-align: center;
+}
+
+.simple-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: #00000000;
+    background-color: transparent;
+}
+.simple-checkbox:checked {
+    background-color: transparent;
+}
+.checkbox-cell {
+    text-align: center;
 }

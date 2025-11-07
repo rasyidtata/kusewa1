@@ -22,6 +22,7 @@ class PendaftaranController extends Controller
         $validator = Validator::make($request->all(), [
             // Data Diri - Step 1
             'jenis_penyewa' => 'required|in:Perorangan,Perusahaan',
+            'kategori' => 'required|in: Aset, Event',
             'nama_lengkap' => 'required|string|max:255',
             'nik' => 'required|string|max:20',
             'masa_berlaku_ktp' => 'required|date',
@@ -112,6 +113,7 @@ class PendaftaranController extends Controller
     {
         $data = [
             'Jenis' => $request->jenis_penyewa,
+            'kategori' => $request->kategori,
             'nama' => $request->nama_lengkap,
             'no_identitas' => $request->nik,
             'masa_berlaku_identitas' => $request->masa_berlaku_ktp,
@@ -125,14 +127,16 @@ class PendaftaranController extends Controller
             'npwp' => $request->npwp,
             'kota_penyewa' => $request->kota_penyewa,
             'kode_pos' => $request->kode_pos,
+
             'fax_penyewa' => $request->fax_penyewa,
             'no_akta_pendirian' => $request->no_akte_pendirian,
+            'no_penetapan_pengadilan' => $request->no_penetapan_pengadilan,
+            'tgl_penetapan_pengadilan' => $request->tanggal_penetapan_pengadilan,
+            
             'no_anggaran_dasar' => $request->no_anggaran_dasar,
             'tgl_anggaran_dasar' => $request->tanggal_anggaran_dasar,
             'no_kenmenhum_dan_ham' => $request->no_kemenkumham,
             'tgl_persetujuan_kenmenhum_dan_ham' => $request->tanggal_kemenkumham,
-            'no_penetapan_pengadilan' => $request->no_penetapan_pengadilan,
-            'tgl_penetapan_pengadilan' => $request->tanggal_penetapan_pengadilan,
             'no_izin_berusaha' => $request->no_izin_berusaha,
             'tgl_izin_usaha' => $request->tanggal_izin_berusaha,
             'sk_dirjen_pajak' => $request->surat_keterangan_pajak,

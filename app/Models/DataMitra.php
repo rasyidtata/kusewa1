@@ -22,7 +22,7 @@ class DataMitra extends Model
         'alamat',
         'no_tlpn',
         'foto_identitas',
-        'keperluan',
+        'kategori',
         'nama_perwakilan',
         'penyewa_selaku',
         'kota_penyewa',
