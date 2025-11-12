@@ -277,6 +277,7 @@
                                         readonly>
                                 </div>
                             </div>
+                            
 
                         </div>
 
@@ -715,9 +716,12 @@
                             </button>
                         </div>
                         <div class="col-3">
-                            <button type="button" class="btn btn-download px-4">
-                                <i class="bi bi-download me-2"></i>Download
-                            </button>
+                            <a href="{{ url('perjanjian/preview', $dataps->id_perjanjian) }}" 
+                            rel="noopener" 
+                            target="_blank" 
+                            class="btn btn-default">
+                                <i class="fas fa-print"></i> Print
+                            </a>
                         </div>
                         <div class="col-3">
                             <button type="button" class="btn btn-share px-5">

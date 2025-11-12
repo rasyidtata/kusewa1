@@ -19,6 +19,7 @@ Route::get("pendaftaran/list_data", [PerjanjianSewaController::class, "perjanjia
 Route::get('/pendaftaran/list_perjanjian/{id_perjanjian}', [PerjanjianSewaController::class, 'edit'])->name('pendaftaran.edit');
 Route::post('/pendaftaran/update/{id_perjanjian}', [PerjanjianSewaController::class, 'update'])->name('pendaftaran.update');
 Route::get('/pendaftaran/perjanjian_dokumen/{id_perjanjian}', [PerjanjianSewaController::class, 'showPerjanjianDokumen'])->name('pendaftaran.perjanjian_dokumen');
+Route::get('/perjanjian/preview/{id_perjanjian}', [PerjanjianSewaController::class, 'previewPerjanjianPDF'])->name('perjanjian.preview');
 
 Route::get("pendaftaran/form_data_diri", [PendaftaranController::class, "create"]);
 Route::post("pendaftaran/create", [PendaftaranController::class, "store"]); 

@@ -4,55 +4,559 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin | Dashboard')</title>
+    <title>Perjanjian_Eset_{{ $dataps->dataMitra->nama }}</title>
 
     <!-- CSS Assets -->
     <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/bootstrap-icons-1.8.3/bootstrap-icons.css') }}">
     <link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('asset/css/dokumen.css') }}" rel="stylesheet">
+    <link href="{{ asset('asset/css/dokume.css') }}" rel="stylesheet">
     @yield('css_custom')
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12px;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            background-color: #fff;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Header untuk cetak */
+        .print-header {
+            text-align: center;
+            padding: 10px 0;
+            border-bottom: 2px solid #005C78;
+            margin-bottom: 20px;
+            page-break-after: avoid;
+        }
+
+        .print-header .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .print-header .title-container {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .print-header .header-title {
+            color: #1a202c;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 5px 0;
+        }
+
+        .print-header .header-subtitle {
+            color: #005C78;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 0;
+            font-style: italic;
+        }
+
+        .print-header img {
+            height: 30px;
+        }
+
+        .print-header .logo-kai {
+            height: 40px;
+        }
+
+        /* Container utama */
+        .container {
+            max-width: 100%;
+            padding: 0;
+        }
+
+        /* Halaman */
+        .page {
+            min-height: 29.7cm;
+            padding: 1.5cm;
+            position: relative;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Konten cover */
+        .konten-cover {
+            text-align: center;
+            padding-top: 2cm;
+        }
+
+        .konten-cover .cover-img {
+            margin-bottom: 20px;
+        }
+
+        .konten-cover .cover-img img {
+            height: 160px;
+        }
+
+        .cover-table {
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        .cover-table .table-cover {
+            width: 100%;
+            border: solid #000 1px;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        .cover-table .table-cover td {
+            padding: 8px 5px;
+            border: 1px solid #000;
+        }
+
+        .cover-table .table-cover .no {
+            width: 30%;
+        }
+
+        .cover-table .table-cover .ti {
+            width: 5%;
+        }
+
+        .cover-table .table-cover .isi {
+            text-align: left;
+        }
+
+        .konten-cover h6 {
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        /* Header dokumen */
+        .header-dokumen {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #000;
+            page-break-after: avoid;
+        }
+
+        .header-dokumen h1 {
+            font-size: 14px;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-dokumen h2 {
+            font-size: 12px;
+            margin: 2px 0;
+            font-weight: bold;
+        }
+
+        .header-dokumen p {
+            font-size: 12px;
+            margin: 2px 0;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* Konten utama */
+        .konten h2 {
+            font-size: 14px;
+            margin: 10px 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .konten p {
+            font-size: 12px;
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        /* Layout dua kolom */
+        .row-isi-konten {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+            width: 100%;
+            page-break-inside: avoid;
+        }
+
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding: 0 10px;
+            box-sizing: border-box;
+            page-break-inside: avoid;
+        }
+
+        /* Pasal */
+        .pasal {
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .pasal-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: center;
+            font-size: 12px;
+            break-after: avoid;
+        }
+
+        .pasal-content {
+            text-align: justify;
+            break-inside: avoid;
+        }
+
+        .pasal-content p {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+
+        .definition-list {
+            margin-left: 15px;
+        }
+
+        .definition-item {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+
+        .definition-term {
+            font-weight: bold;
+        }
+
+        /* Tabel */
+        .konten-table1 .table-konten1 {
+            border: 1px solid #919191;
+            font-size: 11px;
+            width: 100%;
+            border-collapse: collapse;
+            page-break-inside: avoid;
+        }
+
+        .konten-table1 .table-konten1 th,
+        .konten-table1 .table-konten1 td {
+            border: 1px solid #919191;
+            padding: 4px;
+            vertical-align: top;
+        }
+
+        .konten-table1 .table-konten1 .no {
+            width: 5%;
+            text-align: center;
+        }
+
+        .konten-table1 .table-konten1 .sub {
+            width: 35%;
+        }
+
+        /* Tanda tangan */
+        .row-ttd {
+            margin-top: 30px;
+            page-break-before: avoid;
+        }
+
+        .kotak-table {
+            border: 1px solid #797979;
+            border-collapse: collapse;
+            width: 200px;
+            margin-left: auto;
+        }
+
+        .kotak-table th,
+        .kotak-table td {
+            border: 1px solid #797979;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .simple-checkbox {
+            width: 16px;
+            height: 16px;
+        }
+
+        .checkbox-cell {
+            text-align: center;
+        }
+
+        /* Tombol (hanya untuk tampilan web) */
+        .tombol {
+            padding: 20px;
+            background-color: #ffffff;
+            margin-top: 10px;
+        }
+
+        .tombol .btn-back {
+            border: 1px solid #c2c2c2;
+            color: #3b3b3b;
+            padding: 8px 20px;
+        }
+
+        .tombol .btn-back:hover {
+            background-color: #929292;
+            border: none;
+            color: #ffffff;
+        }
+
+        .tombol .btn-kirim {
+            border: 1px solid #c2c2c2;
+            color: rgb(42, 85, 165);
+            padding: 8px 20px;
+        }
+
+        .tombol .btn-kirim:hover {
+            background-color: rgb(42, 85, 165);
+            color: #ffffff;
+        }
+
+        .row-ceklist {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .row-tombol {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* Nomor halaman */
+        .page-number {
+            position: absolute;
+            bottom: 1cm;
+            right: 1.5cm;
+            font-size: 12px;
+        }
+
+        /* Tanda tangan akhir */
+        .ttd-section {
+            margin-top: 50px;
+        }
+
+        .ttd-section .row {
+            display: flex;
+            justify-content: space-between;
+
+        }
+
+        .ttd-section .row .col-6 {
+            justify-items: center;
+        }
+        .ttd-section .row .col-6 >p {
+            text-align: center;
+        }
+
+        /* Aturan untuk cetak */
+        @media print {
+            body {
+                background: white;
+                font-size: 11px;
+                margin: 0;
+                padding: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .container {
+                box-shadow: none;
+                max-width: none;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+            }
+
+            .page {
+                box-shadow: none;
+                margin: 0;
+                padding: 1.5cm;
+                min-height: 29.7cm;
+                height: 29.7cm;
+                width: 100%;
+                position: relative;
+                page-break-after: always;
+            }
+
+            .page:last-child {
+                page-break-after: auto;
+            }
+
+            /* PERBAIKAN UTAMA UNTUK LAYOUT DUA KOLOM */
+            .row-isi-konten {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                width: 100% !important;
+                margin: 0 !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .col-md-6 {
+                flex: 0 0 50% !important;
+                max-width: 50% !important;
+                width: 50% !important;
+                padding: 0 10px !important;
+                box-sizing: border-box !important;
+                float: none !important;
+                display: block !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            /* PERBAIKAN UNTUK KONTEN DALAM KOLOM */
+            .pasal {
+                margin-bottom: 15px;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .pasal-title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                text-align: center;
+                font-size: 12px;
+                break-after: avoid;
+            }
+
+            .pasal-content {
+                text-align: justify;
+                break-inside: avoid;
+            }
+
+            .pasal-content p {
+                margin-bottom: 8px;
+                text-align: justify;
+            }
+
+            .definition-list {
+                margin-left: 15px;
+                break-inside: avoid;
+            }
+
+            .definition-item {
+                margin-bottom: 8px;
+                text-align: justify;
+                break-inside: avoid;
+            }
+
+            /* ELEMEN LAIN YANG PERLU DIPERBAIKI */
+            .print-header {
+                position: static;
+                margin-bottom: 20px;
+            }
+
+            .tombol {
+                display: none !important;
+            }
+
+            /* Memastikan tabel tidak terpotong */
+            table {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            /* Memastikan judul tidak sendirian di halaman bawah */
+            h1, h2, h3, h4, h5, h6 {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+
+            /* Memastikan paragraf tidak terpotong */
+            p, .pasal {
+                page-break-inside: avoid;
+                break-inside: avoid;
+                orphans: 3;
+                widows: 3;
+            }
+
+            /* Menghilangkan elemen yang tidak perlu untuk cetak */
+            .btn, .tombol {
+                display: none !important;
+            }
+
+            /* PERBAIKAN TAMBAHAN UNTUK KONTEN PANJANG */
+            .konten {
+                width: 100%;
+            }
+
+            .header-dokumen {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+
+            /* Pastikan checkbox tetap terlihat */
+            .simple-checkbox {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* Atur ulang margin dan padding untuk konsistensi */
+            .page > * {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Hindari pemotongan konten penting */
+            .row-ttd {
+                page-break-before: avoid;
+                break-before: avoid;
+                margin-top: 20px;
+            }
+
+            /* Pastikan layout tetap konsisten */
+            .kotak-table {
+                width: 200px !important;
+                margin-left: auto !important;
+            }
+        }
+
+        /* Untuk layar kecil */
+        @media (max-width: 768px) {
+            .col-md-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .print-header .logo-container {
+                flex-direction: column;
+            }
+
+            .print-header img {
+                margin: 5px 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Header Section -->
-    <header class="header header-utama">
-        <div class="container-fluid">
-            <div class="row row-hider align-items-center ">
-                <div class="col-12 col-md-4">
-                    <div class="logo">
-                        <img src="{{ asset('asset/img/kusewa.png') }}" height="30px" class="logo-img">
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="header-content">
-                        <h1 class="header-title">Penyewaan Asset KAI Non Lokomotif</h1>
-                        <p class="header-subtitle">DAOP 6 Yogyakarta</p>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="header-actions">
-                        <div class="logo-secondary">
-                            <img src="{{ asset('asset/img/logo_kai.png') }}" height="100px" class="logo-img">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
+    <!-- Header untuk cetak -->
+    
     <div class="container">
+        <!-- Halaman 1: Cover -->
         <div class="page">
             <div class="konten-cover">
-                <div class="img cover-img">
+                <div class="cover-img">
                     <img src="{{ asset('asset/img/logo_kai.png') }}" alt="Logo PT KAI">
                 </div>
                 <h6><strong>PERJANJIAN</strong></h6>
-                <div class="table cover-table ">
+                <div class="cover-table">
                     <table class="table-cover">
                         <tr>
                             <td class="no"><strong>NOMOR</strong></td>
                             <td class="ti"><strong>:</strong></td>
-                            <td class="isi">{{ $nomor_kontrak ??'...........................................' }}</td>
+                            <td class="isi">{{ $nomor_kontrak ?? '...........................................' }}</td>
                         </tr>
                         <tr>
                             <td class="no"><strong>NOMOR ASET</strong></td>
@@ -68,34 +572,33 @@
                         </tr>
                     </table>
                 </div>
-                <h6 class=" mt-5"><strong>ANTARA</strong></h6>
-                <h6 class=" mt-5"><strong>PT. KERETA API INDONESIA (Persero)</strong></h6>
-                <h6 class=" mt-5"><strong>DENGAN</strong></h6>
-                <h6 class=" mt-5"><strong>{{ strtoupper($dataps->dataMitra->nama ?? '') }}</strong></h6>
-                <h6 class=" mt-5"><strong>{{ strtoupper($dataps->dataMitra->alamat ?? '') }}</strong>
-                </h6>
-                <h6 class=" mt-5"><strong>TENTANG :<br>
+                <h6 class="mt-4"><strong>ANTARA</strong></h6>
+                <h6 class="mt-4"><strong>PT. KERETA API INDONESIA (Persero)</strong></h6>
+                <h6 class="mt-4"><strong>DENGAN</strong></h6>
+                <h6 class="mt-4"><strong>{{ strtoupper($dataps->dataMitra->nama ?? '') }}</strong></h6>
+                <h6 class="mt-4"><strong>{{ strtoupper($dataps->dataMitra->alamat ?? '') }}</strong></h6>
+                <h6 class="mt-4"><strong>TENTANG :<br>
                         PERSEWAAN ASET MILIK PT. KERETA API INDONESIA (Persero)
                         DI {{ strtoupper($dataps->dataAset->lokasi ?? '') }}
                         UNTUK {{ strtoupper($dataps->dataAset->penggunaan_objek ?? '') }}
                     </strong>
                 </h6>
-                <h6 class="tgl-cover"><strong>MASA BERLAKU :<br>
+                <h6 class="mt-5"><strong>MASA BERLAKU :<br>
                         {{ $dataps->masa_awal_perjanjian ?
-                        strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_awal_perjanjian)->translatedFormat('d
-                        F Y')) : '' }}
+                        strtoupper(\Carbon\Carbon::parse($dataps->masa_awal_perjanjian)->translatedFormat('d F Y')) : ''
+                        }}
                         s.d
                         {{ $dataps->masa_akhir_perjanjian ?
-                        strtoupper(\Carbon\Carbon::parse($dataps->dataMitra->masa_akhir_perjanjian)->translatedFormat('d
-                        F Y')) : '' }}
+                        strtoupper(\Carbon\Carbon::parse($dataps->masa_akhir_perjanjian)->translatedFormat('d F Y')) :
+                        '' }}
                     </strong>
                 </h6>
-                <h6 class=" mt-5"><strong>2025</strong></h6>
-
+                <h6 class="mt-5"><strong>2025</strong></h6>
             </div>
         </div>
+        <!-- Halaman 2: Lampiran I -->
         <div class="page">
-            <div class="header header-dokumen">
+            <div class="header-dokumen">
                 <h1>LAMPIRAN I</h1>
                 <h1>PERJANJIAN SEWA MENYEWA ASET PT KAI</h1>
                 <p>NO. KAI :...........................................</p>
@@ -105,24 +608,22 @@
                         ->translatedFormat('d F Y')) : '' }}</strong></p>
             </div>
             <div class="konten">
-                <h2 style="text-align: center; text-transform: uppercase;">SYARAT DAN KETENTUAN PERJANJIAN SEWA
-                    MENYEWA<br>ASET
+                <h2>SYARAT DAN KETENTUAN PERJANJIAN SEWA MENYEWA<br>ASET
                     PT KERETA API INDONESIA (PERSERO) UNTUK EVENT</h2>
                 <p>Syarat dan Ketentuan Sewa Menyewa Aset PT Kereta Api Indonesia (Persero) Untuk Event selanjutnya
-                    disebut
-                    "Syarat dan Ketentuan" ini telah disetujui dan disepakati oleh dan antara KAI dan PENYEWA yang
-                    merupakan
-                    bagian yang tidak terpisahkan dengan Perjanjian.</p>
+                    disebut "Syarat dan Ketentuan" ini telah disetujui dan disepakati oleh dan antara KAI dan PENYEWA
+                    yang
+                    merupakan bagian yang tidak terpisahkan dengan Perjanjian.</p>
 
-                <div class="row row-isi-konten">
+                <div class="row-isi-konten">
                     <!-- Kolom Kiri -->
-                    <div class="col col-md-6">
+                    <div class="col-md-6">
                         <div class="pasal">
                             <div class="pasal-title">PASAL 1<br>DEFINISI</div>
                             <div class="pasal-content">
                                 <p>Jika konteks dan kata-katanya tidak mensyaratkan lain, maka semua istilah dalam huruf
-                                    besar
-                                    yang belum ditetapkan dalam Syarat dan Ketentuan ini tetapi sudah ditetapkan dalam
+                                    besar yang belum ditetapkan dalam Syarat dan Ketentuan ini tetapi sudah ditetapkan
+                                    dalam
                                     Perjanjian akan memiliki arti sebagaimana ditetapkan dalam Perjanjian dan semua
                                     istilah yang
                                     dimulai dengan huruf besar dalam Syarat dan Ketentuan ini akan mempunyai arti
@@ -131,11 +632,10 @@
                                 <div class="definition-list">
                                     <div class="definition-item">
                                         <span class="definition-term">1. Aset</span> adalah tanah, lahan, bangunan,
-                                        ruang udara
-                                        yang berada di atas lahan, fasilitas penunjang, termasuk namun tidak terbatas
-                                        pada
-                                        Tower, Reklame dan Utilitas lainnya yang berada di bawah penguasaan dan/atau
-                                        kepemilikan
+                                        ruang udara yang berada di atas lahan, fasilitas penunjang, termasuk namun tidak
+                                        terbatas
+                                        pada Tower, Reklame dan Utilitas lainnya yang berada di bawah penguasaan
+                                        dan/atau kepemilikan
                                         KAI.
                                     </div>
                                     <div class="definition-item">
@@ -144,17 +644,15 @@
                                     </div>
                                     <div class="definition-item">
                                         <span class="definition-term">3. Fasilitas</span> adalah fasilitas pendukung
-                                        meliputi
-                                        instalasi air, listrik, telepon, dan APAR (Alat Pemadam Api Ringan) dan
-                                        fasilitas
-                                        penunjang lainnya.
+                                        meliputi instalasi air, listrik, telepon, dan APAR (Alat Pemadam Api Ringan) dan
+                                        fasilitas penunjang lainnya.
                                     </div>
                                     <div class="definition-item">
                                         <span class="definition-term">4. Hak Retensi</span> adalah hak KAI untuk menahan
-                                        dan
-                                        menguasai barang-barang termasuk Sarana Milik Penyewa yang berada di atas Objek
-                                        Sewa,
-                                        bila PENYEWA belum melaksanakan kewajibannya termasuk namun tidak terbatas pada
+                                        dan menguasai barang-barang termasuk Sarana Milik Penyewa yang berada di atas
+                                        Objek
+                                        Sewa, bila PENYEWA belum melaksanakan kewajibannya termasuk namun tidak terbatas
+                                        pada
                                         mengembalikan Objek Sewa berdasarkan Perjanjian.
                                     </div>
                                     <div class="definition-item">
@@ -162,14 +660,12 @@
                                     </div>
                                     <div class="definition-item">
                                         <span class="definition-term">6. Hari Kerja</span> adalah hari selain hari
-                                        sabtu, minggu
-                                        atau hari libur nasional yang ditetapkan oleh pemerintah.
+                                        sabtu, minggu atau hari libur nasional yang ditetapkan oleh pemerintah.
                                     </div>
                                     <div class="definition-item">
                                         <span class="definition-term">7. Nilai Sewa</span> adalah segala kewajiban
-                                        pembayaran
-                                        meliputi
-                                        tarif sewa dan/atau cost of money yang harus dibayar oleh PENYEWA.
+                                        pembayaran meliputi tarif sewa dan/atau cost of money yang harus dibayar oleh
+                                        PENYEWA.
                                     </div>
                                 </div>
                             </div>
@@ -177,39 +673,36 @@
                     </div>
 
                     <!-- Kolom Kanan -->
-                    <div class="col col-md-6">
-                        <div class="definition-item">
+                    <div class="col-md-6">
+                        <div class="definition-list">
                             <div class="definition-item">
                                 <span class="definition-term">8. Objek Sewa</span> adalah Aset dan Sarana KAI yang
-                                menjadi Objek
-                                dalam Perjanjian ini dengan rincian lokasi, luas dan peruntukan/penggunaan/pemanfaatan
+                                menjadi Objek dalam Perjanjian ini dengan rincian lokasi, luas dan
+                                peruntukan/penggunaan/pemanfaatan
                                 sebagaimana diatur dalam Perjanjian.
                             </div>
                             <div class="definition-item">
                                 <span class="definition-term">9. Perjanjian</span> adalah Perjanjian Sewa Menyewa Aset
-                                PT Kereta
-                                Api Indonesia (Persero) Untuk Event yang dibuat oleh dan antara KAI dengan PENYEWA
-                                beserta
-                                seluruh lampirannya.
+                                PT Kereta Api Indonesia (Persero) Untuk Event yang dibuat oleh dan antara KAI dengan
+                                PENYEWA
+                                beserta seluruh lampirannya.
                             </div>
                             <div class="definition-item">
                                 <span class="definition-term">10. Sarana Milik Penyewa</span> adalah segala
-                                sesuatu/benda yang
-                                ditempatkan/dipasang/dibangun oleh PENYEWA pada Objek Sewa setelah mendapat izin
-                                tertulis dari
-                                KAI sebagaimana diatur dalam Perjanjian ini.
+                                sesuatu/benda yang ditempatkan/dipasang/dibangun oleh PENYEWA pada Objek Sewa setelah
+                                mendapat izin
+                                tertulis dari KAI sebagaimana diatur dalam Perjanjian ini.
                             </div>
                             <div class="definition-item">
                                 <span class="definition-term">11. Total Harga</span> adalah seluruh nilai yang harus
-                                dibayarkan
-                                oleh PENYEWA, meliputi Nilai Sewa dan PPN.
+                                dibayarkan oleh PENYEWA, meliputi Nilai Sewa dan PPN.
                             </div>
                             <div class="definition-item">
                                 <span class="definition-term">12. Virtual Account</span> adalah nomor rekening virtual
-                                yang
-                                dibuat oleh bank untuk diberikan kepada PENYEWA (badan usaha atau perorangan) sebagai
-                                rekening
-                                tujuan untuk melakukan pembayaran Harga Sewa sebagaimana dimaksud dalam Lampiran IV
+                                yang dibuat oleh bank untuk diberikan kepada PENYEWA (badan usaha atau perorangan)
+                                sebagai
+                                rekening tujuan untuk melakukan pembayaran Harga Sewa sebagaimana dimaksud dalam
+                                Lampiran IV
                                 Perjanjian.
                             </div>
                         </div>
@@ -217,12 +710,10 @@
                             <div class="pasal-title">PASAL 2<br>RUANG LINGKUP</div>
                             <div class="pasal-content">
                                 <p>(1) KAI memiliki dan/atau menguasai Objek Sewa, dengan ini sepakat untuk menyewakan
-                                    Objek
-                                    Sewa tersebut kepada PENYEWA.</p>
+                                    Objek Sewa tersebut kepada PENYEWA.</p>
                                 <p>(2) PENYEWA akan menggunakan Objek Sewa sesuai dengan Penggunaannya.</p>
                                 <p>(3) PENYEWA dapat memanfaatkan Objek Sewa setelah Perjanjian ditandatangani dan
-                                    melakukan
-                                    pembayaran sewa sebagaimana dimaksud dalam Perjanjian.</p>
+                                    melakukan pembayaran sewa sebagaimana dimaksud dalam Perjanjian.</p>
                                 <p>(4) PENYEWA akan mengembalikan Objek Sewa kepada KAI setelah berakhirnya Perjanjian.
                                 </p>
                             </div>
@@ -230,50 +721,48 @@
                     </div>
                 </div>
             </div>
-            <div class="row row-ttd">
-                <div class="col-3">
-                    <div class="table-perjanjian">
-                        <table class="kotak-table">
-                            <thead>
-                                <tr>
-                                    <th>KAI</th>
-                                    <th>PENYEWA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row-ttd">
+                <div class="table-perjanjian">
+                    <table class="kotak-table">
+                        <thead>
+                            <tr>
+                                <th>KAI</th>
+                                <th>PENYEWA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <!-- Halaman 3: Pasal 3 & 4 -->
         <div class="page">
-            <div class="row row-isi-konten">
+            <div class="row-isi-konten">
                 <!-- Kolom Kiri -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-title">PASAL 3<br>HAK DAN KEWAJIBAN KAI DAN PENYEWA</div>
                         <div class="pasal-content">
                             <p>(1) HAK KAI :</p>
                             <p>a. menagih dan menerima pembayaran Total Harga dan/atau denda dari PENYEWA;</p>
                             <p>b. mendapatkan jaminan dari PENYEWA, bahwa Objek Sewa tidak dipergunakan untuk hal-hal
-                                yang
-                                melanggar kesusilaan, kepatutan, ketertiban dan kepentingan umum;</p>
+                                yang melanggar kesusilaan, kepatutan, ketertiban dan kepentingan umum;</p>
                             <p>c. memutus Perjanjian secara sepihak dalam hal terjadi kondisi sebagaimana diatur dalam
                                 Perjanjian;</p>
                             <p>d. menerima kembali Objek Sewa pada saat berakhirnya Perjanjian, sesuai dengan Syarat dan
                                 Ketentuan sebagaimana diatur dalam Perjanjian ini; dan</p>
                             <p>e. melaksanakan Hak Retensi terhadap PENYEWA apabila, PENYEWA belum melaksanakan
-                                kewajibannya
-                                termasuk namun tidak terbatas pada mengembalikan Objek Sewa berdasarkan Perjanjian.</p>
+                                kewajibannya termasuk namun tidak terbatas pada mengembalikan Objek Sewa berdasarkan
+                                Perjanjian.</p>
 
                             <p>(2) KEWAJIBAN KAI:</p>
                             <p>Menyerahkan pemanfaatan Objek Sewa kepada PENYEWA setelah pembayaran diterima.</p>
@@ -284,44 +773,39 @@
                             <p>a. membayar Total Harga, denda, ganti rugi dan/atau biaya lain sebagaimana dimaksud dalam
                                 Perjanjian kepada KAI;</p>
                             <p>b. mendahulukan pembayaran-pembayaran apapun yang terhutang berdasarkan Perjanjian
-                                daripada
-                                pembayaran lainnya yang karena apapun juga wajib dibayar oleh PENYEWA terhadap siapapun;
+                                daripada pembayaran lainnya yang karena apapun juga wajib dibayar oleh PENYEWA terhadap
+                                siapapun;
                             </p>
                             <p>c. memiliki segala perizinan, pendaftaran, pelaporan dan/atau pemberitahuan secara
                                 berkesinambungan dari Pihak yang berwenang yang berkaitan dengan kegiatan usaha pada
-                                dan/atau
-                                penggunaan Objek Sewa dengan biaya sepenuhnya merupakan tanggung jawab PENYEWA, dan
-                                bertanggung
-                                jawab sepenuhnya apabila timbul tuntutan pihak lain terkait perizinan dimaksud;</p>
+                                dan/atau penggunaan Objek Sewa dengan biaya sepenuhnya merupakan tanggung jawab PENYEWA,
+                                dan
+                                bertanggung jawab sepenuhnya apabila timbul tuntutan pihak lain terkait perizinan
+                                dimaksud;</p>
                             <p>d. memelihara, merawat, menjaga keamanan, ketertiban, dan mengamankan Objek Sewa;</p>
                             <p>e. membayar pajak-pajak dan biaya-biaya lainnya sesuai peraturan yang berlaku atas
-                                penggunaan
-                                Objek Sewa terhitung sejak berlakunya Perjanjian sampai dengan berakhirnya Perjanjian,
-                                termasuk
-                                namun tidak terbatas pada listrik dan iuran lainnya;</p>
+                                penggunaan Objek Sewa terhitung sejak berlakunya Perjanjian sampai dengan berakhirnya
+                                Perjanjian,
+                                termasuk namun tidak terbatas pada listrik dan iuran lainnya;</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Kolom Kanan -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-content">
                             <p>f. memasang perlengkapan standar keamanan dan keselamatan pada Objek Sewa;</p>
                             <p>g. bertanggung jawab apabila terjadi kerusakan/gangguan yang ditimbulkan dari penggunaan
-                                Objek
-                                Sewa oleh PENYEWA;</p>
+                                Objek Sewa oleh PENYEWA;</p>
                             <p>h. bertanggung jawab dan membebaskan KAI dari segala tanggung jawab dan biaya yang
-                                timbul, dalam
-                                hal adanya tuntutan dan/atau gugatan kepada KAI dari pihak lain akibat dari perbuatan
-                                dan/atau
-                                penggunaan PENYEWA atas Objek Sewa;</p>
+                                timbul, dalam hal adanya tuntutan dan/atau gugatan kepada KAI dari pihak lain akibat
+                                dari perbuatan
+                                dan/atau penggunaan PENYEWA atas Objek Sewa;</p>
                             <p>i. mengembalikan Objek Sewa sebagaimana diatur dalam Perjanjian; dan</p>
                             <p>j. menaati segala ketentuan dalam Perjanjian dan peraturan perundang-undangan yang
-                                berlaku,
-                                termasuk tapi tidak terbatas pada peraturan yang berlaku di lingkungan KAI yang
-                                berkaitan dengan
-                                sewa-menyewa.</p>
+                                berlaku, termasuk tapi tidak terbatas pada peraturan yang berlaku di lingkungan KAI yang
+                                berkaitan dengan sewa-menyewa.</p>
                         </div>
                     </div>
                     <div class="pasal">
@@ -335,20 +819,17 @@
                             <p>c. menjaminkan atau membebani Objek Sewa, Fasilitas dan Sarana milik Penyewa dengan Hak
                                 Tanggungan atau jaminan kebendaan lainnya;</p>
                             <p>d. melakukan kegiatan yang dapat mengganggu operasional Kereta Api dan/atau
-                                memanfaatkan/merusak
-                                Sarana, Prasarana KAI yang berada di sekitar Objek Sewa;</p>
+                                memanfaatkan/merusak Sarana, Prasarana KAI yang berada di sekitar Objek Sewa;</p>
                             <p>e. melakukan kegiatan yang dapat mengganggu pelayanan penumpang sehingga menimbulkan
-                                komplain
-                                dari pihak lain dan/atau penumpang, dalam hal Objek Sewa berlokasi di area stasiun;
+                                komplain dari pihak lain dan/atau penumpang, dalam hal Objek Sewa berlokasi di area
+                                stasiun;
                                 dan/atau</p>
                             <p>f. menggunakan kompor gas/Kompor BBM/kayu bakar/arang dalam hal Objek Sewa berlokasi di
-                                area
-                                stasiun dan kantor KAI.</p>
+                                area stasiun dan kantor KAI.</p>
                             <p>(2) Tanpa Persetujuan tertulis dari KAI, PENYEWA dilarang melakukan hal-hal sebagai
                                 berikut:</p>
                             <p>a. menyerahkan/mengalihkan, menyewakan kembali atau dengan kata lain melepaskan seluruh
-                                atau
-                                sebagian dari penguasaan Objek Sewa atau bagian darinya;</p>
+                                atau sebagian dari penguasaan Objek Sewa atau bagian darinya;</p>
                             <p>b. menggunakan Objek Sewa tidak sesuai dengan Penggunaan sebagaimana dimaksud dalam
                                 Perjanjian;
                             </p>
@@ -356,35 +837,34 @@
                     </div>
                 </div>
             </div>
-            <div class="row row-ttd">
-                <div class="col-3">
-                    <div class="table-perjanjian">
-                        <table class="kotak-table">
-                            <thead>
-                                <tr>
-                                    <th>KAI</th>
-                                    <th>PENYEWA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row-ttd">
+                <div class="table-perjanjian">
+                    <table class="kotak-table">
+                        <thead>
+                            <tr>
+                                <th>KAI</th>
+                                <th>PENYEWA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <!-- Halaman 4: Pasal 4 (lanjutan) & 5-6 -->
         <div class="page">
-            <div class="row row-isi-konten">
+            <div class="row-isi-konten">
                 <!-- Kolom Kiri -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-content">
                             <p>c. menambah, mengubah dan/atau mendirikan bangunan dan/atau Fasilitas; dan/atau</p>
@@ -399,55 +879,49 @@
                                 tagihan/invoice diterbitkan.</p>
                             <p>(3) Untuk pembayaran secara bertahap:</p>
                             <p>a. pembayaran tahap pertama dilakukan paling lambat 1 (satu) Hari Kerja sejak
-                                tagihan/invoice
-                                diterbitkan;</p>
+                                tagihan/invoice diterbitkan;</p>
                             <p>b. pembayaran tahap kedua dan selanjutnya dilakukan sesuai dengan tanggal pembayaran
-                                sebagaimana
-                                ditentukan dalam Lampiran III Perjanjian; dan</p>
+                                sebagaimana ditentukan dalam Lampiran III Perjanjian; dan</p>
                             <p>c. tagihan/invoice akan diterbitkan sebelum tanggal pembayaran sebagaimana diatur dalam
-                                Lampiran
-                                III Perjanjian.</p>
+                                Lampiran III Perjanjian.</p>
                             <p>(4) Apabila PENYEWA melakukan pembayaran tidak sesuai dengan ketentuan sebagaimana diatur
-                                dalam
-                                Perjanjian, maka pembayaran tersebut dianggap tidak sah, PENYEWA bertanggung jawab
+                                dalam Perjanjian, maka pembayaran tersebut dianggap tidak sah, PENYEWA bertanggung jawab
                                 sepenuhnya
                                 atas segala akibat yang timbul karena hal tersebut, dan PENYEWA tetap melakukan
                                 pembayaran
                                 kembali kepada KAI sebagaimana ditentukan dalam Perjanjian.</p>
                             <p>(5) Seluruh biaya transfer terkait dengan pembayaran Total Harga menjadi beban dan
-                                tanggung jawab
-                                PENYEWA.</p>
+                                tanggung jawab PENYEWA.</p>
                         </div>
                     </div>
                     <div class="pasal">
                         <div class="pasal-title">PASAL 6<br>PAJAK DAN BIAYA LAINNYA</div>
                         <div class="pasal-content">
                             <p>(1) PARA PIHAK memahami dan sepakat untuk mematuhi peraturan perundang-undangan yang
-                                berlaku
-                                dibidang perpajakan terkait dengan ruang lingkup Perjanjian dan bertanggung jawab atas
-                                kewajiban
-                                pembayaran pajak masing-masing dan/atau persyaratan administrasi lainnya yang berkaitan
-                                dengan
-                                pajak tersebut secara tepat waktu.</p>
+                                berlaku dibidang perpajakan terkait dengan ruang lingkup Perjanjian dan bertanggung
+                                jawab atas
+                                kewajiban pembayaran pajak masing-masing dan/atau persyaratan administrasi lainnya yang
+                                berkaitan
+                                dengan pajak tersebut secara tepat waktu.</p>
                             <p>(2) PENYEWA harus telah melunasi semua hutang pajak yang menjadi beban PENYEWA pada saat
                                 berakhirnya Perjanjian.</p>
                             <p>(3) Seluruh ongkos dan biaya-biaya Fasilitas lainnya yang bertalian dengan penggunaan
-                                Objek Sewa
-                                termasuk namun tidak terbatas pada biaya-biaya lain untuk penataan/relokasi,</p>
+                                Objek Sewa termasuk namun tidak terbatas pada biaya-biaya lain untuk penataan/relokasi,
+                            </p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Kolom Kanan -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-content">
                             <p> berperkaradi Pengadilan maupun untuk eksekusi, biaya untuk menagih
                                 hutang serta seluruh biaya yang menjadi
                                 tanggungan PENYEWA, dibayar oleh PENYEWA.</p>
                             <p>(4) Apabila KAI telah membayar terlebih dahulu untuk semua biaya sebagaimana dimaksud
-                                pada ayat
-                                (2), maka PENYEWA mengakui segala jumlah tersebut sebagai tambahan atas kewajiban
+                                pada ayat (2), maka PENYEWA mengakui segala jumlah tersebut sebagai tambahan atas
+                                kewajiban
                                 pembayaran.
                             </p>
                         </div>
@@ -456,14 +930,13 @@
                         <div class="pasal-title">PASAL 7<br>SARANA MILIK PENYEWA</div>
                         <div class="pasal-content">
                             <p>(1) PENYEWA dengan biaya dan tanggung jawabnya sendiri dapat melengkapi Objek Sewa dengan
-                                Sarana
-                                Milik Penyewa yang sesuai dengan sifat usaha, setelah mendapatkan persetujuan dari KAI.
+                                Sarana Milik Penyewa yang sesuai dengan sifat usaha, setelah mendapatkan persetujuan
+                                dari KAI.
                             </p>
                             <p>(2) Semua material Sarana Milik Penyewa yang dipasang harus dibuat dari bahan berkualitas
-                                baik,
-                                dan tetap memperhatikan aspek keselamatan dan keindahan, sekurang-kurangnya sesuai
-                                dengan
-                                standar yang ditetapkan oleh KAI, serta memenuhi perizinan yang dipersyaratkan peraturan
+                                baik, dan tetap memperhatikan aspek keselamatan dan keindahan, sekurang-kurangnya sesuai
+                                dengan standar yang ditetapkan oleh KAI, serta memenuhi perizinan yang dipersyaratkan
+                                peraturan
                                 perundang-undangan dan/atau persyaratan yang diwajibkan oleh instansi yang berwenang.
                             </p>
                         </div>
@@ -472,78 +945,70 @@
                         <div class="pasal-title">PASAL 8<br>PERAWATAN DAN PEMELIHARAAN OBJEK SEWA</div>
                         <div class="pasal-content">
                             <p>(1) Selama berlakunya Perjanjian PENYEWA berkewajiban untuk menjaga kebersihan memelihara
-                                Objek
-                                Sewa sebaik-baiknya dari segala kerusakan yang timbul sebagai akibat dari kesalahan
-                                PENYEWA
+                                Objek Sewa sebaik-baiknya dari segala kerusakan yang timbul sebagai akibat dari
+                                kesalahan PENYEWA
                                 dan/atau orang lain yang menjadi tanggungannya dan pula kerusakan-kerusakan yang menurut
                                 hukum
                                 dan kebiasaan menjadi tanggungan PENYEWA terkecuali kerusakan-kerusakan itu bukan
                                 disebabkan
                                 oleh kelalaiannya atau kesalahan PENYEWA dan/atau orang lain.</p>
                             <p>(2) Apabila PENYEWA tidak melakukan pemeliharaan sebagaimana dimaksud ayat (1) KAI akan
-                                menunjuk
-                                pihak lain dan biaya atas pemeliharaan tersebut menjadi tanggung jawab PENYEWA.</p>
+                                menunjuk pihak lain dan biaya atas pemeliharaan tersebut menjadi tanggung jawab PENYEWA.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row row-ttd">
-                <div class="col-3">
-                    <div class="table-perjanjian">
-                        <table class="kotak-table">
-                            <thead>
-                                <tr>
-                                    <th>KAI</th>
-                                    <th>PENYEWA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row-ttd">
+                <div class="table-perjanjian">
+                    <table class="kotak-table">
+                        <thead>
+                            <tr>
+                                <th>KAI</th>
+                                <th>PENYEWA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <!-- Halaman 5: Pasal 9 & 10 -->
         <div class="page">
-            <div class="row row-isi-konten">
+            <div class="row-isi-konten">
                 <!-- Kolom Kiri -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-title">PASAL 9<br>PENGAWASAN DAN PEMERIKSAAN</div>
                         <div class="pasal-content">
                             <p>(1) KAI dapat melakukan pengawasan dan pemeriksaan atas pelaksanaan Perjanjian, termasuk
-                                namun
-                                tidak terbatas pada hal-hal:</p>
+                                namun tidak terbatas pada hal-hal:</p>
                             <p>a. melakukan pengawasan atas pelaksanaan kewajiban PENYEWA berdasarkan Perjanjian;</p>
                             <p>b. melakukan pemeriksaan atas dokumen perizinan dan/atau kondisi fisik Objek Sewa baik
-                                secara
-                                berkala maupun sewaktu-waktu; dan/atau</p>
+                                secara berkala maupun sewaktu-waktu; dan/atau</p>
                             <p>c. melakukan pengecekan pada Objek Sewa pada saat berakhirnya Perjanjian.</p>
                             <p>(2) Pengawasan atas pelaksanaan Perjanjian dilaksanakan oleh KAI dalam hal ini dilakukan
                                 oleh:
                             </p>
                             <p>a. pimpinan unit yang membidangi komersialisasi Aset Daop/Divre/Subdivre/LRT Jabodebek
-                                tempat
-                                kedudukan Objek Sewa; atau</p>
+                                tempat kedudukan Objek Sewa; atau</p>
                             <p>b. pimpinan unit yang membidangi penjagaan Aset Daop/Divre/Subdivre/LRT Jabodebek tempat
                                 kedudukan Objek Sewa.</p>
                             <p>Apabila setelah dilakukan pengawasan dan pemeriksaan ditemukan indikasi adanya
-                                pelanggaran
-                                terhadap Perjanjian, KAI dapat melakukan hal-hal antara lain:</p>
+                                pelanggaran terhadap Perjanjian, KAI dapat melakukan hal-hal antara lain:</p>
                             <p>a. memberitahukan secara tertulis hasil pengawasan dan pemeriksaan, berupa saran dan
-                                masukan
-                                untuk perbaikan; dan/atau</p>
+                                masukan untuk perbaikan; dan/atau</p>
                             <p>b. memberikan surat peringatan sebagaimana dimaksud pada Pasal 10, apabila saran dan
-                                masukan
-                                sebagaimana dimaksud huruf a tidak dilakukan oleh PENYEWA.</p>
+                                masukan sebagaimana dimaksud huruf a tidak dilakukan oleh PENYEWA.</p>
                         </div>
                     </div>
                     <div class="pasal">
@@ -552,15 +1017,14 @@
                             <p>(1) Apabila PENYEWA tidak memenuhi ketentuan Perjanjian, maka:</p>
                             <p>a. KAI memberikan surat peringatan sebanyak 1 (satu) kali;</p>
                             <p>b. apabila setelah diberikan surat peringatan sebagaimana dimaksud huruf a di atas,
-                                tetapi
-                                PENYEWA tetap tidak memenuhi kewajiban dan/atau tetap melanggar larangan, maka KAI
-                                berhak untuk
+                                tetapi PENYEWA tetap tidak memenuhi kewajiban dan/atau tetap melanggar larangan, maka
+                                KAI berhak untuk
                                 memutus Perjanjian secara sepihak dan menuntut pembayaran sekaligus lunas kepada PENYEWA
                                 atas
                                 Total Harga, denda dan ganti rugi yang masih terhutang.</p>
                             <p>(2) Dalam hal adanya keterlambatan pembayaran Total Harga, maka PENYEWA dikenakan denda
-                                sebesar
-                                2‰ (dua perseribu) per hari dari Total Harga terutang yang telah jatuh tempo tidak
+                                sebesar 2‰ (dua perseribu) per hari dari Total Harga terutang yang telah jatuh tempo
+                                tidak
                                 termasuk PPN.
                             </p>
                         </div>
@@ -568,82 +1032,71 @@
                 </div>
 
                 <!-- Kolom Kanan -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
-
                         <div class="pasal-content">
                             <p>(3) PENYEWA wajib membayar denda keterlambatan pembayaran tersebut diatas, meskipun
-                                PENYEWA telah
-                                melakukan pembayaran Total Harga dalam masa pemberian surat peringatan sebagaimana
-                                dimaksud pada
-                                ayat (1) huruf a.</p>
+                                PENYEWA telah melakukan pembayaran Total Harga dalam masa pemberian surat peringatan
+                                sebagaimana
+                                dimaksud pada ayat (1) huruf a.</p>
                             <p>(4) Selain pengenaan denda sebagaimana dimaksud, KAI juga dapat menutup sementara akses
-                                masuk
-                                Objek Sewa dan PENYEWA dengan cara apapun dilarang untuk masuk dan memanfaatkan Objek
-                                Sewa.</p>
+                                masuk Objek Sewa dan PENYEWA dengan cara apapun dilarang untuk masuk dan memanfaatkan
+                                Objek Sewa.</p>
                             <p>(5) Dengan adanya penutupan sementara sebagaimana dimaksud pada ayat (4) diatas, tidak
-                                menambah
-                                Jangka Waktu Perjanjian.</p>
+                                menambah Jangka Waktu Perjanjian.</p>
                             <p>(6) PENYEWA wajib membayar ganti rugi kepada KAI, apabila terjadi kerusakan/gangguan yang
                                 ditimbulkan atas tindakan PENYEWA, antara lain sebagai berikut:</p>
                             <p>a. kegiatan pembangunan/penempatan/pemasangan dan/atau penanaman Sarana Milik Penyewa
-                                pada Objek
-                                Sewa;</p>
+                                pada Objek Sewa;</p>
                             <p>b. penggunaan Objek Sewa oleh PENYEWA;</p>
                             <p>c. kesalahan dan/atau kelalaian PENYEWA; dan/atau</p>
                             <p>d. pengosongan/pembongkaran Sarana Milik Penyewa dan barang-barang lain yang berada di
-                                atas Objek
-                                Sewa.</p>
+                                atas Objek Sewa.</p>
                             <p>(7) Atas kerusakan/gangguan sebagaimana dimaksud pada ayat (6) diatas, KAI akan melakukan
                                 investigasi dan perhitungan untuk menentukan besaran ganti rugi yang harus dipenuhi
                                 PENYEWA.</p>
                             <p>(8) Dalam hal kerusakan/gangguan sebagaimana dimaksud pada ayat (6) diatas mengakibatkan
-                                kerugian
-                                bagi pihak lain, maka PENYEWA bertanggung jawab dan membebaskan KAI dari segala klaim,
-                                gugatan,
-                                dan/atau tuntutan dari Pihak manapun kepada KAI.</p>
+                                kerugian bagi pihak lain, maka PENYEWA bertanggung jawab dan membebaskan KAI dari segala
+                                klaim,
+                                gugatan, dan/atau tuntutan dari Pihak manapun kepada KAI.</p>
                             <p>(9) Seluruh biaya serta akibat yang timbul dari dikenakannya denda dan ganti rugi,
-                                menjadi
-                                tanggung jawab PENYEWA sepenuhnya.</p>
+                                menjadi tanggung jawab PENYEWA sepenuhnya.</p>
                             <p>(10) Pembayaran denda dan/atau ganti rugi, dibayarkan oleh PENYEWA dengan cara transfer
-                                ke
-                                rekening Virtual Account berdasarkan tagihan yang diterbitkan KAI.</p>
+                                ke rekening Virtual Account berdasarkan tagihan yang diterbitkan KAI.</p>
                             <p>(11) Seluruh biaya transfer atas denda dan/atau ganti rugi menjadi beban dan tanggung
-                                jawab
-                                PENYEWA.</p>
+                                jawab PENYEWA.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row row-ttd">
-                <div class="col-3">
-                    <div class="table-perjanjian">
-                        <table class="kotak-table">
-                            <thead>
-                                <tr>
-                                    <th>KAI</th>
-                                    <th>PENYEWA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row-ttd">
+                <div class="table-perjanjian">
+                    <table class="kotak-table">
+                        <thead>
+                            <tr>
+                                <th>KAI</th>
+                                <th>PENYEWA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <!-- Halaman 6: Pasal 11 & 12 -->
         <div class="page">
-            <div class="row row-isi-konten">
+            <div class="row-isi-konten">
                 <!-- Kolom Kiri -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-title">PASAL 11<br>BERAKHIRNYA PERJANJIAN</div>
                         <div class="pasal-content">
@@ -652,36 +1105,34 @@
                             <p>b. PARA PIHAK sepakat untuk mengakhiri Perjanjian sebelum Jangka Waktu Perjanjian
                                 berakhir;</p>
                             <p>c. salah satu PIHAK mengalami force majeure dan hasil perundingan memutuskan Perjanjian
-                                tidak
-                                dapat dilanjutkan, dengan ketentuan sebagaimana diatur dalam Perjanjian; dan/atau</p>
+                                tidak dapat dilanjutkan, dengan ketentuan sebagaimana diatur dalam Perjanjian; dan/atau
+                            </p>
                             <p>d. pengakhiran Perjanjian secara sepihak oleh KAI.</p>
                             <p>(2) Pengakhiran Perjanjian sebagaimana dimaksud pada ayat (1) huruf b dan c diatas
-                                dituangkan
-                                dalam Berita Acara yang ditandatangani oleh KAI dan PENYEWA.</p>
+                                dituangkan dalam Berita Acara yang ditandatangani oleh KAI dan PENYEWA.</p>
                             <p>(3) Perjanjian dapat diakhiri secara sepihak oleh KAI sebagaimana dimaksud pada ayat (1)
-                                huruf d
-                                apabila PENYEWA telah melanggar Perjanjian atau peraturan perundang-undangan yang
+                                huruf d apabila PENYEWA telah melanggar Perjanjian atau peraturan perundang-undangan
+                                yang
                                 berlaku.</p>
                             <p>(4) Pengakhiran Perjanjian sebagaimana dimaksud pada ayat (1) huruf d dilaksanakan dengan
-                                surat
-                                pemutusan Perjanjian dari KAI dengan tata cara sebagaimana dimaksud Perjanjian.</p>
+                                surat pemutusan Perjanjian dari KAI dengan tata cara sebagaimana dimaksud Perjanjian.
+                            </p>
                             <p>(5) Berakhirnya Perjanjian sebagaimana dimaksud pada ayat (1) diatas, tidak menghilangkan
                                 kewajiban pembayaran sewa, pajak-pajak, denda dan/atau ganti rugi dari bekas PENYEWA
                                 yang akan
                                 dihitung secara proporsional, dan selanjutnya KAI akan menerbitkan surat penagihan atas
                                 kewajiban tersebut kepada bekas PENYEWA.</p>
                             <p>(6) Dalam hal terjadi pengakhiran Perjanjian karena PENYEWA melakukan wanprestasi
-                                dan/atau
-                                permintaan pengakhiran dari PENYEWA maka Total Harga yang telah dibayarkan tetapi belum
-                                dijalani
-                                oleh PENYEWA menjadi milik KAI.</p>
+                                dan/atau permintaan pengakhiran dari PENYEWA maka Total Harga yang telah dibayarkan
+                                tetapi belum
+                                dijalani oleh PENYEWA menjadi milik KAI.</p>
                             <p>(7) KAI tidak memiliki kewajiban apapun untuk memenuhi/menaati Perjanjian dan/atau
-                                kesepakatan
-                                yang dibuat antara PENYEWA dengan pihak lainnya terkait Objek Sewa oleh karenanya
-                                PENYEWA
-                                bertanggung jawab sepenuhnya dan membebaskan KAI atas tuntutan, gugatan, kerugian dari
-                                pihak
-                                manapun kepada KAI yang ditimbulkan karena pengakhiran Perjanjian secara sepihak oleh
+                                kesepakatan yang dibuat antara PENYEWA dengan pihak lainnya terkait Objek Sewa oleh
+                                karenanya
+                                PENYEWA bertanggung jawab sepenuhnya dan membebaskan KAI atas tuntutan, gugatan,
+                                kerugian dari
+                                pihak manapun kepada KAI yang ditimbulkan karena pengakhiran Perjanjian secara sepihak
+                                oleh
                                 KAI.</p>
                             <p>(8) PARA PIHAK sepakat untuk mengesampingkan ketentuan Pasal dalam 1266 dan 1267
                                 KUHPerdata.</p>
@@ -690,223 +1141,203 @@
                 </div>
 
                 <!-- Kolom Kanan -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-title">PASAL 12<br>PENGEMBALIAN OBJEK SEWA</div>
                         <div class="pasal-content">
                             <p>(1) Dengan berakhirnya jangka waktu sewa yang telah ditetapkan, maka paling lambat pada
-                                tanggal
-                                berakhirnya Perjanjian PENYEWA wajib mengosongkan Objek Sewa dari Sarana Milik Penyewa
-                                dan
-                                barang-barang lain yang berada di atas Objek Sewa serta menyerahkan Objek Sewa kepada
-                                KAI dalam
-                                keadaan baik dengan kondisi sekurang-kurangnya seperti saat dimulainya Perjanjian.</p>
+                                tanggal berakhirnya Perjanjian PENYEWA wajib mengosongkan Objek Sewa dari Sarana Milik
+                                Penyewa
+                                dan barang-barang lain yang berada di atas Objek Sewa serta menyerahkan Objek Sewa
+                                kepada
+                                KAI dalam keadaan baik dengan kondisi sekurang-kurangnya seperti saat dimulainya
+                                Perjanjian.</p>
                             <p>(2) Pelaksanaan dan biaya pengosongan/pembongkaran Sarana Milik Penyewa dan barang-barang
-                                lain
-                                yang berada di atas Objek Sewa dilakukan oleh PENYEWA sesuai dengan prosedur dan
-                                ketentuan yang
-                                berlaku dilingkungan KAI dengan memperhatikan kondisi sarana, prasarana dan aset KAI.
+                                lain yang berada di atas Objek Sewa dilakukan oleh PENYEWA sesuai dengan prosedur dan
+                                ketentuan yang berlaku dilingkungan KAI dengan memperhatikan kondisi sarana, prasarana
+                                dan aset KAI.
                             </p>
                             <p>(3) Apabila pengosongan/pembongkaran Sarana Milik Penyewa dan barang-barang lain yang
-                                berada di
-                                atas Objek Sewa tidak sesuai dengan ketentuan sebagaimana dimaksud pada ayat (2) maka
-                                PENYEWA
-                                bertanggungjawab untuk mengganti segala kerugian KAI dan pihak lain yang timbul dari
-                                kegiatan
-                                pengosongan dan pembongkaran Sarana Milik Penyewa sebagaimana diatur pada Pasal 10 ayat
-                                (6) dan
-                                (7).</p>
+                                berada di atas Objek Sewa tidak sesuai dengan ketentuan sebagaimana dimaksud pada ayat
+                                (2) maka
+                                PENYEWA bertanggungjawab untuk mengganti segala kerugian KAI dan pihak lain yang timbul
+                                dari
+                                kegiatan pengosongan dan pembongkaran Sarana Milik Penyewa sebagaimana diatur pada Pasal
+                                10 ayat
+                                (6) dan (7).</p>
                             <p>(4) Apabila PENYEWA tidak melaksanakan ketentuan sebagaimana dimaksud pada ayat (1) dan
-                                (2), maka
-                                PENYEWA menyerahkan haknya atas Sarana Milik Penyewa yang masih berada pada Objek Sewa,
-                                dan
-                                dengan sendirinya menjadi milik KAI tanpa diperlukan dokumen/surat-surat lebih lanjut.
+                                (2), maka PENYEWA menyerahkan haknya atas Sarana Milik Penyewa yang masih berada pada
+                                Objek Sewa,
+                                dan dengan sendirinya menjadi milik KAI tanpa diperlukan dokumen/surat-surat lebih
+                                lanjut.
                             </p>
                             <p>(5) KAI dapat mengalihkan, menggunakan dan membongkar Sarana milik Penyewa sebagaimana
-                                dimaksud
-                                pada ayat (4) diatas dan PENYEWA tidak dapat menuntut ganti rugi atas hal tersebut.</p>
+                                dimaksud pada ayat (4) diatas dan PENYEWA tidak dapat menuntut ganti rugi atas hal
+                                tersebut.</p>
                             <p>(6) Hak KAI untuk melakukan sendiri pengosongan Objek Sewa berikut segala sesuatu yang
-                                berada di
-                                atas Objek Sewa adalah merupakan bagian yang tidak terpisahkan dari Perjanjian, sehingga
-                                untuk
-                                itu suatu Surat Kuasa Khusus tidak diperlukan lagi.</p>
+                                berada di atas Objek Sewa adalah merupakan bagian yang tidak terpisahkan dari
+                                Perjanjian, sehingga
+                                untuk itu suatu Surat Kuasa Khusus tidak diperlukan lagi.</p>
                             <p>(7) Setelah penyerahan Objek Sewa atau sesudahnya PENYEWA tidak berhak untuk mengajukan
-                                tuntutan
-                                pembayaran pengganti lainnya dari biaya-biaya yang mungkin telah dikeluarkannya selama
+                                tuntutan pembayaran pengganti lainnya dari biaya-biaya yang mungkin telah dikeluarkannya
+                                selama
                                 berlangsungnya Perjanjian untuk hal apa pun terkait Objek Sewa.</p>
                             <p>(8) Kewajiban pengembalian Objek Sewa sebagaimana diatur pada ayat-ayat tersebut di atas
-                                akan
-                                tetap berlaku meskipun Perjanjian telah berakhir atau diakhiri.</p>
+                                akan tetap berlaku meskipun Perjanjian telah berakhir atau diakhiri.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row row-ttd">
-                <div class="col-3">
-                    <div class="table-perjanjian">
-                        <table class="kotak-table">
-                            <thead>
-                                <tr>
-                                    <th>KAI</th>
-                                    <th>PENYEWA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row-ttd">
+                <div class="table-perjanjian">
+                    <table class="kotak-table">
+                        <thead>
+                            <tr>
+                                <th>KAI</th>
+                                <th>PENYEWA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <!-- Halaman 7: Pasal 13-15 -->
         <div class="page">
-            <div class="row row-isi-konten">
+            <div class="row-isi-konten">
                 <!-- Kolom Kiri -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-title">PASAL 13<br>HUKUM YANG BERLAKU DAN PENYELESAIAN PERSELISIHAN</div>
                         <div class="pasal-content">
                             <p>(1) Perjanjian diatur dan ditafsirkan sesuai dengan hukum yang berlaku di Republik
                                 Indonesia.</p>
                             <p>(2) Apabila terjadi perselisihan atau perbedaan pendapat dalam pelaksanaan Perjanjian,
-                                akan
-                                diselesaikan melalui musyawarah untuk mufakat.</p>
+                                akan diselesaikan melalui musyawarah untuk mufakat.</p>
                             <p>(3) Apabila penyelesaian sebagaimana dimaksud pada ayat (2) gagal, maka PARA PIHAK
-                                sepakat untuk
-                                menyelesaikan dengan melalui Pengadilan Negeri sebagaimana dimaksud dalam Perjanjian.
+                                sepakat untuk menyelesaikan dengan melalui Pengadilan Negeri sebagaimana dimaksud dalam
+                                Perjanjian.
                             </p>
                             <p>(4) Dalam hal PARA PIHAK, sedang dalam proses penyelesaian perselisihan sebagaimana
-                                dimaksud pada
-                                ayat (2) atau ayat (3) maka PARA PIHAK tetap melaksanakan segala ketentuan sebagaimana
-                                diatur
-                                dalam Perjanjian kecuali disepakati lain oleh PARA PIHAK.</p>
+                                dimaksud pada ayat (2) atau ayat (3) maka PARA PIHAK tetap melaksanakan segala ketentuan
+                                sebagaimana diatur dalam Perjanjian kecuali disepakati lain oleh PARA PIHAK.</p>
                         </div>
                     </div>
                     <div class="pasal">
                         <div class="pasal-title">PASAL 14<br>FORCE MAJEURE</div>
                         <div class="pasal-content">
                             <p>(1) Tidak satu PIHAK pun bertanggung jawab atas keterlambatan atau kegagalan pelaksanaan
-                                suatu
-                                kewajiban yang ditentukan dalam Perjanjian jika hal itu disebabkan oleh atau timbul
-                                karena
-                                sesuatu kejadian atau keadaan yang memaksa (force majeure) yakni peristiwa-peristiwa di
-                                luar
-                                kekuasaan manusia yang menghambat pelaksanaan Perjanjian antara lain bencana alam,
-                                Pandemi,
-                                blockade, keadaan perang, pemogokan atau gangguan perburuhan lain, kerusuhan atau
-                                kegaduhan
-                                masyarakat yang tidak disebabkan oleh kelalaian dari PIHAK yang menuntut suatu
-                                keuntungan dari
-                                Pasal ini atau oleh Kebijakan Pemerintah atau oleh suatu sebab yang berada di luar
-                                kekuasaan
-                                PIHAK yang terkena, baik keadaan yang serupa atau tidak, dengan sebab-sebab tertentu.
+                                suatu kewajiban yang ditentukan dalam Perjanjian jika hal itu disebabkan oleh atau
+                                timbul
+                                karena sesuatu kejadian atau keadaan yang memaksa (force majeure) yakni
+                                peristiwa-peristiwa di
+                                luar kekuasaan manusia yang menghambat pelaksanaan Perjanjian antara lain bencana alam,
+                                Pandemi, blockade, keadaan perang, pemogokan atau gangguan perburuhan lain, kerusuhan
+                                atau
+                                kegaduhan masyarakat yang tidak disebabkan oleh kelalaian dari PIHAK yang menuntut suatu
+                                keuntungan dari Pasal ini atau oleh Kebijakan Pemerintah atau oleh suatu sebab yang
+                                berada di
+                                luar kekuasaan PIHAK yang terkena, baik keadaan yang serupa atau tidak, dengan
+                                sebab-sebab tertentu.
                             </p>
                             <p>(2) PIHAK yang mengalami keadaan force majeure wajib memberitahukan kepada pihak lainnya
-                                dalam
-                                Perjanjian selambat-lambatnya 1 (satu) Hari setelah terjadinya force majeure, disertai
+                                dalam Perjanjian selambat-lambatnya 1 (satu) Hari setelah terjadinya force majeure,
+                                disertai
                                 Pernyataan tertulis dari instansi yang berwenang/Pemerintah Setempat.</p>
                             <p>(3) Apabila dalam jangka waktu sebagaimana ditetapkan pada ayat (2), PIHAK yang tertimpa
-                                force
-                                majeure tidak memberitahukan kepada pihak lainnya force majeure yang dialaminya, maka
-                                force
-                                majeure tersebut dianggap tidak pernah ada, dan PARA PIHAK tetap menjalankan hak dan
+                                force majeure tidak memberitahukan kepada pihak lainnya force majeure yang dialaminya,
+                                maka
+                                force majeure tersebut dianggap tidak pernah ada, dan PARA PIHAK tetap menjalankan hak
+                                dan
                                 kewajibannya sebagaimana diatur dalam Perjanjian.</p>
-
                         </div>
                     </div>
                 </div>
 
                 <!-- Kolom Kanan -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-content">
                             <p>(4) Apabila dalam waktu 1 (satu) Hari setelah pihak lainnya menerima pemberitahuan
-                                tentang
-                                terjadinya force majeure tersebut atau menerima surat keterangan dari instansi
-                                berwenang, belum
-                                memberikan tanggapan, maka PIHAK yang menerima pemberitahuan dianggap telah menyetujui
-                                keadaan
-                                force majeure tersebut.</p>
+                                tentang terjadinya force majeure tersebut atau menerima surat keterangan dari instansi
+                                berwenang, belum memberikan tanggapan, maka PIHAK yang menerima pemberitahuan dianggap
+                                telah menyetujui
+                                keadaan force majeure tersebut.</p>
                             <p>(5) PIHAK yang tertimpa force majeure sedapat mungkin untuk berusaha memperbaiki keadaan
-                                yang
-                                menjadi penyebab kegagalan atau penundaan pemenuhan kewajiban dan akan melanjutkan
-                                pemenuhan
-                                kewajiban berdasarkan Perjanjian, selanjutnya dalam waktu 7 (tujuh) Hari.</p>
+                                yang menjadi penyebab kegagalan atau penundaan pemenuhan kewajiban dan akan melanjutkan
+                                pemenuhan kewajiban berdasarkan Perjanjian, selanjutnya dalam waktu 7 (tujuh) Hari.</p>
                             <p>(6) Sejak disetujuinya force majeure oleh pihak lainnya PARA PIHAK segera berunding untuk
                                 menentukan penyelesaian selanjutnya yang dituangkan dalam Addendum Perjanjian yang
                                 merupakan
                                 satu kesatuan dan bagian tak terpisahkan dari Perjanjian. </p>
-                            <p>(7)Dalam hal keadaan force majeure
+                            <p>(7) Dalam hal keadaan force majeure
                                 tersebut tidak dapat diselesaikan dengan perundingan antara PARA PIHAK, maka Perjanjian
-                                dapat
-                                diakhiri sesuai ketentuan tentang Berakhirnya Perjanjian.</p>
+                                dapat diakhiri sesuai ketentuan tentang Berakhirnya Perjanjian.</p>
                             <p>(8) Segala biaya dan/atau kerugian yang diderita oleh PIHAK yang mengalami force majeure
-                                tidak
-                                menjadi beban dan/atau tanggung jawab pihak lainnya.</p>
+                                tidak menjadi beban dan/atau tanggung jawab pihak lainnya.</p>
                         </div>
                     </div>
                     <div class="pasal">
                         <div class="pasal-title">PASAL 15<br>ANTI SUAP, ANTI KORUPSI DAN PENCUCIAN UANG</div>
                         <div class="pasal-content">
                             <p>(1) PARA PIHAK dengan ini menyatakan dan menjamin bahwa tidak ada pembayaran atau bentuk
-                                manfaat
-                                lain atau perlakuan khusus lainnya yang telah atau akan ditawarkan, dijanjikan atau
-                                diberikan,
-                                baik secara langsung maupun tidak langsung, kepada pejabat publik, baik untuk pejabat
-                                publik itu
-                                sendiri maupun untuk orang atau badan lain, dengan maksud untuk mempengaruhi
-                                tindakan/keputusan
-                                resminya, atau agar ia menggunakan pengaruhnya terhadap suatu badan atau institusi
-                                pemerintah,
-                                atau untuk memuluskan/memastikan diperolehnya suatu manfaat secara tidak patut atau
-                                tidak sah
-                                terkait dengan bisnis PARA PIHAK.</p>
+                                manfaat lain atau perlakuan khusus lainnya yang telah atau akan ditawarkan, dijanjikan
+                                atau
+                                diberikan, baik secara langsung maupun tidak langsung, kepada pejabat publik, baik untuk
+                                pejabat
+                                publik itu sendiri maupun untuk orang atau badan lain, dengan maksud untuk mempengaruhi
+                                tindakan/keputusan resminya, atau agar ia menggunakan pengaruhnya terhadap suatu badan
+                                atau institusi
+                                pemerintah, atau untuk memuluskan/memastikan diperolehnya suatu manfaat secara tidak
+                                patut atau
+                                tidak sah terkait dengan bisnis PARA PIHAK.</p>
                             <p>(2) PARA PIHAK dengan ini menyatakan dan menjamin bahwa tidak ada pembayaran atau bentuk
-                                manfaat
-                                lain atau perlakuan khusus yang telah atau akan dijanjikan, ditawarkan atau diberikan
-                                kepada
-                                pihak swasta dengan maksud untuk mempengaruhi suatu tindakan, atau memuluskan/memastikan
+                                manfaat lain atau perlakuan khusus yang telah atau akan dijanjikan, ditawarkan atau
+                                diberikan
+                                kepada pihak swasta dengan maksud untuk mempengaruhi suatu tindakan, atau
+                                memuluskan/memastikan
                                 diperolehnya suatu manfaat secara tidak patut terkait dengan bisnis PARA PIHAK.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row row-ttd">
-                <div class="col-3">
-                    <div class="table-perjanjian">
-                        <table class="kotak-table">
-                            <thead>
-                                <tr>
-                                    <th>KAI</th>
-                                    <th>PENYEWA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row-ttd">
+                <div class="table-perjanjian">
+                    <table class="kotak-table">
+                        <thead>
+                            <tr>
+                                <th>KAI</th>
+                                <th>PENYEWA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <!-- Halaman 8: Pasal 15 (lanjutan) & 16 -->
         <div class="page">
-            <div class="row row-isi-konten">
+            <div class="row-isi-konten">
                 <!-- Kolom Kiri -->
-                <div class="col col-md-6">
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-content">
                             <p>(3) PARA PIHAK dengan ini menyatakan dan menjamin
@@ -931,70 +1362,64 @@
                                 Perjanjian. </p>
                         </div>
                     </div>
+                </div>
+
+                <!-- Kolom Kanan -->
+                <div class="col-md-6">
                     <div class="pasal">
                         <div class="pasal-title">PASAL 16<br>KETENTUAN LAIN-LAIN</div>
                         <div class="pasal-content">
                             <p>(1) Apabila terdapat perubahan dan tambahan atas Perjanjian, maka perubahan dan tambahan
-                                tersebut
-                                akan mengikat PARA PIHAK sepanjang dibuat secara tertulis dan dibuatkan Addendum yang
+                                tersebut akan mengikat PARA PIHAK sepanjang dibuat secara tertulis dan dibuatkan
+                                Addendum yang
                                 ditandatangani oleh PARA PIHAK, yang merupakan bagian yang tidak terpisahkan dengan
                                 Perjanjian.
                             </p>
                             <p>(2) Semua lampiran dalam Perjanjian atau yang akan dibuat kemudian oleh PARA PIHAK
-                                merupakan
-                                bagian yang tidak terpisahkan dari Perjanjian.</p>
+                                merupakan bagian yang tidak terpisahkan dari Perjanjian.</p>
                             <p>(3) Perjanjian tetap mengikat penerus hak (succesor in title) atau penerima pengalihan
-                                hak
-                                (assignee) dalam hal terjadi penunjukan, pengalihan hak, merger, akuisisi, perubahan
-                                nama
-                                dan/atau perubahan kepemilikan saham KAI.</p>
+                                hak (assignee) dalam hal terjadi penunjukan, pengalihan hak, merger, akuisisi, perubahan
+                                nama dan/atau perubahan kepemilikan saham KAI.</p>
                         </div>
                     </div>
-                </div>
-
-                <!-- Kolom Kanan -->
-                <div class="col col-md-6">
                     <div class="pasal">
                         <div class="pasal-content">
                             <p>(4) Dalam hal terdapat perubahan berdasarkan hasil reviu instansi yang berwenang sesuai
-                                ketentuan
-                                peraturan perundang-undangan, PARA PIHAK wajib menyesuaikan ketentuan dalam Perjanjian
-                                ini yang
-                                dituangkan dalam Adendum Perjanjian.</p>
+                                ketentuan peraturan perundang-undangan, PARA PIHAK wajib menyesuaikan ketentuan dalam
+                                Perjanjian
+                                ini yang dituangkan dalam Adendum Perjanjian.</p>
                             <p>(5) PARA PIHAK sepakat untuk melaksanakan Perjanjian dengan rasa penuh tanggung jawab
-                                dengan
-                                didasari kepentingan bersama.</p>
+                                dengan didasari kepentingan bersama.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row row-ttd">
-                <div class="col-3">
-                    <div class="table-perjanjian">
-                        <table class="kotak-table">
-                            <thead>
-                                <tr>
-                                    <th>KAI</th>
-                                    <th>PENYEWA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row-ttd">
+                <div class="table-perjanjian">
+                    <table class="kotak-table">
+                        <thead>
+                            <tr>
+                                <th>KAI</th>
+                                <th>PENYEWA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <!-- Halaman 9: Tabel Perjanjian Bagian 1 -->
         <div class="page">
-            <div class="header header-dokumen">
+            <div class="header-dokumen">
                 <h2>PERJANJIAN SEWA MENYEWA<br>ASET PT KERETA API INDONESIA (PERSERO)</h2>
                 <p>NO. KAI : ...........................................</p>
                 <p>NO. PENYEWA : ...........................................</p>
@@ -1004,11 +1429,11 @@
             </div>
 
             <div class="konten konten-table1">
-                <p>Perjanjian Sewa Menyewa Aset PT Kereta Api Indonesia (Persero) (selanjutnya disebut “Perjanjian”)
-                    dibuat oleh dan antara PT Kereta Api Indonesia (Persero), selanjutnya disebut “KAI”, dalam hal ini
-                    diwakili oleh “BAMBANG RESPATIONO”, dalam kedudukan sebagai Executive Vice President berdasarkan
+                <p>Perjanjian Sewa Menyewa Aset PT Kereta Api Indonesia (Persero) (selanjutnya disebut "Perjanjian")
+                    dibuat oleh dan antara PT Kereta Api Indonesia (Persero), selanjutnya disebut "KAI", dalam hal ini
+                    diwakili oleh "BAMBANG RESPATIONO", dalam kedudukan sebagai Executive Vice President berdasarkan
                     Keputusan Direksi Nomor PER.U/KL.713/II/1/KA-2019 Tanggal 14 Februari 2019 dan PENYEWA, selanjutnya
-                    secara bersama-sama disebut “PARA PIHAK” dan masing-masing disebut “PIHAK”, mengikatkan diri dan
+                    secara bersama-sama disebut "PARA PIHAK" dan masing-masing disebut "PIHAK", mengikatkan diri dan
                     menyepakati hal-hal sebagai berikut:</p>
 
                 <table class="table table-konten1">
@@ -1106,31 +1531,30 @@
                     </tbody>
                 </table>
             </div>
-            <div class="row row-ttd">
-                <div class="col-3">
-                    <div class="table-perjanjian">
-                        <table class="kotak-table">
-                            <thead>
-                                <tr>
-                                    <th>KAI</th>
-                                    <th>PENYEWA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row-ttd">
+                <div class="table-perjanjian">
+                    <table class="kotak-table">
+                        <thead>
+                            <tr>
+                                <th>KAI</th>
+                                <th>PENYEWA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <!-- Halaman 10: Tabel Perjanjian Bagian 2 -->
         <div class="page">
             <div class="konten konten-table1">
                 <table class="table table-konten1">
@@ -1273,31 +1697,30 @@
                     </tbody>
                 </table>
             </div>
-            <div class="row row-ttd">
-                <div class="col-3">
-                    <div class="table-perjanjian">
-                        <table class="kotak-table">
-                            <thead>
-                                <tr>
-                                    <th>KAI</th>
-                                    <th>PENYEWA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row-ttd">
+                <div class="table-perjanjian">
+                    <table class="kotak-table">
+                        <thead>
+                            <tr>
+                                <th>KAI</th>
+                                <th>PENYEWA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <!-- Halaman 11: Penutup dan Tanda Tangan -->
         <div class="page">
             <div class="konten">
                 <p class="mt-4 text-align-justify">PARA PIHAK telah menyetujui Perjanjian ini harus dibaca bersama-sama
@@ -1313,41 +1736,63 @@
                     cukup dan memiliki kekuatan hukum yang sama untuk masing-masing Pihak.
                 </p>
 
-                <div class="row mt-5">
-                    <div class="col-6 text-center">
-                        <p><strong>UNIVERSITAS ISLAM <br>INDONESIA</strong></p>
-                        <p class="mt-5">HANGGA FATHANA, S.IP., B.Int.St.,
-                            M.A.<br>Sekretaris Eksekutif</p>
-                    </div>
-                    <div class="col-6 text-center">
-                        <p><strong>PT KERETA API INDONESIA (PERSERO)<br>DAERAH OPERASI 6 YOGYAKARTA</strong></p>
-                        <p class="mt-5">BAMBANG RESPATIONO<br>Executive Vice President</p>
+                <div class="ttd-section">
+                    <div class="row">
+                        <div class="col-6 ">
+                            <p><strong>UNIVERSITAS ISLAM <br>INDONESIA</strong></p>
+                            <p class="mt-5">HANGGA FATHANA, S.IP., B.Int.St.,
+                                M.A.<br>Sekretaris Eksekutif</p>
+                        </div>
+                        <div class="col-6 ">
+                            <p><strong>PT KERETA API INDONESIA (PERSERO)<br>DAERAH OPERASI 6 YOGYAKARTA</strong></p>
+                            <p class="mt-5">BAMBANG RESPATIONO<br>Executive Vice President</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Halaman 12: Tombol (hanya untuk tampilan web) -->
         <div class="tombol">
-            <div class="tombol-konten">
-                <p>jika anda telah membaca pilih salah satu dengan </p>
+                <div class="tombol-konten">
+                    <p><strong>Centang salah satu cekbox yang ada dibawah ini</strong><br>
+                        * Jika anda setuju dengan semua perjanjian di atas centang <strong>SANGAT SETUJU</strong><br>
+                        ** Jika tidak setuju degan perjanjian di atas centang <strong>TIDAK SETUJU</strong></p>
+                </div>
+                <div class="row-ceklist">
+                    <div class="table-perjanjian">
+                        <table class="kotak-table">
+                            <thead>
+                                <tr>
+                                    <th class="px-5"><strong>TIDAK SETUJU</strong></th>
+                                    <th class="px-5"><strong> SANGAT SETUJU</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                    <td class="checkbox-cell">
+                                        <input type="checkbox" class="simple-checkbox">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row-tombol">
+                    <div class="col-4">
+                        <button type="button" class="btn btn-back px-5">
+                            <i class="bi bi-arrow-left-circle me-2"></i>kembali
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-kirim px-5">
+                            <i class="bi bi-save me-2"></i>Kirim
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="row row-tombol">
-                <div class="col-4 ">
-                    <button type="button" class="btn btn-back px-5">
-                        <i class="bi bi-arrow-left-circle me-2"></i>kembali
-                    </button>
-                </div>
-                <div class="col-4">
-                    <button type="button" class="btn btn-tidak-setuju px-5">
-                        <i class="bi bi-delet me-2"></i>Tidak Setuju
-                    </button>
-                </div>
-                <div class="col-4">
-                    <button type="button" class="btn btn-setuju px-5">
-                        <i class="bi bi-save me-2"></i>Setuju
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 </body>
 

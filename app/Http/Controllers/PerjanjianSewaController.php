@@ -8,6 +8,7 @@ use App\Models\DataAset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PerjanjianSewaController extends Controller
 {
@@ -235,4 +236,29 @@ class PerjanjianSewaController extends Controller
             return view('pendaftaran.perjanjian_event', compact('dataps'));
         }
     }
+
+
+
+
+
+
+
+    public function previewPerjanjianPDF($id_perjanjian)
+    {
+        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
+
+        $kategori = $dataps->dataMitra->kategori ?? '';
+        $kategoriText = strtolower($kategori) === 'event' ? 'Event' : 'Aset';
+        $fileName = "Perjanjian_{$kategoriText}_KAI_{$dataps->id_perjanjian}.pdf";
+
+        // Tentukan view berdasarkan kategori
+        if ($kategori === 'Event') {
+            $viewName = 'pendaftaran.perjanjian_event';
+        } else {
+            $viewName = 'pendaftaran.perjanjian_aset';
+        }
+
+        return view('pendaftaran.perjanjian_event', compact('dataps', 'viewName', 'fileName'));
+    }
+    
 }

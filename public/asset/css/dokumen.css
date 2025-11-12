@@ -328,8 +328,8 @@ body {
     background-color: #ffffff;
     margin-top: 10px;
 }
-.tombol .col-4 {
-    text-align: center;
+.tombol .col-3 {
+    text-align: start;
 }
 .col-4 .btn-back{
     border: 1px solid #c2c2c2;
@@ -340,21 +340,22 @@ body {
     border: none;
     color: #ffffff;
 }
-.col-4 .btn-tidak-setuju{
-    border: 1px solid #c2c2c2;
-    color: #d33838;
-}
-.col-4 .btn-tidak-setuju:hover{
-    background-color: #d33838;
-    color: #ffffff;
-}
-.col-4 .btn-setuju{
+
+.col-3 .btn-kirim{
     border: 1px solid #c2c2c2;
     color: rgb(42, 85, 165);
 }
-.col-4 .btn-setuju:hover{
+.col-3 .btn-kirim:hover{
     background-color: rgb(42, 85, 165);
     color: #ffffff;
+}
+
+.row-ceklist {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: start;
+    align-items: start;
+    justify-content: start;
 }
 
 
