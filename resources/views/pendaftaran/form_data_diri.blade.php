@@ -446,14 +446,14 @@
                                     <div class="form-group">
                                         <label for="luas_tanah" class="form-label fw-medium">Luas Tanah</label>
                                         <input type="text" id="luas_tanah" name="luas_tanah" class="form-control"
-                                            placeholder="-- Luas Tanah Dalan m&sup2; --" required>
+                                            placeholder="-- Luas Tanah Dalan m&sup2; --">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="luas_bangunan" class="form-label fw-medium">Luas Bangunan</label>
                                         <input type="text" id="luas_bangunan" name="luas_bangunan" class="form-control"
-                                            placeholder="-- Luas Bangunan Dalam m&sup2; --" required>
+                                            placeholder="-- Luas Bangunan Dalam m&sup2; --">
                                     </div>
                                 </div>
                             </div>
