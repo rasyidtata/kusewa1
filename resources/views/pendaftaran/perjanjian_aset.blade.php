@@ -11,35 +11,363 @@
     <link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('asset/css/dokumen.css') }}" rel="stylesheet">
     @yield('css_custom')
+    <style>
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12px;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            background-color: #ffffff;
+        }
+
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Responsive for modern header */
+        @media (max-width: 768px) {
+            .header-modern .row {
+                text-align: center;
+            }
+
+            .header-title {
+                font-size: 1.2rem;
+            }
+
+            .header-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .header-actions {
+                justify-content: center;
+                margin-top: 0.5rem;
+            }
+
+            .logo,
+            .logo-secondary {
+                justify-content: center;
+            }
+        }
+
+
+        .container {
+            padding-top: 0px;
+            padding-bottom: 20px;
+            max-width: 21cm;
+            margin: 0 auto;
+
+        }
+
+        .page {
+            height: 29.7cm;
+            padding: 2cm;
+            page-break-after: always;
+            position: relative;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .page+.page {
+            margin-top: 0.5cm;
+            /* Jarak untuk halaman kedua dan seterusnya */
+        }
+
+
+        /*============================== konten cover =========================*/
+        .konten-cover .table-cover {
+            margin: 20px;
+        }
+
+        .konten-cover .cover-img {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .konten-cover .cover-img>img {
+            height: 170px;
+        }
+
+        .cover-table {
+            margin-top: 20px;
+        }
+
+        .cover-table .table-cover {
+            width: 60%;
+            border: solid #000 1px;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        .cover-table .table-cover .no {
+            width: 30%;
+            padding: 4px 0;
+        }
+
+        .cover-table .table-cover .ti {
+            width: 5%;
+        }
+
+        .cover-table .table-cover .isi {
+            padding: 4px 0;
+        }
+
+        .konten-cover>h6 {
+            text-align: center;
+        }
+
+        .konten-cover .tgl-cover {
+            margin-top: 110px;
+        }
+
+
+
+
+        /*============================== dokumen =========================*/
+        .header-dokumen {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
+        .header-dokumen>h1 {
+            font-size: 14px;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .header-dokumen>h2 {
+            font-size: 12px;
+            margin: 2px 0;
+            font-weight: bold;
+        }
+
+        .header-dokumen>p {
+            font-size: 12px;
+            margin: 2px 0;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .konten>h2 {
+            font-size: 14px;
+            margin: 2px 0;
+            font-weight: bold;
+        }
+
+        .konten>p {
+            font-size: 13px;
+            margin: 20px 0;
+            font-weight: normal;
+        }
+
+
+        .row-isi-konten {
+            font-size: 13px;
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+            text-align: justify;
+        }
+
+        .pasal {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .pasal-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .pasal-content {
+            margin-left: 0;
+        }
+
+        .definition-list {
+            margin-left: 20px;
+            text-align: justify;
+        }
+
+        .definition-item {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+
+        .definition-term {
+            font-weight: bold;
+            text-align: justify;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 1cm;
+            right: 1.5cm;
+            font-size: 12px;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                max-width: none;
+            }
+
+            .page {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+
+        .pasal-content p,
+        .definition-item {
+            word-spacing: -0.05em;
+        }
+
+        .pasal-content p {
+            margin-bottom: 5px;
+            /* Jarak antar paragraf dalam pasal */
+        }
+
+
+
+        /*============================== konten table perjanjian =========================*/
+        /*----- 1 -----*/
+        .konten-table1 .table-konten1 {
+            border: #ddd 1px solid;
+            font-size: 12px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .konten-table1 .table-konten1 th,
+        .konten-table1 .table-konten1 td {
+            border: 1px solid #919191;
+        }
+
+        .konten-table1 .table-konten1 .no {
+            width: 5%;
+            padding: 2px;
+            text-align: center;
+            color: #000;
+        }
+
+        .konten-table1 .table-konten1 .sub {
+            width: 35%;
+            padding: 2px;
+            text-align: center;
+            color: #000;
+        }
+
+        .konten-table1 .table-konten1 .ket {
+            padding: 2px;
+            text-align: center;
+            color: #000;
+        }
+
+
+        /*============================== tombol =========================*/
+        .tombol {
+            padding: 20px;
+            background-color: #ffffff;
+            margin-top: 10px;
+        }
+
+        .tombol .col-3 {
+            text-align: start;
+        }
+
+        .col-4 .btn-back {
+            border: 1px solid #c2c2c2;
+            color: #3b3b3b;
+        }
+
+        .col-4 .btn-back:hover {
+            background-color: #929292;
+            border: none;
+            color: #ffffff;
+        }
+
+        .col-3 .btn-kirim {
+            border: 1px solid #c2c2c2;
+            color: rgb(42, 85, 165);
+        }
+
+        .col-3 .btn-kirim:hover {
+            background-color: rgb(42, 85, 165);
+            color: #ffffff;
+        }
+
+        .row-ceklist {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            text-align: start;
+            align-items: start;
+            justify-content: start;
+        }
+
+
+        /*============================== tabel ttd event dan aset =========================*/
+        .row-ttd {
+            text-align: end;
+            align-items: end;
+            justify-content: end;
+            font-size: 10px;
+        }
+
+        .kotak-table {
+            border: 1px solid #797979;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .kotak-table th,
+        .kotak-table td {
+            border: 1px solid #797979;
+            padding: 2px;
+            text-align: center;
+        }
+
+        .simple-checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: #00000000;
+            background-color: transparent;
+        }
+
+        .simple-checkbox:checked {
+            background-color: transparent;
+        }
+
+        .checkbox-cell {
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Header Section -->
-    <header class="header header-utama">
-        <div class="container-fluid">
-            <div class="row row-hider align-items-center ">
-                <div class="col-12 col-md-4">
-                    <div class="logo">
-                        <img src="{{ asset('asset/img/kusewa.png') }}" height="30px" class="logo-img">
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="header-content">
-                        <h1 class="header-title">Penyewaan Asset KAI Non Lokomotif</h1>
-                        <p class="header-subtitle">DAOP 6 Yogyakarta</p>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="header-actions">
-                        <div class="logo-secondary">
-                            <img src="{{ asset('asset/img/logo_kai.png') }}" height="100px" class="logo-img">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
     <div class="container ">
         <div class="page">
             <div class="konten-cover">
@@ -68,13 +396,13 @@
                         </tr>
                     </table>
                 </div>
-                <h6 class=" mt-5"><strong>ANTARA</strong></h6>
-                <h6 class=" mt-5"><strong>PT. KERETA API INDONESIA (Persero)</strong></h6>
-                <h6 class=" mt-5"><strong>DENGAN</strong></h6>
-                <h6 class=" mt-5"><strong>{{ strtoupper($dataps->dataMitra->nama ?? '') }}</strong></h6>
-                <h6 class=" mt-5"><strong>{{ strtoupper($dataps->dataMitra->alamat ?? '') }}</strong>
+                <h6 class=" mt-3"><strong>ANTARA</strong></h6>
+                <h6 class=" mt-3"><strong>PT. KERETA API INDONESIA (Persero)</strong></h6>
+                <h6 class=" mt-3"><strong>DENGAN</strong></h6>
+                <h6 class=" mt-3"><strong>{{ strtoupper($dataps->dataMitra->nama ?? '') }}</strong></h6>
+                <h6 class=" mt-3"><strong>{{ strtoupper($dataps->dataMitra->alamat ?? '') }}</strong>
                 </h6>
-                <h6 class=" mt-5"><strong>TENTANG :<br>
+                <h6 class=" mt-3"><strong>TENTANG :<br>
                         PERSEWAAN ASET MILIK PT. KERETA API INDONESIA (Persero)
                         DI {{ strtoupper($dataps->dataAset->lokasi ?? '') }}
                         UNTUK {{ strtoupper($dataps->dataAset->penggunaan_objek ?? '') }}
@@ -292,7 +620,7 @@
                             <p>b. memberitahukan kepada PENYEWA apabila KAI akan menggunakan Objek Sewa untuk
                                 Kepentingan
                                 Negara dan/atau Kepentingan KAI; dan</p>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -499,10 +827,10 @@
                                 Bumi
                                 dan
                                 Bangunan (PBB) atas Objek Sewa menjadi beban dan tanggung jawab PENYEWA.</p>
-                            
+
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="row row-ttd">
@@ -655,7 +983,7 @@
                             <p>b. pimpinan unit yang membidangi penjagaan Aset Daop/Divre/Subdivre/LRT Jabodebek
                                 tempat
                                 kedudukan Objek Sewa.</p>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -794,7 +1122,7 @@
                             <p>b. PARA PIHAK sepakat untuk mengakhiri Perjanjian sebelum Jangka Waktu Perjanjian
                                 berakhir;
                             </p>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -932,7 +1260,7 @@
                                 setelah
                                 dilakukan perubahan sesuai ketentuan yang diatur dalam Perjanjian dengan jangka waktu 30
                                 (tiga puluh) Hari sejak tanggal surat pemutusan Perjanjian.</p>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -1155,7 +1483,8 @@
                                 yang
                                 tidak berkepentingan dengan alasan apapun juga selama dan sesudah berakhirnya
                                 Perjanjian,
-                                kecuali hal-hal yang merupakan milik umum (public domain) atau diharuskan </p>                        </div>
+                                kecuali hal-hal yang merupakan milik umum (public domain) atau diharuskan </p>
+                        </div>
                     </div>
                 </div>
 
@@ -1289,7 +1618,7 @@
                                 sekitar
                                 Objek Sewa;</p>
                             <p>b. tidak dipergunakan untuk hal-hal yang melanggar </p>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -1333,12 +1662,14 @@
                             <p>(1) PARA PIHAK dengan ini menyatakan dan menjamin bahwa tidak ada pembayaran atau
                                 bentuk
                                 manfaat lain atau perlakuan khusus lainnya yang telah atau akan ditawarkan,
-                                dijanjikan atau diberikan, baik secara langsung maupun tidak langsung, kepada pejabat publik,
+                                dijanjikan atau diberikan, baik secara langsung maupun tidak langsung, kepada pejabat
+                                publik,
                                 baik untukpejabat publik itu sendiri maupun untuk orang atau badan lain, dengan maksud
-                                untuk mempengaruhi tindakan/keputusan resminya, atau agar ia menggunakan pengaruhnya terhadap
+                                untuk mempengaruhi tindakan/keputusan resminya, atau agar ia menggunakan pengaruhnya
+                                terhadap
                                 suatu badan atau institusi pemerintah, atau untuk memuluskan/memastikan diperolehnya
                                 suatu
-                                manfaat secara tidak patut atau tidak 
+                                manfaat secara tidak patut atau tidak
                             </p>
                         </div>
                     </div>
@@ -1374,7 +1705,7 @@
                 <!-- Kolom Kiri -->
                 <div class="col col-md-6">
                     <div class="pasal">
-                        
+
                         <div class="pasal-content">
                             <p>sah terkait dengan bisnis PARA PIHAK.</p>
                             <p>(2) PARA PIHAK dengan ini menyatakan dan menjamin bahwa tidak ada pembayaran atau bentuk
@@ -1623,7 +1954,8 @@
                         </tr>
                         <tr>
                             <td>b. LUAS TANAH/BANGUNAN</td>
-                            <td>{{ $dataps->dataAset->luas_tanah ?? '' }}m&sup2; / {{ $dataps->dataAset->luas_bangunan ?? '' }}m&sup2;</td>
+                            <td>{{ $dataps->dataAset->luas_tanah ?? '' }}m&sup2; / {{ $dataps->dataAset->luas_bangunan
+                                ?? '' }}m&sup2;</td>
                         </tr>
                         <tr>
                             <td></td>

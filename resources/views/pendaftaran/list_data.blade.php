@@ -10,7 +10,41 @@
     <div class="container">
         <div class="card card-list border">
             <div class="card-header">
-                <p class="card-title">List Data Proses</p>
+                <div class="row">
+                    <div class="col-10">
+                        <p class="card-title">List Data Proses</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2 filter-tahun">
+                        <div class="form-filter">
+                            <input type="text" id="filtertahun" name="filtertahun" class="form-control" placeholder="Tahun">
+                        </div>
+                    </div>
+                    <div class="col-2 filter-bulan">
+                        <div class="form-filter">
+                            <input type="text" id="filterbulan" name="filterbulan" class="form-control" placeholder="bulan">
+                        </div>
+                    </div>
+                    <div class="col-2 filter-jenis">
+                        <div class="form-filter">
+                            <input type="text" id="filterjenis" name="filterjenis" class="form-control" placeholder="jenis">
+                        </div>
+                    </div>
+                    <div class="col-6 filter-search">
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 250px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-search">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="table-container">
                 <div class="table-responsive">
@@ -46,10 +80,14 @@
                                     </span>
                                 </td>
                                 <td data-label="Aksi" class="text-center"> 
-                                    <div class="btn-group" role="group">
-                                        <a href="{{ url('pendaftaran/list_perjanjian/'.$datmit->id_perjanjian) }}"
+                                    <div class="btn-aksi" role="group">
+                                        <a href="{{ url('pendaftaran/form_edit/'.$datmit->id_perjanjian) }}"
                                             class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil-square"></i> Detail
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a href="{{ url('pendaftaran/detail/'.$datmit->id_perjanjian) }}" 
+                                        class="btn btn-sm btn-success">
+                                            <i class="bi bi-book"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -72,14 +110,21 @@
         <div class="card card-list-second border">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-10">
                         <p class="card-title">List Data Diterima</p>
                     </div>
-                    <div class="col-6">
-                        <form class="d-flex ">
-                            <input type="text" id="cari" name="filter cari" class="form-control-cari"
-                                placeholder="Masukkan nama untuk pencarian...">
-                        </form>
+                    <div class="col-2">
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-search">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

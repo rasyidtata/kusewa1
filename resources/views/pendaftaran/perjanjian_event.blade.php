@@ -29,50 +29,6 @@
             print-color-adjust: exact;
         }
 
-        /* Header untuk cetak */
-        .print-header {
-            text-align: center;
-            padding: 10px 0;
-            border-bottom: 2px solid #005C78;
-            margin-bottom: 20px;
-            page-break-after: avoid;
-        }
-
-        .print-header .logo-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .print-header .title-container {
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .print-header .header-title {
-            color: #1a202c;
-            font-size: 16px;
-            font-weight: 500;
-            margin: 0 0 5px 0;
-        }
-
-        .print-header .header-subtitle {
-            color: #005C78;
-            font-size: 12px;
-            font-weight: 500;
-            margin: 0;
-            font-style: italic;
-        }
-
-        .print-header img {
-            height: 30px;
-        }
-
-        .print-header .logo-kai {
-            height: 40px;
-        }
-
         /* Container utama */
         .container {
             max-width: 100%;
@@ -355,7 +311,8 @@
         .ttd-section .row .col-6 {
             justify-items: center;
         }
-        .ttd-section .row .col-6 >p {
+
+        .ttd-section .row .col-6>p {
             text-align: center;
         }
 
@@ -468,13 +425,19 @@
             }
 
             /* Memastikan judul tidak sendirian di halaman bawah */
-            h1, h2, h3, h4, h5, h6 {
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
                 page-break-after: avoid;
                 break-after: avoid;
             }
 
             /* Memastikan paragraf tidak terpotong */
-            p, .pasal {
+            p,
+            .pasal {
                 page-break-inside: avoid;
                 break-inside: avoid;
                 orphans: 3;
@@ -482,7 +445,8 @@
             }
 
             /* Menghilangkan elemen yang tidak perlu untuk cetak */
-            .btn, .tombol {
+            .btn,
+            .tombol {
                 display: none !important;
             }
 
@@ -503,7 +467,7 @@
             }
 
             /* Atur ulang margin dan padding untuk konsistensi */
-            .page > * {
+            .page>* {
                 margin: 0;
                 padding: 0;
             }
@@ -541,8 +505,6 @@
 </head>
 
 <body>
-    <!-- Header untuk cetak -->
-    
     <div class="container">
         <!-- Halaman 1: Cover -->
         <div class="page">
@@ -1753,46 +1715,46 @@
         </div>
         <!-- Halaman 12: Tombol (hanya untuk tampilan web) -->
         <div class="tombol">
-                <div class="tombol-konten">
-                    <p><strong>Centang salah satu cekbox yang ada dibawah ini</strong><br>
-                        * Jika anda setuju dengan semua perjanjian di atas centang <strong>SANGAT SETUJU</strong><br>
-                        ** Jika tidak setuju degan perjanjian di atas centang <strong>TIDAK SETUJU</strong></p>
-                </div>
-                <div class="row-ceklist">
-                    <div class="table-perjanjian">
-                        <table class="kotak-table">
-                            <thead>
-                                <tr>
-                                    <th class="px-5"><strong>TIDAK SETUJU</strong></th>
-                                    <th class="px-5"><strong> SANGAT SETUJU</strong></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                    <td class="checkbox-cell">
-                                        <input type="checkbox" class="simple-checkbox">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row-tombol">
-                    <div class="col-4">
-                        <button type="button" class="btn btn-back px-5">
-                            <i class="bi bi-arrow-left-circle me-2"></i>kembali
-                        </button>
-                    </div>
-                    <div class="col-3">
-                        <button type="button" class="btn btn-kirim px-5">
-                            <i class="bi bi-save me-2"></i>Kirim
-                        </button>
-                    </div>
+            <div class="tombol-konten">
+                <p><strong>Centang salah satu cekbox yang ada dibawah ini</strong><br>
+                    * Jika anda setuju dengan semua perjanjian di atas centang <strong>SANGAT SETUJU</strong><br>
+                    ** Jika tidak setuju degan perjanjian di atas centang <strong>TIDAK SETUJU</strong></p>
+            </div>
+            <div class="row-ceklist">
+                <div class="table-perjanjian">
+                    <table class="kotak-table">
+                        <thead>
+                            <tr>
+                                <th class="px-5"><strong>TIDAK SETUJU</strong></th>
+                                <th class="px-5"><strong> SANGAT SETUJU</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="simple-checkbox">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+            <div class="row-tombol">
+                <div class="col-4">
+                    <button type="button" class="btn btn-back px-5">
+                        <i class="bi bi-arrow-left-circle me-2"></i>kembali
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button type="button" class="btn btn-kirim px-5">
+                        <i class="bi bi-save me-2"></i>Kirim
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

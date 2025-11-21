@@ -56,7 +56,7 @@
                     </li>
                     <li class="list-group-item"><a href="#">Perpanjang Mitra</a></li>
                     <li class="list-group-item"><a href="#">Putus Kontrak</a></li>
-                    <li class="list-group-item"><a href="#">Data Mitra</a></li>
+                    <li class="list-group-item"><a href="{{ url('list_data_perjanjian/data_perjanjian') }}">List Data perjanjian</a></li>
                     <li class="list-group-item"><a href="#">Laporan</a></li>
                     <li class="list-group-item"><a href="#">Logout</a></li>
                 </ul>
