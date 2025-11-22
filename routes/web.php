@@ -5,21 +5,22 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DataMitraController;
 use App\Http\Controllers\PerjanjianSewaController;
 use App\Http\Controllers\PendaftaranController;
-use App\Models\DataMitra;
-use App\Models\PerjanjianSewa;
+use App\Http\Controllers\DashboardController;
 
-Route::get("/", [HomeController::class, "beranda"])->name('home');
-Route::get("home/beranda", [HomeController::class, "beranda"])->name('home');
-Route::get("pendaftaran/form_data_diri", [HomeController::class, "form_pendaftaran"])->name('home');
-Route::get("pendaftaran/list_data", [HomeController::class, "list_data"])->name('home');
-Route::get("pendaftaran/list_perjanjian", [HomeController::class, "list_perjanjian"])->name('home');
-Route::get("pendaftaran/perjanjian_event", [HomeController::class, "perjanjian"])->name('home');
 
-Route::get("pendaftaran/list_data", [PerjanjianSewaController::class, "perjanjian_sewa"]);
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/home/beranda', [DashboardController::class, 'index'])->name('dashboard');
+
+// --- RUTE LAPORAN ---
+Route::get('/laporan', [DashboardController::class, 'laporan'])->name('laporan.index');
+Route::get('/laporan/download', [DashboardController::class, 'downloadPdf'])->name('laporan.download');
+
+Route::get("pendaftaran/form_data_diri", [PendaftaranController::class, "create"])->name('pendaftaran.form');
+Route::post("pendaftaran/create", [PendaftaranController::class, "store"])->name('pendaftaran.store');
+Route::get("pendaftaran/list_data", [PerjanjianSewaController::class, "perjanjian_sewa"])->name('pendaftaran.list');
 Route::get('/pendaftaran/list_perjanjian/{id_perjanjian}', [PerjanjianSewaController::class, 'edit'])->name('pendaftaran.edit');
 Route::post('/pendaftaran/update/{id_perjanjian}', [PerjanjianSewaController::class, 'update'])->name('pendaftaran.update');
 Route::get('/pendaftaran/perjanjian_dokumen/{id_perjanjian}', [PerjanjianSewaController::class, 'showPerjanjianDokumen'])->name('pendaftaran.perjanjian_dokumen');
 Route::get('/perjanjian/preview/{id_perjanjian}', [PerjanjianSewaController::class, 'previewPerjanjianPDF'])->name('perjanjian.preview');
-
-Route::get("pendaftaran/form_data_diri", [PendaftaranController::class, "create"]);
-Route::post("pendaftaran/create", [PendaftaranController::class, "store"]); 
+Route::get("pendaftaran/list_perjanjian", [HomeController::class, "list_perjanjian"])->name('menu.list_perjanjian');
+Route::get("pendaftaran/perjanjian_event", [HomeController::class, "perjanjian"])->name('menu.perjanjian_event');
