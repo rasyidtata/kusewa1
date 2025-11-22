@@ -13,8 +13,7 @@
         </div>
         <hr>
         <div class="card-body p-2">
-            <form class="biodata-form" method="POST" action="{{ url('pendaftaran/update/'.$dataps->id_perjanjian) }}"
-                enctype="multipart/form-data">
+            <form method="POST" action="{{ url('pendaftaran/update/'.$dataps->id_perjanjian) }}" enctype="multipart/form-data">
                 @csrf
                 <!-- Tampilkan error validasi -->
                 @if ($errors->any())
@@ -159,8 +158,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Upload KTP -->
                 <!-- Upload KTP -->
                 <div class="card mb-4">
                     <div class="card-header">

@@ -131,7 +131,7 @@ class PerjanjianSewaController extends Controller
 
             DB::commit();
 
-            return redirect('pendaftaran.edit', $id_perjanjian)
+            return redirect('pendaftaran/form_edit', $id_perjanjian)
                 ->with('success', 'Data perjanjian sewa berhasil diperbarui.');
                 
         } catch (\Exception $e) {
