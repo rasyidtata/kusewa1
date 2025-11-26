@@ -13,7 +13,7 @@ class PerjanjianSewa extends Model
     protected $fillable = [
         'jangka_waktu',
         'masa_awal_perjanjian',
-        'masa_akhir_perjanjian', 
+        'masa_akhir_perjanjian',
         'masa_awal_manfaat',
         'masa_akhir_manfaat',
         'harga_sewa',
@@ -61,15 +61,18 @@ class PerjanjianSewa extends Model
     {
         return $this->belongsTo(DataMitra::class, 'id_mitra', 'id_mitra');
     }
+
     public function dataAset()
     {
         return $this->belongsTo(DataAset::class, 'id_aset', 'id_aset');
     }
-    //public function admin()
-   // {
-     //   return $this->belongsTo(Admin::class, 'id_admin', 'id_admin');
-   // }
-    
+
+
+    //public function admin()Call to undefined relationship [dataMitra] on model [App\Models\PerjanjianSewa].Call to undefined relationship [dataMitra] on model [App\Models\PerjanjianSewa].Call to undefined relationship [dataMitra] on model [App\Models\PerjanjianSewa].Call to undefined relationship [dataMitra] on model [App\Models\PerjanjianSewa].Call to undefined relationship [dataMitra] on model [App\Models\PerjanjianSewa].Call to undefined relationship [dataMitra] on model [App\Models\PerjanjianSewa].
+    // {
+    //   return $this->belongsTo(Admin::class, 'id_admin', 'id_admin');
+    // }
+
 
 
     public function getJangkaWaktuTahunAttribute()
@@ -100,24 +103,23 @@ class PerjanjianSewa extends Model
     public function getMasaAwalPerjanjianFormattedAttribute()
     {
         return $this->masa_awal_perjanjian
-            ? \Carbon\Carbon::parse($this->masa_awal_perjanjian)->format('Y-m-d'): null;
+            ? \Carbon\Carbon::parse($this->masa_awal_perjanjian)->format('Y-m-d') : null;
     }
     public function getMasaAkhirPerjanjianFormattedAttribute()
     {
         return $this->masa_akhir_perjanjian
-            ? \Carbon\Carbon::parse($this->masa_akhir_perjanjian)->format('Y-m-d'): null;
+            ? \Carbon\Carbon::parse($this->masa_akhir_perjanjian)->format('Y-m-d') : null;
     }
     public function getMasaAwalManfaatFormattedAttribute()
     {
         return $this->masa_awal_manfaat
-            ? \Carbon\Carbon::parse($this->masa_awal_manfaat)->format('Y-m-d'): null;
+            ? \Carbon\Carbon::parse($this->masa_awal_manfaat)->format('Y-m-d') : null;
     }
     public function getMasaAkhirManfaatFormattedAttribute()
     {
         return $this->masa_akhir_manfaat
-            ? \Carbon\Carbon::parse($this->masa_akhir_manfaat)->format('Y-m-d'): null;
+            ? \Carbon\Carbon::parse($this->masa_akhir_manfaat)->format('Y-m-d') : null;
     }
 
-    
+
 }
- 

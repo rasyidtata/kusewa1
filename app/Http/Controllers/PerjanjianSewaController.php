@@ -23,19 +23,19 @@ class PerjanjianSewaController extends Controller
             'da.id_aset',
             'dm.status'
         )
-        ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
-        ->join('data_aset as da', 'perjanjian_sewa.id_aset', '=', 'da.id_aset')
-        ->get();
+            ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
+            ->join('data_aset as da', 'perjanjian_sewa.id_aset', '=', 'da.id_aset')
+            ->get();
 
         return view('pendaftaran.list_data', compact('dataps'));
     }
 
     public function edit($id_perjanjian)
     {
-        
+
         // Ambil data dengan relasi yang lengkap
         $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
-        
+
         return view('pendaftaran.list_perjanjian', compact('dataps'));
     }
 
@@ -116,10 +116,10 @@ class PerjanjianSewaController extends Controller
 
             // Step 1: Update Data Mitra
             $this->updateDataMitra($request, $perjanjianSewa->id_mitra);
-            
+
             // Step 2: Update Data Aset
             $this->updateDataAset($request, $perjanjianSewa->id_aset);
-            
+
             // Step 3: Update Perjanjian Sewa
             $this->updatePerjanjianSewa($request, $id_perjanjian);
 
@@ -127,7 +127,7 @@ class PerjanjianSewaController extends Controller
 
             return redirect('pendaftaran/list_data')
                 ->with('success', 'Data perjanjian sewa berhasil diperbarui.');
-                
+
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()
@@ -200,9 +200,12 @@ class PerjanjianSewaController extends Controller
         $h = (int) ($request->hari ?? 0);
 
         $parts = [];
-        if ($t > 0) $parts[] = "$t Tahun";
-        if ($b > 0) $parts[] = "$b Bulan"; 
-        if ($h > 0) $parts[] = "$h Hari";
+        if ($t > 0)
+            $parts[] = "$t Tahun";
+        if ($b > 0)
+            $parts[] = "$b Bulan";
+        if ($h > 0)
+            $parts[] = "$h Hari";
 
         $jangkawaktu = implode(' ', $parts) ?: '0 Hari';
 
@@ -229,7 +232,7 @@ class PerjanjianSewaController extends Controller
     {
         $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
         $kategori = $dataps->dataMitra->kategori ?? '';
-        
+
         if ($kategori === 'Aset') {
             return view('pendaftaran.perjanjian_aset', compact('dataps'));
         } else {
@@ -260,5 +263,92 @@ class PerjanjianSewaController extends Controller
 
         return view('pendaftaran.perjanjian_event', compact('dataps', 'viewName', 'fileName'));
     }
-    
+
+    /* ==================================================================== */
+    /*                FITUR PERPANJANGAN PERJANJIAN SEWA                    */
+    /* ==================================================================== */
+
+    public function indexPerpanjang()
+    {
+        $data = PerjanjianSewa::with(['dataMitra', 'dataAset'])->get();
+        return view('perpanjang.index', compact('data'));
+    }
+
+    public function formPerpanjang($id)
+    {
+        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id);
+
+        // Formatkan tanggal untuk input form (agar aman jika null)
+        $dataps->masa_awal_perjanjian_formatted = optional($dataps->masa_awal_perjanjian)->format('Y-m-d');
+        $dataps->masa_akhir_perjanjian_formatted = optional($dataps->masa_akhir_perjanjian)->format('Y-m-d');
+
+        return view('perpanjang.form', compact('dataps'));
+    }
+
+
+    public function storePerpanjang(Request $request, $id)
+    {
+        $perjanjian = PerjanjianSewa::findOrFail($id);
+
+        // Tentukan minimal tanggal yang valid
+        $minDate = $perjanjian->masa_akhir_perjanjian
+            ? Carbon::parse($perjanjian->masa_akhir_perjanjian)->format('Y-m-d')
+            : Carbon::now()->format('Y-m-d');
+
+        // Validasi form
+        $validated = $request->validate([
+            'tanggal_perpanjang' => ['required', 'date', 'after:' . $minDate],
+        ], [
+            'tanggal_perpanjang.after' => "Tanggal perpanjangan harus lebih besar dari tanggal akhir sebelumnya ($minDate)."
+        ]);
+
+        DB::beginTransaction();
+        try {
+
+            $newEnd = Carbon::parse($validated['tanggal_perpanjang']);
+            $oldStart = $perjanjian->masa_awal_perjanjian
+                ? Carbon::parse($perjanjian->masa_awal_perjanjian)
+                : null;
+
+            // Hitung ulang jangka waktu total
+            $jangkaParts = [];
+
+            if ($oldStart) {
+                $diffYears = $oldStart->diffInYears($newEnd);
+                $intermediate = $oldStart->copy()->addYears($diffYears);
+
+                $diffMonths = $intermediate->diffInMonths($newEnd);
+                $intermediate = $intermediate->copy()->addMonths($diffMonths);
+
+                $diffDays = $intermediate->diffInDays($newEnd);
+
+                if ($diffYears > 0)
+                    $jangkaParts[] = $diffYears . ' Tahun';
+                if ($diffMonths > 0)
+                    $jangkaParts[] = $diffMonths . ' Bulan';
+                if ($diffDays > 0)
+                    $jangkaParts[] = $diffDays . ' Hari';
+            } else {
+                $jangkaParts[] = '0 Hari';
+            }
+
+            // Simpan data perpanjangannya
+            $perjanjian->masa_akhir_perjanjian = $newEnd->format('Y-m-d');
+            $perjanjian->jangka_waktu = implode(' ', $jangkaParts) ?: '0 Hari';
+            $perjanjian->save();
+
+            DB::commit();
+
+            return redirect()->route('perpanjang.index')
+                ->with('success', 'Perpanjangan berhasil disimpan. Masa akhir diperbarui!');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->back()->withInput()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
+
 }
