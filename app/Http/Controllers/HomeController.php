@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function beranda()
-    {
-        return view("home.beranda");
-    }
+    
     public function form_pendaftaran()
     {
         return view("pendaftaran.form_data_diri");
