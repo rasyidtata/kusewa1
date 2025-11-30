@@ -43,6 +43,7 @@ class DataMitra extends Model
         'tgl_anggaran_dasar',
         'no_kenmenhum_dan_ham',
         'tgl_persetujuan_kenmenhum_dan_ham',
+        'alasan_penolakan'
     ];
 
     protected $hidden = [];

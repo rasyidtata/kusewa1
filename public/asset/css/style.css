@@ -176,11 +176,11 @@ body {
 }
 
 /* Logout Style */
-.list-group-item:nth-child(7) a {
+.list-group-item:nth-child(8) a {
     color: #dc3545;
 }
 
-.list-group-item:nth-child(7):hover a {
+.list-group-item:nth-child(8):hover a {
     color: #ffffff;
 }
 
@@ -340,6 +340,7 @@ body {
 .col-md-4 {
     text-align: center;
 }
+
 .btn-group {
     border-radius: 7px;
 }
@@ -363,7 +364,7 @@ body {
 }
 
 
-.form-group .kategori-border{
+.form-group .kategori-border {
     border: 1px solid #005C78;
 }
 
@@ -452,7 +453,7 @@ body {
 
 
 
-.btn.btn-simpan-data{
+.btn.btn-simpan-data {
     background-color: #2c3e50;
     color: white;
 }
@@ -628,6 +629,7 @@ textarea.form-control {
     font-weight: 600;
     color: #2c3e50;
 }
+
 /* tabel */
 .card-list {
     border-radius: 8px;
@@ -644,6 +646,7 @@ textarea.form-control {
     display: flex;
     flex-direction: column;
 }
+
 .table-container {
     flex: 1;
     overflow: hidden;
@@ -661,7 +664,7 @@ textarea.form-control {
     top: 0;
     background-color: #ffffff;
     z-index: 10;
-    
+
     font-size: 12px;
     font-weight: 600;
     color: #0c3257;
@@ -799,20 +802,20 @@ textarea.form-control {
     background: #a8a8a8;
 }
 
-.filter-search .card-tools{
+.filter-search .card-tools {
     justify-self: end;
     align-items: end;
 }
 
 .card-tools .input-group .btn-search {
-  border-radius: 0 4px 4px 0; 
-  background-color: #00346b;
-  color: white;
-  padding: 9px 12px;
-  font-size: 0.9rem;
+    border-radius: 0 4px 4px 0;
+    background-color: #00346b;
+    color: white;
+    padding: 9px 12px;
+    font-size: 0.9rem;
 }
 
-/*======================================== form list ================================================*/
+/*======================================== detail list ================================================*/
 
 
 
@@ -842,58 +845,122 @@ textarea.form-control {
     background-color: #EB6A28;
     color: rgb(255, 255, 255);
 }
+
 .btn-dock:hover {
     background-color: #eb7f4a;
     color: rgb(255, 255, 255);
 }
 
 /* Tombol Kembali */
-.btn-kembali {
-    border-color: #6c757d;
-    color: #6c757d;
-    background-color: white;
-}
-
-.btn-kembali:hover {
-    background-color: #6c757d;
-    color: white;
+.row-detail-cetak .col-kembali>a {
+    color: #00346b;
+    text-decoration: none;
+    justify-content: start;
+    align-items: start;
+    text-align: start;
 }
 
 /* Tombol Download */
 .btn-download {
-    border-color: #007bff;
-    color: #007bff;
-    background-color: white;
+    border-color: #005C78;
+    color: #ffffff;
+    background-color: #005C78;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right: 20px;
+    transition: all 0.3s ease;
 }
 
 .btn-download:hover {
     background-color: #007bff;
     color: white;
+    transform: translateY(-2px);
 }
 
 /* Tombol Share */
 .btn-share {
     border-color: #28a745;
-    color: #28a745;
-    background-color: white;
+    color: #ffffff;
+    background-color: #28a745;
+    padding-left: 15px;
+    padding-right: 15px;
+    transition: all 0.3s ease;
 }
 
 .btn-share:hover {
-    background-color: #28a745;
+    background-color: #09e93d;
     color: white;
+    transform: translateY(-2px);
 }
 
 /* Tombol Approved */
 .btn-approved {
-    border-color: #ffc107;
-    color: #ffc107;
-    background-color: white;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 23px;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 .btn-approved:hover {
-    background-color: #ffc107;
+    background-color: #218838;
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
 }
+
+.btn-rejected {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 23px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-rejected:hover {
+    background-color: #c82333;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.form-inputan-alasan {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 7px 12px;
+    width: 60%;
+    transition: all 0.3s ease;
+    margin: 5px 0;
+}
+
+.form-inputan-alasan:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+.tombol-detail{
+    text-align: start;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Optional: Style untuk layout */
 .row-list-perjanjian {
@@ -907,10 +974,18 @@ textarea.form-control {
 }
 
 
+.row-detail-cetak .col-share {
+    justify-content: end;
+    text-align: end;
+    display: flex;
+    gap: 15px;
+}
+
+
 
 /*==================================== list data perjanjian ============================================*/
 
-.container-list-data-perjanjian{
+.container-list-data-perjanjian {
     padding: 0px;
     max-width: 1100px;
     margin: 0 auto;

@@ -20,6 +20,7 @@ Route::get('/laporan/download', [DashboardController::class, 'downloadPdf'])->na
 
 Route::get("pendaftaran/form_data_diri", [PendaftaranController::class, "create"])->name('pendaftaran.form');
 Route::post("pendaftaran/create", [PendaftaranController::class, "store"])->name('pendaftaran.store');
+Route::post('/pendaftaran/approve/{id_perjanjian}', [PendaftaranController::class, 'approve'])->name('pendaftaran.approve');
 
 
 Route::get("/pendaftaran/list_data", [PerjanjianSewaController::class, "perjanjian_sewa"])->name('pendaftaran.list');
