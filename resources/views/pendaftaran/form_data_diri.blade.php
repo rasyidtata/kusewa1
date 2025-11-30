@@ -42,7 +42,7 @@
                                     <label class="btn" for="Perusahaan">
                                         <i class="bi bi-building "></i>
                                         Perusahaan
-                                    </label>
+                                    </label>  
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                                 <input type="file" id="foto_identitas" name="foto_identitas" class="form-control"
                                     accept=".jpg,.jpeg,.pdf">
                                 <div class="form-text">
-                                    <small class="text-muted">*Isi sesuai dengan data diri yang benar</small><br>
+                                    <small class="text-muted">* Isi sesuai dengan data diri yang benar</small><br>
                                     <small class="text-muted">**File yang bisa di upload berupa jpg, jpeg, pdf</small>
                                 </div>
                             </div>
@@ -565,21 +565,20 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <div class="col-md-6 mb-3">
-                                        <div class="form-group">
-                                            <label for="harga_sewa" class="form-label fw-medium">Harga Sewa</label>
-                                            <input type="text" id="harga_sewa_display" class="form-control"
-                                                placeholder="-- Masukan harga sewa --" required>
-                                            <input type="hidden" id="harga_sewa" name="harga_sewa" required>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="harga_sewa" class="form-label fw-medium">Harga Sewa</label>
+                                        <input type="text" id="harga_sewa_display" class="form-control"
+                                            placeholder="-- Masukan harga sewa --" required>
+                                        <input type="hidden" id="harga_sewa" name="harga_sewa" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="harga_pemanfaatan" class="form-label fw-medium">Harga
                                             Pemanfaatan</label>
-                                        <input type="text" id="harga_pemanfaatan" name="harga_pemanfaatan"
-                                            class="form-control" placeholder="-- Masukan harga pemanfaatan --" required>
+                                        <input type="text" id="harga_pemanfaatan_display"class="form-control" 
+                                            placeholder="-- Masukan harga pemanfaatan --" required>
+                                        <input type="hidden" id="harga_pemanfaatan" name="harga_pemanfaatan" required>
                                     </div>
                                 </div>
                             </div>
@@ -588,15 +587,17 @@
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="biaya_admin" class="form-label fw-medium">Biaya Admin</label>
-                                        <input type="text" id="biaya_admin" name="biaya_admin" class="form-control"
+                                        <input type="text" id="biaya_admin_display" class="form-control"
                                             placeholder="-- Masukan biaya admin --" required>
+                                        <input type="hidden" id="biaya_admin" name="biaya_admin" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="cost_of_money" class="form-label fw-medium">Cost Of Money</label>
-                                        <input type="text" id="cost_of_money" name="cost_of_money" class="form-control"
+                                        <input type="text" id="cost_of_money_display" class="form-control"
                                             placeholder="-- Masukan biaya COM --" required>
+                                        <input type="hidden" id="cost_of_money" name="cost_of_money" required>
                                     </div>
                                 </div>
                             </div>
@@ -605,16 +606,18 @@
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="harga_sewa_admin" class="form-label fw-medium">Harga Sewa + Admin</label>
-                                        <input type="text" id="harga_sewa_admin" name="harga_sewa_admin"
+                                        <input type="text" id="harga_sewa_admin_display"
                                             class="form-control" placeholder="Rp.">
+                                        <input type="hidden" id="harga_sewa_admin" name="harga_sewa_admin" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="harga_sewa_admin_com" class="form-label fw-medium">Harga Sewa + Admin +
                                             COM</label>
-                                        <input type="text" id="harga_sewa_admin_com" name="harga_sewa_admin_com"
+                                        <input type="text" id="harga_sewa_admin_com_display"
                                             class="form-control" placeholder="Rp.">
+                                        <input type="hidden" id="harga_sewa_admin_com" name="harga_sewa_admin_com" required>
                                     </div>
                                 </div>
                             </div>
@@ -623,14 +626,16 @@
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="ppn" class="form-label fw-medium">PPN 11%</label>
-                                        <input type="text" id="ppn" name="ppn" class="form-control" placeholder="Rp.">
+                                        <input type="text" id="ppn_display" class="form-control" placeholder="Rp.">
+                                        <input type="hidden" id="ppn" name="ppn" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="total_harga" class="form-label fw-medium">Total Harga</label>
-                                        <input type="text" id="total_harga" name="total_harga" class="form-control"
+                                        <input type="text" id="total_harga_display" class="form-control"
                                             placeholder="Rp.">
+                                        <input type="hidden" id="total_harga" name="total_harga" required>
                                     </div>
                                 </div>
                             </div>
@@ -638,8 +643,8 @@
                             <div class="row ">
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group p-4 text-warning">
-                                        <p>* cek kembali nominal yang anda masukan<br>
-                                            ** pastikan nomor terbilang ditulis dengan benar
+                                        <p>*cek kembali nominal yang anda masukan<br>
+                                            **pastikan nomor terbilang ditulis dengan benar
                                         </p>
                                     </div>
                                 </div>
@@ -660,7 +665,7 @@
                             <button type="button" class="btn px-5 prev-step" data-prev="2">
                                 <i class="bi bi-arrow-left-circle me-2"></i>Kembali
                             </button>
-                            <button type="submit" class="btn px-5">
+                            <button type="submit" class="btn btn-simpan-data px-5">
                                 <i class="bi bi-check-circle me-2"></i>Simpan Data
                             </button>
                         </div>

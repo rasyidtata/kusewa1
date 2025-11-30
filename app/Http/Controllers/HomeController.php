@@ -6,11 +6,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function beranda()
-    {
-        return view("home.beranda");
-    }
-
+    
     public function form_pendaftaran()
     {
         return view("pendaftaran.form_data_diri");
@@ -21,14 +17,18 @@ class HomeController extends Controller
         return view("pendaftaran.list_data");
     }
 
-    public function list_perjanjian()
+    public function edit()
     {
-        return view("pendaftaran.list_perjanjian");
+        return view("pendaftaran.form_edit");
     }
 
     public function perjanjian()
     {
         return view("pendaftaran.perjanjian_event");
+    }
+    public function data_perjanjian()
+    {
+        return view("list_data_perjanjian.data_perjanjian");
     }
 }
 

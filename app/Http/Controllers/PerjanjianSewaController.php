@@ -30,21 +30,34 @@ class PerjanjianSewaController extends Controller
         return view('pendaftaran.list_data', compact('dataps'));
     }
 
+
+
+
+
+
+
+
+
+
+
     public function edit($id_perjanjian)
     {
+
 
         // Ambil data dengan relasi yang lengkap
         $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
 
         return view('pendaftaran.list_perjanjian', compact('dataps'));
-    }
 
+        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
+        return view('pendaftaran.form_edit', compact('dataps'));
+    }
     public function update(Request $request, $id_perjanjian)
     {
         $validator = Validator::make($request->all(), [
             // Data Diri - Step 1
             'jenis_penyewa' => 'required|in:Perorangan,Perusahaan',
-            'kategori' => 'required|in: Aset, Event',
+            'kategori' => 'required|in:Aset,Event',
             'nama_lengkap' => 'required|string|max:255',
             'nik' => 'required|string|max:20',
             'masa_berlaku_ktp' => 'required|date',
@@ -53,28 +66,28 @@ class PerjanjianSewaController extends Controller
             'tanggal_perjanjian' => 'required|date',
             'penyewa_berdasarkan' => 'required|string|max:255',
             'alamat' => 'required|string',
-            'foto_identitas' => 'sometimes|file|mimes:jpg,jpeg,pdf|max:2048',
+            'foto_identitas' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
 
             // Data Perusahaan (kondisional)
-            'nama_perwakilan' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:255',
-            'perwakilan_selaku' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:255',
-            'npwp' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:20',
-            'kota_penyewa' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:100',
-            'kode_pos' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:10',
+            'nama_perwakilan' => 'nullable|string|max:255',
+            'perwakilan_selaku' => 'nullable|string|max:255',
+            'npwp' => 'nullable|string|max:20',
+            'kota_penyewa' => 'nullable|string|max:100',
+            'kode_pos' => 'nullable|string|max:10',
             'fax_penyewa' => 'nullable|string|max:20',
-            'no_akte_pendirian' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:50',
-            'no_anggaran_dasar' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:50',
-            'tanggal_anggaran_dasar' => 'required_if:jenis_penyewa,Perusahaan|nullable|date',
-            'no_kemenkumham' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:50',
-            'tanggal_kemenkumham' => 'required_if:jenis_penyewa,Perusahaan|nullable|date',
+            'no_akte_pendirian' => 'nullable|string|max:50',
+            'no_anggaran_dasar' => 'nullable|string|max:50',
+            'tanggal_anggaran_dasar' => 'nullable|date',
+            'no_kemenkumham' => 'nullable|string|max:50',
+            'tanggal_kemenkumham' => 'nullable|date',
             'no_penetapan_pengadilan' => 'nullable|string|max:50',
             'tanggal_penetapan_pengadilan' => 'nullable|date',
-            'no_izin_berusaha' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:50',
-            'tanggal_izin_berusaha' => 'required_if:jenis_penyewa,Perusahaan|nullable|date',
-            'surat_keterangan_pajak' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:50',
-            'tanggal_surat_keterangan_pajak' => 'required_if:jenis_penyewa,Perusahaan|nullable|date',
-            'surat_pengukuhan_pkp' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:50',
-            'tanggal_surat_pengukuhan_pkp' => 'required_if:jenis_penyewa,Perusahaan|nullable|date',
+            'no_izin_berusaha' => 'nullable|string|max:50',
+            'tanggal_izin_berusaha' => 'nullable|date',
+            'surat_keterangan_pajak' => 'nullable|string|max:50',
+            'tanggal_surat_keterangan_pajak' => 'nullable|date',
+            'surat_pengukuhan_pkp' => 'nullable|string|max:50',
+            'tanggal_surat_pengukuhan_pkp' => 'nullable|date',
 
             // Data Aset - Step 2
             'alamat_asset' => 'required|string',
@@ -90,15 +103,15 @@ class PerjanjianSewaController extends Controller
             'masa_akhir_pemanfaatan' => 'required|date',
 
             // Harga Aset - Step 3
-            'harga_sewa' => 'required|numeric|min:0',
-            'harga_pemanfaatan' => 'required|numeric|min:0',
-            'biaya_admin' => 'required|numeric|min:0',
-            'cost_of_money' => 'required|numeric|min:0',
-            'harga_sewa_admin' => 'required|numeric|min:0',
-            'harga_sewa_admin_com' => 'required|numeric|min:0',
-            'ppn' => 'required|numeric|min:0',
-            'total_harga' => 'required|numeric|min:0',
-            'terbilang' => 'required|string'
+            'harga_sewa' => 'nullable|numeric|min:0',
+            'harga_pemanfaatan' => 'nullable|numeric|min:0',
+            'biaya_admin' => 'nullable|numeric|min:0',
+            'cost_of_money' => 'nullable|numeric|min:0',
+            'harga_sewa_admin' => 'nullable|numeric|min:0',
+            'harga_sewa_admin_com' => 'nullable|numeric|min:0',
+            'ppn' => 'nullable|numeric|min:0',
+            'total_harga' => 'nullable|numeric|min:0',
+            'terbilang' => 'nullable|string'
         ]);
 
         // Validasi gagal
@@ -125,7 +138,7 @@ class PerjanjianSewaController extends Controller
 
             DB::commit();
 
-            return redirect('pendaftaran/list_data')
+            return redirect('pendaftaran/form_edit', $id_perjanjian)
                 ->with('success', 'Data perjanjian sewa berhasil diperbarui.');
 
         } catch (\Exception $e) {
@@ -135,7 +148,6 @@ class PerjanjianSewaController extends Controller
                 ->withInput();
         }
     }
-
     private function updateDataMitra(Request $request, $id_mitra)
     {
         $data = [
@@ -174,13 +186,21 @@ class PerjanjianSewaController extends Controller
         if ($request->hasFile('foto_identitas')) {
             $file = $request->file('foto_identitas');
             $fileName = time() . '_' . $file->getClientOriginalName();
+            
+            // Hapus foto lama jika ada
+            $dataMitra = DataMitra::find($id_mitra);
+            if ($dataMitra->foto_identitas && file_exists(public_path($dataMitra->foto_identitas))) {
+                unlink(public_path($dataMitra->foto_identitas));
+            }
+            
+            // Simpan file baru
+            $filePath = 'asset/img/identitas/' . $fileName;
             $file->move(public_path('asset/img/identitas'), $fileName);
-            $data['foto_identitas'] = 'asset/img/identitas/' . $fileName;
+            $data['foto_identitas'] = $filePath;
         }
 
         return DataMitra::where('id_mitra', $id_mitra)->update($data);
     }
-
     private function updateDataAset(Request $request, $id_aset)
     {
         $data = [
@@ -192,7 +212,6 @@ class PerjanjianSewaController extends Controller
 
         return DataAset::where('id_aset', $id_aset)->update($data);
     }
-
     private function updatePerjanjianSewa(Request $request, $id_perjanjian)
     {
         $t = (int) ($request->tahun ?? 0);
@@ -211,6 +230,9 @@ class PerjanjianSewaController extends Controller
 
         $data = [
             'jangka_waktu' => $jangkawaktu,
+            'jangka_waktu_tahun' => $t,
+            'jangka_waktu_bulan' => $b,
+            'jangka_waktu_hari' => $h,
             'masa_awal_perjanjian' => $request->masa_awal_perjanjian,
             'masa_akhir_perjanjian' => $request->masa_akhir_perjanjian,
             'masa_awal_manfaat' => $request->masa_awal_pemanfaatan,
@@ -228,6 +250,48 @@ class PerjanjianSewaController extends Controller
 
         return PerjanjianSewa::where('id_perjanjian', $id_perjanjian)->update($data);
     }
+    public function showFoto($id_mitra)
+    {
+        $dataMitra = DataMitra::findOrFail($id_mitra);
+        
+        if (!$dataMitra->foto_identitas || !file_exists(public_path($dataMitra->foto_identitas))) {
+            abort(404);
+        }
+
+        return response()->file(public_path($dataMitra->foto_identitas));
+    }
+    public function deleteFoto($id_mitra)
+    {
+        DB::beginTransaction();
+        
+        try {
+            $dataMitra = DataMitra::findOrFail($id_mitra);
+            
+            if ($dataMitra->foto_identitas && file_exists(public_path($dataMitra->foto_identitas))) {
+                unlink(public_path($dataMitra->foto_identitas));
+            }
+            
+            $dataMitra->update(['foto_identitas' => null]);
+            
+            DB::commit();
+            
+            return redirect()->back()->with('success', 'Foto identitas berhasil dihapus.');
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Gagal menghapus foto: ' . $e->getMessage());
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     public function showPerjanjianDokumen($id_perjanjian)
     {
         $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
@@ -263,6 +327,7 @@ class PerjanjianSewaController extends Controller
 
         return view('pendaftaran.perjanjian_event', compact('dataps', 'viewName', 'fileName'));
     }
+
 
     /* ==================================================================== */
     /*                FITUR PERPANJANGAN PERJANJIAN SEWA                    */
@@ -350,5 +415,21 @@ class PerjanjianSewaController extends Controller
         }
     }
 
+
+
+
+
+
+    public function detail_perjanjian($id_perjanjian)
+    {
+        
+        // Ambil data dengan relasi yang lengkap
+        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
+        
+        return view('pendaftaran.detail', compact('dataps'));
+    }
+
+
+    
 
 }

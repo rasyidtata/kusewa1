@@ -82,6 +82,58 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15); /* Bayangan halus */
+            margin-bottom: 20px;
+        }
+        .card-header {
+            background-color: #f8f9fc;
+            border-bottom: 1px solid #e3e6f0;
+            font-weight: bold;
+            color: #4e73df; 
+            border-radius: 10px 10px 0 0 !important;
+            padding: 15px 20px;
+        }
+
+
+        .small-box {
+            border-radius: 10px;
+            position: relative;
+            display: block;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            overflow: hidden;
+            color: #fff;
+            padding: 20px;
+        }
+        .small-box > .inner { padding: 10px; }
+        .small-box h3 { font-size: 2.2rem; font-weight: bold; margin: 0 0 10px 0; white-space: nowrap; padding: 0; }
+        .small-box p { font-size: 1rem; }
+        
+        .small-box .icon {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            z-index: 0;
+            font-size: 90px;
+            color: rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+        }
+        .small-box:hover .icon { transform: scale(1.1); }
+        
+        /* Warna-warni Khas Dashboard */
+        .bg-gradient-primary { background: linear-gradient(45deg, #4e73df 10%, #224abe 90%); }
+        .bg-gradient-success { background: linear-gradient(45deg, #1cc88a 10%, #13855c 90%); }
+        .bg-gradient-warning { background: linear-gradient(45deg, #f6c23e 10%, #dda20a 90%); }
+        .bg-gradient-danger { background: linear-gradient(45deg, #e74a3b 10%, #be2617 90%); }
+
+        .btn-custom { border-radius: 50px; padding: 8px 20px; font-weight: 600; box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }
+    </style>
 <script>
     const cData = {!! json_encode($chartData ?? []) !!};
 

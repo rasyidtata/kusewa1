@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
@@ -99,6 +100,9 @@
         }
     </style>
 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     @yield('css_custom')
 </head>
 
@@ -151,10 +155,13 @@
                         <a href="{{ route('perpanjang.index') }}">Perpanjang Kontrak</a>
                     </li>
                     <li class="list-group-item"><a href="#">Putus Kontrak</a></li>
+
+                    <li class="list-group-item"><a href="{{ url('list_data_perjanjian/data_perjanjian') }}">List Data perjanjian</a></li>
+
                     <li class="list-group-item"><a href="#">Data Mitra</a></li>
 
                     <li class="list-group-item">
-                        <a href="{{ route('laporan.index') }}">Laporan</a>
+                        <a href="{{ url('laporan/index') }}">Laporan</a>
                     </li>
 
                     <li class="list-group-item"><a href="#">Logout</a></li>
