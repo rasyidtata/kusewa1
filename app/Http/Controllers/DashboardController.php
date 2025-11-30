@@ -11,15 +11,12 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    // --- HALAMAN HOME (BERANDA) ---
     public function index()
     {
         $chartData = $this->getChartData();
-        // Pastikan file view ada di: resources/views/home/beranda.blade.php
         return view('home.beranda', compact('chartData'));
     }
 
-    // --- HALAMAN LAPORAN ---
     public function laporan(Request $request)
     {
         $startDate = $request->input('start_date', Carbon::now()->startOfYear()->toDateString());
@@ -35,7 +32,6 @@ class DashboardController extends Controller
         return view('laporan.laporan', compact('transaksi', 'startDate', 'endDate', 'chartData'));
     }
 
-    // --- DOWNLOAD PDF ---
     public function downloadPdf(Request $request)
     {
         $startDate = $request->input('start_date');
@@ -46,38 +42,48 @@ class DashboardController extends Controller
             ->get();
 
         $pdf = Pdf::loadView('laporan.pdf', compact('transaksi', 'startDate', 'endDate'));
-        
         return $pdf->download('laporan_aset_kai.pdf');
     }
 
-    // --- LOGIKA GRAFIK (PRIVATE) ---
     private function getChartData()
     {
+        // 1. Grafik Pendapatan
         $pendapatan = PerjanjianSewa::select(
             DB::raw('DATE_FORMAT(masa_awal_perjanjian, "%Y-%m") as bulan'),
             DB::raw('SUM(total_harga) as total')
         )
-        ->groupBy('bulan')
-        ->orderBy('bulan')
-        ->limit(12)
-        ->get();
+        ->groupBy('bulan')->orderBy('bulan')->limit(12)->get();
 
+        // 2. Grafik Status
         $status = PerjanjianSewa::select('status', DB::raw('count(*) as total'))
-            ->groupBy('status')
-            ->pluck('total', 'status')->toArray();
+            ->groupBy('status')->pluck('total', 'status')->toArray();
             
+        // 3. Grafik Mitra
         $mitra = DataMitra::select('Jenis', DB::raw('count(*) as total'))
-            ->groupBy('Jenis')
-            ->pluck('total', 'Jenis')->toArray();
+            ->groupBy('Jenis')->pluck('total', 'Jenis')->toArray();
+
+        // --- UPDATE BARU ---
+        
+        // Menghitung TOTAL SEMUA DATA (Untuk Kartu Hijau)
+        $totalPerjanjian = PerjanjianSewa::count();
+
+        // Menghitung HANYA YANG AKTIF (Untuk Kartu Kuning)
+        $perjanjianAktif = PerjanjianSewa::where('status', 'aktif')->count();
 
         return [
             'labels_pendapatan' => $pendapatan->pluck('bulan'),
             'data_pendapatan' => $pendapatan->pluck('total'),
+            
             'status_aktif' => $status['aktif'] ?? 0,
             'status_peringatan' => $status['peringatan'] ?? 0,
             'status_mati' => $status['mati'] ?? 0,
+            
             'mitra_perorangan' => $mitra['Perorangan'] ?? 0,
             'mitra_perusahaan' => $mitra['Perusahaan'] ?? 0,
+            
+            // Variabel Baru dikirim ke View
+            'total_semua_perjanjian' => $totalPerjanjian,
+            'jumlah_perjanjian_aktif' => $perjanjianAktif,
         ];
     }
 }
