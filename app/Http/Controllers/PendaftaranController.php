@@ -207,4 +207,58 @@ class PendaftaranController extends Controller
         return PerjanjianSewa::create($data);
     }
 
+
+    public function approve(Request $request, $id_perjanjian)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Cari data perjanjian
+            $perjanjian = PerjanjianSewa::with('dataMitra')->findOrFail($id_perjanjian);
+
+            // Validasi input
+            $approvals = $request->input('approval');
+            $action = $request->input('action');
+            $rejectionReason = $request->input('rejection_reason');
+
+            // Simpan data approval ke session atau database (untuk menjaga state)
+            session(['approval_data_' . $id_perjanjian => $approvals]);
+
+            if ($action === 'approve') {
+                // Validasi bahwa semua pihak setuju
+                foreach ($approvals as $row => $value) {
+                    if ($value !== 'setuju') {
+                        return redirect()->back()->with('error', 'Semua pihak harus menyetujui perjanjian untuk dapat di-approve.');
+                    }
+                }
+
+                // Update status menjadi 'Diterima'
+                $perjanjian->dataMitra->update([
+                    'status' => 'Diterima',
+                    'tgl_perjanjian' => now(),
+                ]);
+
+                $message = 'Perjanjian berhasil disetujui dan status telah diubah menjadi diterima.';
+
+            } elseif ($action === 'reject') {
+                // Update status menjadi 'Ditolak'
+                $perjanjian->dataMitra->update([
+                    'status' => 'Ditolak',
+                    'alasan_penolakan' => $rejectionReason,
+                    'tanggal_penolakan' => now(),
+                ]);
+
+                $message = 'Perjanjian berhasil ditolak. Alasan: ' . $rejectionReason;
+            }
+
+            DB::commit();
+
+            return redirect()->route('pendaftaran.list_data')->with('success', $message);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
 }

@@ -54,6 +54,7 @@ class PerjanjianSewaController extends Controller
     }
     public function update(Request $request, $id_perjanjian)
     {
+        $perjanjianSewa = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
         $validator = Validator::make($request->all(), [
             // Data Diri - Step 1
             'jenis_penyewa' => 'required|in:Perorangan,Perusahaan',
@@ -125,7 +126,7 @@ class PerjanjianSewaController extends Controller
 
         try {
             // Ambil data perjanjian sewa
-            $perjanjianSewa = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
+            
 
             // Step 1: Update Data Mitra
             $this->updateDataMitra($request, $perjanjianSewa->id_mitra);
@@ -138,7 +139,7 @@ class PerjanjianSewaController extends Controller
 
             DB::commit();
 
-            return redirect('pendaftaran/form_edit', $id_perjanjian)
+            return redirect('pendaftaran/form_edit/' . $id_perjanjian)
                 ->with('success', 'Data perjanjian sewa berhasil diperbarui.');
 
         } catch (\Exception $e) {
@@ -150,6 +151,7 @@ class PerjanjianSewaController extends Controller
     }
     private function updateDataMitra(Request $request, $id_mitra)
     {
+        $dataMitra = DataMitra::find($id_mitra);
         $data = [
             'Jenis' => $request->jenis_penyewa,
             'kategori' => $request->kategori,
@@ -199,10 +201,12 @@ class PerjanjianSewaController extends Controller
             $data['foto_identitas'] = $filePath;
         }
 
-        return DataMitra::where('id_mitra', $id_mitra)->update($data);
+        $dataMitra->fill($data);
+            return $dataMitra->save();
     }
     private function updateDataAset(Request $request, $id_aset)
     {
+        $dataAset = DataAset::find($id_aset);
         $data = [
             'lokasi' => $request->alamat_asset,
             'penggunaan_objek' => $request->penggunaan_asset,
@@ -210,10 +214,12 @@ class PerjanjianSewaController extends Controller
             'luas_bangunan' => $request->luas_bangunan,
         ];
 
-        return DataAset::where('id_aset', $id_aset)->update($data);
+        $dataAset->fill($data);
+            return $dataAset->save();
     }
     private function updatePerjanjianSewa(Request $request, $id_perjanjian)
     {
+        $perjanjianSewa = PerjanjianSewa::find($id_perjanjian);
         $t = (int) ($request->tahun ?? 0);
         $b = (int) ($request->bulan ?? 0);
         $h = (int) ($request->hari ?? 0);
@@ -248,7 +254,9 @@ class PerjanjianSewaController extends Controller
             'terbilang' => $request->terbilang
         ];
 
-        return PerjanjianSewa::where('id_perjanjian', $id_perjanjian)->update($data);
+        $perjanjianSewa->fill($data);
+            return $perjanjianSewa->save();
+
     }
     public function showFoto($id_mitra)
     {

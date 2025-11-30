@@ -24,11 +24,11 @@ class HomeController extends Controller
 
     public function perjanjian()
     {
-        return view("pendaftaran.perjanjian_event");
+        return view("pendaftaran.perjanjian_event"); 
     }
     public function data_perjanjian()
     {
-        return view("list_data_perjanjian.data_perjanjian");
+        return view("list_data.data_perjanjian");
     }
 }
 

@@ -63,7 +63,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($dataps as $key => $datmit)
+                            @php
+                                $prosesData = $dataps->where('status', 'Proses');
+                            @endphp
+                            @forelse($prosesData as $key => $datmit)
                             <tr>
                                 <td data-label="No" class="text-center">{{ $key + 1 }}</td>
                                 <td data-label="Tanggal Sewa">{{ $datmit->tgl_perjanjian }}</td>
@@ -72,10 +75,10 @@
                                 <td data-label="Id Asset" class="text-center">{{ $datmit->id_aset }}</td>
                                 <td data-label="Nama">{{ $datmit->nama }}</td>
                                 <td data-label="Harga Asset">Rp. {{ number_format($datmit->harga_sewa ?? 0, 0,
-                                    ',', '.') }}</td> {{-- Format currency --}}
+                                    ',', '.') }}</td> 
+
                                 <td data-label="Status" class="text-center">
-                                    <span
-                                        class="badge bg-{{ $datmit->status == 'Diterima' ? 'success' : ($datmit->status == 'Proses' ? 'warning' : 'secondary') }}">
+                                    <span class="badge bg-warning">
                                         {{ $datmit->status }}
                                     </span>
                                 </td>
@@ -94,7 +97,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="9" class="text-center">Tidak ada data ditemukan</td>
+                                <td colspan="9" class="text-center">Tidak ada data proses ditemukan</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -111,7 +114,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-10">
-                        <p class="card-title">List Data Diterima</p>
+                        <p class="card-title">List Data Diterima & Ditolak</p>
                     </div>
                     <div class="col-2">
                         <div class="card-tools">
@@ -136,7 +139,7 @@
                                 <th>No</th>
                                 <th>Tanggal</th>
                                 <th>Id Mitra</th>
-                                <th>Penyewa</th>
+                                <th>Jenis</th>
                                 <th>Id Aset</th>
                                 <th>Nama</th>
                                 <th>Harga Aset</th>
@@ -144,18 +147,32 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $selesaiData = $dataps->whereIn('status', ['Diterima', 'Ditolak']);
+                            @endphp
+                            @forelse($selesaiData as $key => $datmit)
                             <tr>
-                                <td data-label="No" class="text-center">1</td>
-                                <td data-label="Tanggal Sewa">14/09/2025</td>
-                                <td data-label="Id Mitra">NPA202500001</td>
-                                <td data-label="Penyewa">Perorangan</td>
-                                <td data-label="Id Asset">KAI0600001</td>
-                                <td data-label="Nama">Fernando</td>
-                                <td data-label="Harga Asset">Rp.10.500.000</td>
-                                <td data-label="Status" class="text-center"><span
-                                        class="status-badge status-approved">Diterima</span></td>
-
+                                <td data-label="No" class="text-center">{{ $key + 1 }}</td>
+                                <td data-label="Tanggal Sewa">{{ $datmit->tgl_perjanjian }}</td>
+                                <td data-label="Id Mitra"class="text-center">{{ $datmit->id_mitra }}</td>
+                                <td data-label="jenis"class="text-center">{{ $datmit->Jenis }}</td>
+                                <td data-label="Id Asset"class="text-center">{{ $datmit->id_aset }}</td>
+                                <td data-label="Nama">{{ $datmit->nama }}</td>
+                                <td data-label="Harga Asset">Rp. {{ number_format($datmit->harga_sewa ?? 0, 0,
+                                    ',', '.') }}</td>
+                                <td data-label="Status" class="text-center">
+                                    <span
+                                        class="badge bg-{{ 
+                                        $datmit->status == 'Diterima' ? 'success' : 'danger' }}">
+                                        {{ $datmit->status }}
+                                    </span>
+                                </td>
                             </tr>
+                            @empty
+                            <tr>
+                                <td colspan="8" class="text-center">Tidak ada data diterima/ditolak ditemukan</td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -163,6 +180,5 @@
         </div>
     </div>
 </div>
-
 
 @endsection

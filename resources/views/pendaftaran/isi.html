@@ -1,11 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const setujuCheckboxes = document.querySelectorAll('.setuju-checkbox');
+        const tidakSetujuCheckboxes = document.querySelectorAll('.tidak-setuju-checkbox');
+        const approveBtn = document.getElementById('approveBtn');
+        const rejectBtn = document.getElementById('rejectBtn');
+
+        // Fungsi untuk menangani perubahan checkbox
+        function handleCheckboxChange() {
+            const row = this.getAttribute('data-row');
+            const isSetuju = this.classList.contains('setuju-checkbox');
+
+            // Uncheck checkbox yang berlawanan dalam row yang sama
+            if (isSetuju) {
+                document.querySelector(`.tidak-setuju-checkbox[data-row="${row}"]`).checked = false;
+            } else {
+                document.querySelector(`.setuju-checkbox[data-row="${row}"]`).checked = false;
+            }
+
+            validateForm();
+        }
+
+        // Validasi form
+        function validateForm() {
+            let allRowsApproved = true;
+            let allRowsRejected = true;
+            let anyRowRejected = false;
+
+            // Cek setiap row
+            for (let i = 1; i <= 2; i++) {
+                const setujuChecked = document.querySelector(`.setuju-checkbox[data-row="${i}"]`).checked;
+                const tidakSetujuChecked = document.querySelector(`.tidak-setuju-checkbox[data-row="${i}"]`).checked;
+
+                // Jika tidak ada yang dicentang
+                if (!setujuChecked && !tidakSetujuChecked) {
+                    allRowsApproved = false;
+                    allRowsRejected = false;
+                }
+                // Jika setuju dicentang
+                else if (setujuChecked) {
+                    allRowsRejected = false;
+                }
+                // Jika tidak setuju dicentang
+                else if (tidakSetujuChecked) {
+                    allRowsApproved = false;
+                    anyRowRejected = true;
+                }
+            }
+
+            // Enable/disable tombol approve dan reject
+            approveBtn.disabled = !allRowsApproved;
+
+            // Tampilkan tombol reject jika ada yang tidak setuju
+            if (anyRowRejected) {
+                rejectBtn.style.display = 'block';
+                approveBtn.style.display = 'none';
+            } else {
+                rejectBtn.style.display = 'none';
+                approveBtn.style.display = 'block';
+            }
+        }
+
+        // Tambahkan event listener untuk semua checkbox
+        setujuCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', handleCheckboxChange);
+        });
+
+        tidakSetujuCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', handleCheckboxChange);
+        });
+
+        // Handle form submission
+        document.getElementById('approvalForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const action = e.submitter?.name === 'reject' ? 'reject' : 'approve';
+
+            if (action === 'approve') {
+                // Konfirmasi untuk approve
+                if (confirm('Apakah Anda yakin ingin menyetujui perjanjian ini?')) {
+                    // Set hidden input untuk action
+                    document.getElementById('formAction').value = 'approve';
+                    // Nonaktifkan checkbox dan tombol selama proses
+                    disableFormElements();
+                    this.submit();
+                }
+            } else if (action === 'reject') {
+                // Konfirmasi untuk reject
+                const reason = prompt('Masukkan alasan penolakan:');
+                if (reason !== null && reason.trim() !== '') {
+                    document.getElementById('formAction').value = 'reject';
+                    document.getElementById('rejectionReason').value = reason;
+                    // Nonaktifkan checkbox dan tombol selama proses
+                    disableFormElements();
+                    this.submit();
+                } else if (reason !== null) {
+                    alert('Alasan penolakan harus diisi.');
+                }
+            }
+        });
+
+
+
+        // Initial validation
+        validateForm();
+    });
+</script>
