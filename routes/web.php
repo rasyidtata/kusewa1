@@ -21,9 +21,10 @@ Route::get('/laporan/download', [DashboardController::class, 'downloadPdf'])->na
 Route::get("pendaftaran/form_data_diri", [PendaftaranController::class, "create"])->name('pendaftaran.form');
 Route::post("pendaftaran/create", [PendaftaranController::class, "store"])->name('pendaftaran.store');
 Route::post('/pendaftaran/approve/{id_perjanjian}', [PendaftaranController::class, 'approve'])->name('pendaftaran.approve');
+Route::get('/pendaftaran/fitur_filter', [PendaftaranController::class, 'fitur_filter'])->name('pendaftaran.fitur_filter');
 
 
-Route::get("/pendaftaran/list_data", [PerjanjianSewaController::class, "perjanjian_sewa"])->name('pendaftaran.list');
+Route::get("/list_data/data_perjanjian", [PerjanjianSewaController::class, "perjanjian_sewa"])->name('list_data.perjanjian');
 Route::get('/pendaftaran/form_edit/{id_perjanjian}', [PerjanjianSewaController::class, 'edit'])->name('pendaftaran.edit');
 Route::post('/pendaftaran/update/{id_perjanjian}', [PerjanjianSewaController::class, 'update'])->name('pendaftaran.update');
 Route::get('/pendaftaran/detail/{id_perjanjian}', [PerjanjianSewaController::class, 'detail_perjanjian']);

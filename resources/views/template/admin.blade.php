@@ -55,15 +55,13 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="mitraDropdown">
                             <li><a class="dropdown-item" href="{{ route('pendaftaran.form') }}">Form Pendaftaran</a></li>
-                            <li><a class="dropdown-item" href="{{ route('pendaftaran.list') }}">List Data</a></li>
+                            <li><a class="dropdown-item" href="{{ url('pendaftaran/fitur_filter') }}">List Data</a></li>
                         </ul>
                     </li>
                     <li class="list-group-item"><a href="#">Perpanjang Mitra</a></li>
                     <li class="list-group-item"><a href="#">Putus Kontrak</a></li>
 
-                    <li class="list-group-item"><a href="{{ url('list_data_perjanjian/data_perjanjian') }}">List Data perjanjian</a></li>
-
-                    <li class="list-group-item"><a href="#">Data Mitra</a></li>
+                    <li class="list-group-item"><a href="{{ url('list_data/data_perjanjian') }}">List Data perjanjian</a></li>
                     
                     <li class="list-group-item">
                         <a href="{{ url('laporan/index') }}">Laporan</a>

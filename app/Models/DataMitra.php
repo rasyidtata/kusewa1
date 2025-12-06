@@ -11,6 +11,7 @@ class DataMitra extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = [
+        'kode_mitra',
         'Jenis',
         'status',
         'no_identitas',
@@ -125,6 +126,42 @@ class DataMitra extends Model
             ? \Carbon\Carbon::parse($this->tgl_surat_pengukuhan_kena_pajak)->format('Y-m-d'): null;
     }
 
+
+
+
+    
+    
+    public static function generateKodeMitra()
+    {
+        $prefix = 'NPA';
+        $year = date('y'); // 2 digit tahun, contoh: 25
+        $month = date('m'); // 2 digit bulan, contoh: 12
+        
+        // Cari record terakhir dengan prefix yang sama tahun-bulan
+        $lastRecord = self::where('kode_mitra', 'like', $prefix . $year . $month . '%')
+            ->orderBy('kode_mitra', 'desc')
+            ->first();
+        
+        if ($lastRecord && $lastRecord->kode_mitra) {
+            // Ambil 6 digit terakhir
+            $lastSequence = substr($lastRecord->kode_mitra, -6);
+            $nextSequence = str_pad((int)$lastSequence + 1, 6, '0', STR_PAD_LEFT);
+        } else {
+            $nextSequence = '000001';
+        }
+        
+        return $prefix . $year . $month . $nextSequence; // Contoh: NPA2512000001
+    }
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($model) {
+            if (empty($model->kode_mitra)) {
+                $model->kode_mitra = self::generateKodeMitra();
+            }
+        });
+    }
 
 
 }

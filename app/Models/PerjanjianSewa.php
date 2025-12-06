@@ -11,6 +11,7 @@ class PerjanjianSewa extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = [
+        'kode_perjanjian',
         'jangka_waktu',
         'masa_awal_perjanjian',
         'masa_akhir_perjanjian', 
@@ -118,6 +119,43 @@ class PerjanjianSewa extends Model
             ? \Carbon\Carbon::parse($this->masa_akhir_manfaat)->format('Y-m-d'): null;
     }
 
+
+
+
+
+    public static function generateKodePerjanjian()
+    {
+        $prefix = 'NO/PRJ/SEWA';
+        $year = date('y'); // 2 digit tahun
+        $month = date('m'); // 2 digit bulan
+        
+        // Cari record terakhir dengan tahun-bulan yang sama
+        $lastRecord = self::where('kode_perjanjian', 'like', $prefix . '/' . $year . '/' . $month . '/%')
+            ->orderBy('kode_perjanjian', 'desc')
+            ->first();
+        
+        if ($lastRecord && $lastRecord->kode_perjanjian) {
+            // Ambil sequence setelah slash terakhir
+            $parts = explode('/', $lastRecord->kode_perjanjian);
+            $lastSequence = end($parts);
+            $nextSequence = str_pad((int)$lastSequence + 1, 6, '0', STR_PAD_LEFT);
+        } else {
+            $nextSequence = '000001';
+        }
+        
+        return $prefix . '/' . $year . '/' . $month . '/' . $nextSequence; 
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($model) {
+            if (empty($model->kode_perjanjian)) {
+                $model->kode_perjanjian = self::generateKodePerjanjian();
+            }
+        });
+    }
     
 }
  

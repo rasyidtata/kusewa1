@@ -31,7 +31,7 @@
             </div>
             <div class="row row-detail-cetak ">
                 <div class="col-4 col-kembali">
-                    <a href="{{ url('pendaftaran/list_data') }}" class="text text-kembali px-5">
+                    <a href="{{ url('pendaftaran/fitur_filter') }}" class="text text-kembali px-5">
                         <i class="bi bi-arrow-left-circle me-2"></i>kembali
                     </a>
                 </div>
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alasanInput.required = true;
         } else {
             // Jika semua setuju, aktifkan tombol terima, nonaktifkan tombol tolak
-            rejectBtn.disabled = false;
+            rejectBtn.disabled = true;
             approveBtn.disabled = false;
             
             // Tidak wajibkan alasan penolakan
