@@ -47,9 +47,11 @@
                     <button type="button" class="btn btn-share ">
                         <i class="bi bi-share me-2"></i>Share
                     </button>
-                    <button type="button" class="btn btn-download ">
+                    <a href="{{ url('perjanjian/download', $dataps->id_perjanjian) }}" 
+                        class="btn btn-download" 
+                        download>
                         <i class="fas fa-file-pdf fa-sm me-2"></i>Download
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="card mb-4 border-0 p-5">
@@ -59,7 +61,7 @@
                     <input type="hidden" id="formAction" name="action" value="approve">
                     <input type="hidden" id="rejectionReason" name="rejection_reason" value="">
 
-                    <table class="table table-perjanjian table-bordered">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>

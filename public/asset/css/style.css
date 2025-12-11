@@ -659,7 +659,7 @@ textarea.form-control {
     overflow: auto;
 }
 
-.table thead th {
+.table-bordered thead th {
     position: sticky;
     top: 0;
     background-color: #2c3e50;
@@ -672,15 +672,26 @@ textarea.form-control {
 
 }
 
-.table tbody td {
-
+.table-bordered {
+    border-spacing: 0;
+    width: 100%;
+}
+.table-bordered td {
     vertical-align: middle;
     font-size: 12px;
+    background-color: #ffffff;
 }
 
 .table-bordered th,
 .table-bordered td {
     border: 1px solid #dee2e6;
+}
+
+.table-bordered tbody tr:hover {
+    background-color: #f5f5f5;
+}
+.table-bordered tbody tr:hover td {
+    background-color: #f5f5f5;
 }
 
 .status-badge {
@@ -944,7 +955,7 @@ textarea.form-control {
 /*==================================== list data perjanjian ============================================*/
 
 .row-data-perjanjian .col-2>a {
-    font-size: 14px;
+    font-size: 12px;
     color: #444444;
 }
 
@@ -1144,6 +1155,12 @@ textarea.form-control {
     width: 100%;
 }
 
+.table-perjanjian td {
+    vertical-align: middle;
+    font-size: 12px;
+    background-color: #ffffff;
+}
+
 .table-perjanjian th,
 .table-perjanjian td {
     border: 1px solid #dee2e6;
@@ -1152,12 +1169,15 @@ textarea.form-control {
 }
 
 .table-perjanjian th {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     font-weight: bold;
     border-bottom: 2px solid #dee2e6;
 }
 
 .table-perjanjian tbody tr:hover {
+    background-color: #f5f5f5;
+}
+.table-perjanjian tbody tr:hover td {
     background-color: #f5f5f5;
 }
 
@@ -1265,7 +1285,7 @@ textarea.form-control {
     border: 1px solid #dee2e6;
     padding: 8px 5px;
     text-align: left;
-    vertical-align: top;
+    vertical-align: middle;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;

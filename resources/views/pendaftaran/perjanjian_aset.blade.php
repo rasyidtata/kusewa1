@@ -106,19 +106,24 @@
         }
 
         .cover-table {
-            margin-top: 20px;
+            margin: 30px auto;
+            width: 80%;
         }
 
         .cover-table .table-cover {
             width: 60%;
-            border: solid #000 1px;
             border-collapse: collapse;
             margin: 0 auto;
         }
 
+        .table-cover td {
+            padding: 10px 8px;
+            border: 1px solid #000;
+        }
+
         .cover-table .table-cover .no {
             width: 30%;
-            padding: 4px 0;
+            padding: 4px 4px;
         }
 
         .cover-table .table-cover .ti {
@@ -126,7 +131,7 @@
         }
 
         .cover-table .table-cover .isi {
-            padding: 4px 0;
+            padding: 4px 4px;
         }
 
         .konten-cover>h6 {
@@ -226,149 +231,102 @@
         }
 
         @media print {
+            @page {
+                size: A4;
+                margin: 0; 
+            }
+
             body {
-                background: white;
+                background-color: white !important;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .tombol, 
+            .btn, 
+            button,
+            .no-print {
+                display: none !important;
             }
 
             .container {
-                box-shadow: none;
-                max-width: none;
+                width: 100% !important;
+                max-width: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
             }
 
             .page {
-                box-shadow: none;
-                margin: 0;
+                width: 100% !important;
+                margin: 0 !important;
+                padding-left: 2.5cm !important;
+                padding-right: 1.5cm !important;
+                border: none !important;
+                box-shadow: none !important;
+                page-break-after: always; 
+                min-height: auto !important;
             }
-        }
 
-        .pasal-content p,
-        .definition-item {
-            word-spacing: -0.05em;
-        }
+            .page:last-child {
+                page-break-after: auto;
+            }
 
-        .pasal-content p {
-            margin-bottom: 5px;
-            /* Jarak antar paragraf dalam pasal */
-        }
+            .row-isi-konten, 
+            .row {
+                display: block !important;
+                width: 100% !important;
+            }
 
+            .col-md-6, 
+            .col-6 {
+                float: left !important;
+                width: 50% !important;
+                padding: 0 10px !important;
+                box-sizing: border-box !important;
+            }
 
+            .row-isi-konten::after, 
+            .row::after {
+                content: "";
+                display: table;
+                clear: both;
+            }
 
-        /*============================== konten table perjanjian =========================*/
-        /*----- 1 -----*/
-        .konten-table1 .table-konten1 {
-            border: #ddd 1px solid;
-            font-size: 12px;
-            width: 100%;
-            border-collapse: collapse;
-        }
+            .pasal, 
+            p, 
+            tr, 
+            li,
+            .definition-item {
+                page-break-inside: avoid !important;
+            }
 
-        .konten-table1 .table-konten1 th,
-        .konten-table1 .table-konten1 td {
-            border: 1px solid #919191;
-        }
+            table {
+                border-collapse: collapse !important;
+                width: 100% !important;
+            }
+            
+            td, th {
+                border: 1px solid #000 !important;
+            }
 
-        .konten-table1 .table-konten1 .no {
-            width: 5%;
-            padding: 2px;
-            text-align: center;
-            color: #000;
-        }
-
-        .konten-table1 .table-konten1 .sub {
-            width: 35%;
-            padding: 2px;
-            text-align: center;
-            color: #000;
-        }
-
-        .konten-table1 .table-konten1 .ket {
-            padding: 2px;
-            text-align: center;
-            color: #000;
-        }
-
-
-        /*============================== tombol =========================*/
-        .tombol {
-            padding: 20px;
-            background-color: #ffffff;
-            margin-top: 10px;
-        }
-
-        .tombol .col-3 {
-            text-align: start;
-        }
-
-        .col-4 .btn-back {
-            border: 1px solid #c2c2c2;
-            color: #3b3b3b;
-        }
-
-        .col-4 .btn-back:hover {
-            background-color: #929292;
-            border: none;
-            color: #ffffff;
-        }
-
-        .col-3 .btn-kirim {
-            border: 1px solid #c2c2c2;
-            color: rgb(42, 85, 165);
-        }
-
-        .col-3 .btn-kirim:hover {
-            background-color: rgb(42, 85, 165);
-            color: #ffffff;
-        }
-
-        .row-ceklist {
-            margin-top: 30px;
-            margin-bottom: 30px;
-            text-align: start;
-            align-items: start;
-            justify-content: start;
-        }
-
-
-        /*============================== tabel ttd event dan aset =========================*/
-        .row-ttd {
-            text-align: end;
-            align-items: end;
-            justify-content: end;
-            font-size: 10px;
-        }
-
-        .kotak-table {
-            border: 1px solid #797979;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        .kotak-table th,
-        .kotak-table td {
-            border: 1px solid #797979;
-            padding: 2px;
-            text-align: center;
-        }
-
-        .simple-checkbox {
-            width: 16px;
-            height: 16px;
-            accent-color: #00000000;
-            background-color: transparent;
-        }
-
-        .simple-checkbox:checked {
-            background-color: transparent;
-        }
-
-        .checkbox-cell {
-            text-align: center;
+            input[type="checkbox"] {
+                -webkit-appearance: none;
+                appearance: none;
+                border: 1px solid black;
+                width: 12px;
+                height: 12px;
+                display: inline-block;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="container ">
+        <button class="print-button" onclick="window.print()">Cetak Dokumen</button>
         <div class="page">
             <div class="konten-cover">
                 <div class="img cover-img">
@@ -685,7 +643,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row row-ttd">
+            <div class="row row-ttd ">
                 <div class="col-3">
                     <div class="table-perjanjian">
                         <table class="kotak-table">
@@ -2129,29 +2087,17 @@
                 </div>
             </div>
         </div>
-        <div class="tombol">
-            <div class="tombol-konten">
-                <p>jika anda telah membaca pilih salah satu dengan </p>
-            </div>
-            <div class="row row-tombol">
-                <div class="col-4 ">
-                    <button type="button" class="btn btn-back px-5">
-                        <i class="bi bi-arrow-left-circle me-2"></i>kembali
-                    </button>
-                </div>
-                <div class="col-4">
-                    <button type="button" class="btn btn-tidak-setuju px-5">
-                        <i class="bi bi-delet me-2"></i>Tidak Setuju
-                    </button>
-                </div>
-                <div class="col-4">
-                    <button type="button" class="btn btn-setuju px-5">
-                        <i class="bi bi-save me-2"></i>Setuju
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
+
+    <script>
+
+        window.onload = function() {
+            // Jika URL memiliki parameter print, langsung cetak
+            if (window.location.search.includes('print=true')) {
+                window.print();
+            }
+        };
+    </script>
 </body>
 
 </html>

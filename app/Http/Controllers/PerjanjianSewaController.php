@@ -325,26 +325,26 @@ class PerjanjianSewaController extends Controller
 
 
 
-
-
-
-
-    public function previewPerjanjianPDF($id_perjanjian)
+    public function downloadPerjanjianPDF($id_perjanjian)
     {
         $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
 
-        $kategori = $dataps->dataMitra->kategori ?? '';
-        $kategoriText = strtolower($kategori) === 'event' ? 'Event' : 'Aset';
-        $fileName = "Perjanjian_{$kategoriText}_KAI_{$dataps->id_perjanjian}.pdf";
-
+        $kategori = $dataps->dataMitra->kategori ?? 'Aset';
+        
         // Tentukan view berdasarkan kategori
-        if ($kategori === 'Event') {
-            $viewName = 'pendaftaran.perjanjian_event';
+        if (strtolower($kategori) === 'event') {
+            $view = 'pendaftaran.perjanjian_event';
         } else {
-            $viewName = 'pendaftaran.perjanjian_aset';
+            $view = 'pendaftaran.perjanjian_aset';
         }
 
-        return view('pendaftaran.perjanjian_event', compact('dataps', 'viewName', 'fileName'));
+        $pdf = Pdf::loadView($view, compact('dataps'))
+                ->setPaper('A4', 'portrait');
+
+        $kategoriText = ucfirst(strtolower($kategori));
+        $fileName = "Perjanjian_{$kategoriText}_KAI_{$dataps->id_perjanjian}.pdf";
+
+        return $pdf->download($fileName); 
     }
 
 
