@@ -11,6 +11,7 @@ class DataAset extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = [
+        'kode_aset',
         'lokasi',
         'luas_tanah',
         'luas_bangunan',
@@ -37,5 +38,35 @@ class DataAset extends Model
     public function perjanjianSewa()
     {
         return $this->hasMany(PerjanjianSewa::class, 'id_aset', 'id_aset');
+    }
+
+
+
+
+    public static function generateKodeAset()
+    {
+        $prefix = 'KAIASET';
+        
+        // Cari record terakhir
+        $lastRecord = self::orderBy('id_aset', 'desc')->first();
+        
+        if ($lastRecord && $lastRecord->id_aset) {
+            $nextSequence = str_pad($lastRecord->id_aset + 1, 6, '0', STR_PAD_LEFT);
+        } else {
+            $nextSequence = '000001';
+        }
+        
+        return $prefix . $nextSequence; // Contoh: KAIASET000001
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($model) {
+            if (empty($model->kode_aset)) {
+                $model->kode_aset = self::generateKodeAset();
+            }
+        });
     }
 }

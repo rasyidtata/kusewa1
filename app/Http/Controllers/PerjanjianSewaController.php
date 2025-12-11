@@ -12,50 +12,50 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PerjanjianSewaController extends Controller
 {
-    public function perjanjian_sewa()
+    public function perjanjian_sewa(Request $request) // Tambahkan Request $request
     {
-        $dataps = PerjanjianSewa::select(
+        // Gunakan query builder
+        $query = PerjanjianSewa::select(
             'perjanjian_sewa.*',
             'dm.tgl_perjanjian',
-            'dm.id_mitra',
+            'dm.kode_mitra',
             'dm.nama',
             'dm.Jenis',
-            'da.id_aset',
-            'dm.status'
+            'dm.nama_perwakilan',
+            'dm.penyewa_selaku',
+            'dm.alamat',
+            'dm.no_tlpn',
+            'dm.kategori',
+            'da.kode_aset',
+            'da.lokasi'
         )
-            ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
-            ->join('data_aset as da', 'perjanjian_sewa.id_aset', '=', 'da.id_aset')
-            ->get();
-
-        return view('pendaftaran.list_data', compact('dataps'));
-    }
-
-    public function showForm($id)
-{
-    $dataps = PerjanjianSewa::select(
-        'perjanjian_sewa.*',
-        'dm.tgl_perjanjian',
-        'dm.id_mitra',
-        'dm.nama',
-        'dm.Jenis',
-        'da.id_aset',
-        'dm.status'
-    )
-        ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
-        ->join('data_aset as da', 'perjanjian_sewa.id_aset', '=', 'da.id_aset')
-        ->where('perjanjian_sewa.id_perjanjian', $id)
-        ->firstOrFail();
-
-    return view('perpanjang.formperpanjang', compact('dataps'));
-}
 
 
+        // Filter berdasarkan kategori
+        if ($request->filled('filterkategori')) {
+            $query->where('dm.kategori', $request->filterkategori);
+        }
 
+        // Filter berdasarkan jenis mitra
+        if ($request->filled('filterjenis')) {
+            $query->where('dm.Jenis', $request->filterjenis);
+        }
 
+        // Filter berdasarkan pencarian
+        if ($request->filled('table_search')) {
+            $search = $request->table_search;
+            $query->where(function($q) use ($search) {
+                $q->where('dm.nama', 'LIKE', "%{$search}%")
+                ->orWhere('dm.kode_mitra', 'LIKE', "%{$search}%")
+                ->orWhere('da.kode_aset', 'LIKE', "%{$search}%")
+                ->orWhere('perjanjian_sewa.kode_perjanjian', 'LIKE', "%{$search}%");
+            });
+        }
 
+        $dataPerjanjian = $query->get();
 
-
-
+        return view('list_data.data_perjanjian', compact('dataPerjanjian'));
+    }  
 
 
 

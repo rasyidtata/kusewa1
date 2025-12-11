@@ -69,11 +69,14 @@
                                 <small class="d-block text-muted">Mulai: {{ \Carbon\Carbon::parse($t->masa_awal_perjanjian)->format('d/m/Y') }}</small>
                                 <small class="d-block text-muted">Akhir: {{ \Carbon\Carbon::parse($t->masa_akhir_perjanjian)->format('d/m/Y') }}</small>
                             </td>
-                            <td>
-                                @if($t->status == 'aktif') <span class="badge bg-success">Aktif</span>
-                                @elseif($t->status == 'peringatan') <span class="badge bg-warning text-dark">Peringatan</span>
-                                @else <span class="badge bg-danger">Mati</span>
-                                @endif
+                            <td data-label="Status Perjanjian" class="text-center">
+                                <span class="badge bg-{{ 
+                                    $t->status == 'aktif' ? 'success' : 
+                                    ($t->status == 'peringatan' ? 'secondary' : 
+                                    ($t->status == 'mati' ? 'danger' : 'warning')) 
+                                }}">
+                                    {{ $t->status }}
+                                </span>
                             </td>
                             <td class="text-right font-weight-bold text-primary">Rp {{ number_format($t->total_harga, 0, ',', '.') }}</td>
                         </tr>

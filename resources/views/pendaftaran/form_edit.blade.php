@@ -715,7 +715,7 @@
                 <div class="card mb-4 border-0 p-5">
                     <div class="row row-list-perjanjian p-4">
                         <div class="col-4">
-                            <a href="{{ url('pendaftaran/list_data') }}"
+                            <a href="{{ url('pendaftaran/fitur_filter') }}"
                                 class="btn btn-kembali px-5 text-decoration-none">
                                 <i class="bi bi-arrow-left-circle me-2"></i>kembali
                             </a>

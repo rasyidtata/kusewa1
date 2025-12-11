@@ -10,6 +10,7 @@
     </div>
 
     <div class="row">
+        <!-- KARTU 1: TOTAL PENDAPATAN (BIRU) -->
         <div class="col-lg-6 col-12">
             <div class="small-box bg-gradient-primary">
                 <div class="inner">
@@ -22,31 +23,36 @@
             </div>
         </div>
 
+        <!-- KARTU 2: JUMLAH TOTAL (HIJAU) -->
         <div class="col-lg-3 col-6">
             <div class="small-box bg-gradient-success">
                 <div class="inner">
-                    <h3>{{ $chartData['status_aktif'] ?? 0 }}</h3>
-                    <p>Aset Aktif</p>
+                    <!-- Mengambil data total semua -->
+                    <h3>{{ $chartData['total_semua_perjanjian'] ?? 0 }}</h3>
+                    <p>Jumlah Total Perjanjian</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- KARTU 3: PERJANJIAN AKTIF (KUNING) -->
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-gradient-warning">
+                <div class="inner">
+                    <!-- Mengambil data yang aktif saja -->
+                    <h3 style="color: white;">{{ $chartData['jumlah_perjanjian_aktif'] ?? 0 }}</h3>
+                    <p style="color: white;">Perjanjian Sedang Aktif</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-check-circle"></i>
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-gradient-warning">
-                <div class="inner">
-                    <h3 style="color: white;">{{ $chartData['status_peringatan'] ?? 0 }}</h3>
-                    <p style="color: white;">Perlu Perhatian</p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-            </div>
-        </div>
     </div>
 
+    <!-- Grafik -->
     <div class="row">
         <div class="col-xl-8 col-lg-7">
             <div class="card shadow mb-4">
@@ -84,56 +90,53 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-        
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15); /* Bayangan halus */
-            margin-bottom: 20px;
-        }
-        .card-header {
-            background-color: #f8f9fc;
-            border-bottom: 1px solid #e3e6f0;
-            font-weight: bold;
-            color: #4e73df; 
-            border-radius: 10px 10px 0 0 !important;
-            padding: 15px 20px;
-        }
+    /* Styling Tambahan untuk Card dan Small Box */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 20px;
+    }
+    .card-header {
+        background-color: #f8f9fc;
+        border-bottom: 1px solid #e3e6f0;
+        font-weight: bold;
+        color: #4e73df; 
+        border-radius: 10px 10px 0 0 !important;
+        padding: 15px 20px;
+    }
 
+    .small-box {
+        border-radius: 10px;
+        position: relative;
+        display: block;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        overflow: hidden;
+        color: #fff;
+        padding: 20px;
+    }
+    .small-box > .inner { padding: 10px; }
+    .small-box h3 { font-size: 2.2rem; font-weight: bold; margin: 0 0 10px 0; white-space: nowrap; padding: 0; }
+    .small-box p { font-size: 1rem; margin-bottom: 0; }
+    
+    .small-box .icon {
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        z-index: 0;
+        font-size: 90px;
+        color: rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s;
+    }
+    .small-box:hover .icon { transform: scale(1.1); }
+    
+    .bg-gradient-primary { background: linear-gradient(45deg, #4e73df 10%, #224abe 90%); }
+    .bg-gradient-success { background: linear-gradient(45deg, #1cc88a 10%, #13855c 90%); }
+    .bg-gradient-warning { background: linear-gradient(45deg, #f6c23e 10%, #dda20a 90%); }
+    .bg-gradient-danger { background: linear-gradient(45deg, #e74a3b 10%, #be2617 90%); }
+</style>
 
-        .small-box {
-            border-radius: 10px;
-            position: relative;
-            display: block;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-            overflow: hidden;
-            color: #fff;
-            padding: 20px;
-        }
-        .small-box > .inner { padding: 10px; }
-        .small-box h3 { font-size: 2.2rem; font-weight: bold; margin: 0 0 10px 0; white-space: nowrap; padding: 0; }
-        .small-box p { font-size: 1rem; }
-        
-        .small-box .icon {
-            position: absolute;
-            top: -10px;
-            right: 10px;
-            z-index: 0;
-            font-size: 90px;
-            color: rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s;
-        }
-        .small-box:hover .icon { transform: scale(1.1); }
-        
-        /* Warna-warni Khas Dashboard */
-        .bg-gradient-primary { background: linear-gradient(45deg, #4e73df 10%, #224abe 90%); }
-        .bg-gradient-success { background: linear-gradient(45deg, #1cc88a 10%, #13855c 90%); }
-        .bg-gradient-warning { background: linear-gradient(45deg, #f6c23e 10%, #dda20a 90%); }
-        .bg-gradient-danger { background: linear-gradient(45deg, #e74a3b 10%, #be2617 90%); }
-
-        .btn-custom { border-radius: 50px; padding: 8px 20px; font-weight: 600; box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }
-    </style>
 <script>
     const cData = {!! json_encode($chartData ?? []) !!};
 
@@ -158,7 +161,17 @@
                         fill: true
                     }]
                 },
-                options: { maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                options: { 
+                    maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) { return 'Rp ' + new Intl.NumberFormat('id-ID').format(value); }
+                            }
+                        }
+                    }
+                }
             });
         }
 

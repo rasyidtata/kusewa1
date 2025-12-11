@@ -146,9 +146,14 @@
                             Pendaftaran Mitra
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="mitraDropdown">
+<<<<<<< HEAD
                             <li><a class="dropdown-item" href="{{ route('pendaftaran.form') }}">Form Pendaftaran</a>
                             </li>
                             <li><a class="dropdown-item" href="{{ route('pendaftaran.list') }}">List Data</a></li>
+=======
+                            <li><a class="dropdown-item" href="{{ route('pendaftaran.form') }}">Form Pendaftaran</a></li>
+                            <li><a class="dropdown-item" href="{{ url('pendaftaran/fitur_filter') }}">List Data</a></li>
+>>>>>>> d12f0bfcf70870f87ce8fc954d26b9ad211d52c0
                         </ul>
                     </li>
                     <li class="list-group-item">
@@ -156,10 +161,15 @@
                     </li>
                     <li class="list-group-item"><a href="#">Putus Kontrak</a></li>
 
+<<<<<<< HEAD
                     <li class="list-group-item"><a href="{{ url('list_data_perjanjian/data_perjanjian') }}">List Data perjanjian</a></li>
 
                     <li class="list-group-item"><a href="#">Data Mitra</a></li>
 
+=======
+                    <li class="list-group-item"><a href="{{ url('list_data/data_perjanjian') }}">List Data perjanjian</a></li>
+                    
+>>>>>>> d12f0bfcf70870f87ce8fc954d26b9ad211d52c0
                     <li class="list-group-item">
                         <a href="{{ url('laporan/index') }}">Laporan</a>
                     </li>

@@ -22,7 +22,7 @@ class PendaftaranController extends Controller
         $validator = Validator::make($request->all(), [
             // Data Diri - Step 1
             'jenis_penyewa' => 'required|in:Perorangan,Perusahaan',
-            'kategori' => 'required|in: Aset, Event',
+            'kategori' => 'required|in:Aset,Event',
             'nama_lengkap' => 'required|string|max:255',
             'nik' => 'required|string|max:20',
             'masa_berlaku_ktp' => 'required|date',
@@ -77,6 +77,7 @@ class PendaftaranController extends Controller
             'total_harga' => 'required|numeric|min:0',
             'terbilang' => 'required|string'
         ]);
+        
 
         
         DB::beginTransaction();
@@ -213,7 +214,6 @@ class PendaftaranController extends Controller
         try {
             DB::beginTransaction();
 
-            // Cari data perjanjian
             $perjanjian = PerjanjianSewa::with('dataMitra')->findOrFail($id_perjanjian);
 
             // Validasi input
@@ -232,10 +232,12 @@ class PendaftaranController extends Controller
                     }
                 }
 
-                // Update status menjadi 'Diterima'
                 $perjanjian->dataMitra->update([
                     'status' => 'Diterima',
-                    'tgl_perjanjian' => now(),
+                ]);
+                $perjanjian->update([
+                'status' => 'aktif',
+                'updated_at' => now(),
                 ]);
 
                 $message = 'Perjanjian berhasil disetujui dan status telah diubah menjadi diterima.';
@@ -259,6 +261,66 @@ class PendaftaranController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
+    }
+
+
+
+    public function fitur_filter(Request $request)
+    {
+        // Query untuk DATA SELESAI (tabel kedua) dengan filter
+        $querySelesai = PerjanjianSewa::select(
+                'perjanjian_sewa.*',
+                'dm.tgl_perjanjian',
+                'dm.kode_mitra',
+                'dm.nama',
+                'dm.Jenis',
+                'da.kode_aset',
+                'dm.status',
+            )
+            ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
+            ->join('data_aset as da', 'perjanjian_sewa.id_aset', '=', 'da.id_aset')
+            ->whereIn('dm.status', ['Diterima', 'Ditolak']); // Hanya status selesai
+
+        // Filter berdasarkan kategori
+        if ($request->filled('filterkategori')) {
+            $querySelesai->where('dm.kategori', $request->filterkategori);
+        }
+
+        // Filter berdasarkan jenis mitra
+        if ($request->filled('filterjenis')) {
+            $querySelesai->where('dm.Jenis', $request->filterjenis);
+        }
+
+        // Pencarian
+        if ($request->filled('table_search')) {
+            $search = $request->table_search;
+            $querySelesai->where(function($q) use ($search) {
+                $q->where('dm.nama', 'LIKE', "%{$search}%")
+                ->orWhere('dm.kode_mitra', 'LIKE', "%{$search}%")
+                ->orWhere('da.kode_aset', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Query untuk DATA PROSES (tabel pertama) TANPA filter
+        $queryProses = PerjanjianSewa::select(
+                'perjanjian_sewa.*',
+                'dm.tgl_perjanjian',
+                'dm.kode_mitra',
+                'dm.nama',
+                'dm.Jenis',
+                'da.kode_aset',
+                'dm.status',
+            )
+            ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
+            ->join('data_aset as da', 'perjanjian_sewa.id_aset', '=', 'da.id_aset')
+            ->where('dm.status', 'Proses'); // Hanya status proses
+
+        // Ambil data
+        
+        $dataProses = $queryProses->orderBy('perjanjian_sewa.created_at', 'desc')->get();
+        $dataSelesai = $querySelesai->orderBy('perjanjian_sewa.updated_at', 'desc')->get();
+
+        return view('pendaftaran.list_data', compact('dataSelesai', 'dataProses'));
     }
 
 }
