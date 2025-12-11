@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DataMitraController;
 use App\Http\Controllers\PerjanjianSewaController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\PerpanjangController;
 use App\Http\Controllers\DashboardController;
 
 Route::get("pendaftaran/form_data_diri", [HomeController::class, "form_pendaftaran"])->name('home');
@@ -48,17 +49,24 @@ Route::get('pendaftaran/perjanjian_event', [HomeController::class, 'perjanjian']
 // PERPANJANGAN KONTRAK
 // ======================================================
 
-// tabel data perpanjang
-Route::get('/perpanjang', [PerjanjianSewaController::class, 'indexPerpanjang'])
+// halaman list perpanjang
+Route::get('/perpanjang', [PerpanjangController::class, 'index'])
     ->name('perpanjang.index');
 
-// form perpanjang
-Route::get('/perpanjang/{id}', [PerjanjianSewaController::class, 'formPerpanjang'])
+// FORM STEP 1 - tampilkan data perjanjian
+Route::get('/perpanjang/form/{id}', [PerpanjangController::class, 'form'])
     ->name('perpanjang.form');
 
-// simpan perpanjang
-Route::post('/perpanjang/{id}', [PerjanjianSewaController::class, 'storePerpanjang'])
+// FORM STEP 2 - form isi perpanjang kontrak
+Route::get('/perpanjang/formperpanjang/{id}', [PerpanjangController::class, 'showForm'])
+    ->name('perpanjang.formperpanjang');
+
+// SIMPAN HASIL PERPANJANG
+Route::post('/perpanjang/{id}', [PerpanjangController::class, 'store'])
     ->name('perpanjang.store');
+
+
+
 
 Route::get('/laporan/index', [DashboardController::class, 'laporan'])->name('laporan.index');
 Route::get('/laporan/download', [DashboardController::class, 'downloadPdf'])->name('laporan.download');

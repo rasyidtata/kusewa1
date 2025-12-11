@@ -30,6 +30,25 @@ class PerjanjianSewaController extends Controller
         return view('pendaftaran.list_data', compact('dataps'));
     }
 
+    public function showForm($id)
+{
+    $dataps = PerjanjianSewa::select(
+        'perjanjian_sewa.*',
+        'dm.tgl_perjanjian',
+        'dm.id_mitra',
+        'dm.nama',
+        'dm.Jenis',
+        'da.id_aset',
+        'dm.status'
+    )
+        ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
+        ->join('data_aset as da', 'perjanjian_sewa.id_aset', '=', 'da.id_aset')
+        ->where('perjanjian_sewa.id_perjanjian', $id)
+        ->firstOrFail();
+
+    return view('perpanjang.formperpanjang', compact('dataps'));
+}
+
 
 
 
@@ -302,7 +321,7 @@ class PerjanjianSewaController extends Controller
 
     public function showPerjanjianDokumen($id_perjanjian)
     {
-        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
+        $dataps = PerjanjianSewa::with(['dataMitra', 'aset'])->findOrFail($id_perjanjian);
         $kategori = $dataps->dataMitra->kategori ?? '';
 
         if ($kategori === 'Aset') {

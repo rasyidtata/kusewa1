@@ -990,3 +990,14 @@ textarea.form-control {
     max-width: 1100px;
     margin: 0 auto;
 }
+
+/* Efek hover smooth zoom + highlight biru */
+.custom-hover tbody tr {
+    transition: transform 0.15s ease, background-color 0.2s ease;
+}
+
+.custom-hover tbody tr:hover {
+    background-color: #e8f2ff !important; /* biru muda */
+    transform: scale(1.01); /* zoom sangat ringan */
+    cursor: pointer;
+}
