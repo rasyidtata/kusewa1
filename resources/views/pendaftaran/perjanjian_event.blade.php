@@ -310,6 +310,37 @@
             right: 1cm;
             font-size: 12px;
         }
+        .table-konten1 thead {
+            background: #ffbb54ff !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .table-konten1 thead th {
+            padding: 8px 5px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+            .table-konten1 tbody tr:nth-child(odd) { /* Baris ganjil: 1, 3, 5, 7, 9 dst */
+            background-color: #ffeaccff !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        .table-konten1 tbody tr:nth-child(even) { /* Baris genap: 2, 4, 6, 8, 10 dst */
+            background-color: #fffdf9ff !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .table-konten1 tbody td[rowspan] {
+            background: #fffdf9ff !important;
+            text-align: center !important;
+            vertical-align: middle !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
 
         /* Aturan untuk Cetak */
         @media print {
@@ -344,7 +375,7 @@
             .page {
                 box-shadow: none !important;
                 margin: 0 !important;
-                padding: 2cm !important;
+                padding: 1.5cm !important;
                 min-height: 29.7cm !important;
                 height: auto !important;
                 width: 21cm !important;
@@ -1288,7 +1319,7 @@
                         </tr>
                         <tr>
                             <td>a. IDENTITAS PENANDATANGAN (KTP/SIM/PASPOR)</td>
-                            <td>NO. {{ $dataps->dataMitra->no_identitas ?? '' }}<br>MASA BERLAKU: SEUMUR HIDUP</td>
+                            <td>NO. {{ $dataps->dataMitra->no_identitas ?? '' }}<br>MASA BERLAKU: {{ $dataps->dataMitra->masa_berlaku_identitas }}</td>
                         </tr>
                         <tr>
                             <td>b. NPWP</td>

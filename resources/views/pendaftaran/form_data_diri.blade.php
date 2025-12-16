@@ -76,9 +76,9 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label for="nik" class="form-label fw-medium">NIK</label>
-                                        <input type="text" id="nik" name="nik" class="form-control"
-                                            placeholder="-- Masukkan NIK --" required>
+                                        <label for="email" class="form-label fw-medium">Alamat E-mail</label>
+                                        <input type="email" id="email" name="email" class="form-control"
+                                            placeholder="-- Masukan alamat email --" required>
                                     </div>
                                 </div>
                             </div>
@@ -86,22 +86,22 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label for="masa_berlaku_ktp" class="form-label fw-medium">Masa Berlaku
-                                            Kartu Identitas</label>
+                                        <label for="tanggal_perjanjian" class="form-label fw-medium">Tanggal
+                                            Perjanjian</label>
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="bi bi-calendar3"></i>
                                             </span>
-                                            <input type="date" id="masa_berlaku_ktp" name="masa_berlaku_ktp"
+                                            <input type="date" id="tanggal_perjanjian" name="tanggal_perjanjian"
                                                 class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label for="email" class="form-label fw-medium">Alamat E-mail</label>
-                                        <input type="email" id="email" name="email" class="form-control"
-                                            placeholder="-- Masukan alamat email --" required>
+                                        <label for="alamat" class="form-label fw-medium">Alamat</label>
+                                        <textarea id="alamat" name="alamat" class="form-control" rows="3"
+                                            placeholder="-- Masukkan alamat lengkap --" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -121,25 +121,9 @@
                                     <div class="form-group">
                                         <label for="no_telepon" class="form-label fw-medium">No Telepon/WA</label>
                                         <input type="tel" id="no_telepon" name="no_telepon" class="form-control"
-                                            placeholder="-- Masukan No.Hp/Wa --" required>
+                                            placeholder="-- Masukan No.Hp/Wa --">
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <div class="form-group">
-                                        <label for="tanggal_perjanjian" class="form-label fw-medium">Tanggal
-                                            Perjanjian</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">
-                                                <i class="bi bi-calendar3"></i>
-                                            </span>
-                                            <input type="date" id="tanggal_perjanjian" name="tanggal_perjanjian"
-                                                class="form-control" required>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="penyewa_berdasarkan" class="form-label fw-medium">Penyewa
@@ -148,11 +132,22 @@
                                             class="form-control" placeholder="-- Masukan tanda bukti KTP/dll --" required>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label for="alamat" class="form-label fw-medium">Alamat</label>
-                                        <textarea id="alamat" name="alamat" class="form-control" rows="3"
-                                            placeholder="-- Masukkan alamat lengkap --" required></textarea>
+                                        <label for="masa_berlaku_ktp" class="form-label fw-medium">Masa Berlaku
+                                            Kartu Identitas</label>
+                                        <input type="text" id="masa_berlaku_ktp" name="masa_berlaku_ktp"
+                                            class="form-control" placeholder="-- Masukan Masa Berlaku Identitas --">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="nik" class="form-label fw-medium">Nomor Identitas/NIK</label>
+                                        <input type="text" id="nik" name="nik" class="form-control"
+                                            placeholder="-- Masukan Identitas/NIK --" required>
                                     </div>
                                 </div>
                             </div>
@@ -400,7 +395,7 @@
                     </div>
 
                     <!-- Step 1 Actions -->
-                    <div class="card border-0 ">
+                    <div class="card-tombol border-0">
                         <div class="card-body text-end pt-0">
                             <button type="reset" class="btn px-5">
                                 <i class="bi bi-arrow-clockwise"></i>Reset
@@ -472,8 +467,8 @@
                                                     placeholder="-- Bulan --">
                                             </div>
                                             <div class="col-4">
-                                                <input type="text" id="-- hari --" name="hari" class="form-control"
-                                                    placeholder="Hari">
+                                                <input type="text" id="hari" name="hari" class="form-control"
+                                                    placeholder="-- Hari --">
                                             </div>
                                         </div>
                                     </div>
@@ -519,7 +514,7 @@
                                                 <i class="bi bi-calendar3"></i>
                                             </span>
                                             <input type="date" id="masa_awal_pemanfaatan" name="masa_awal_pemanfaatan"
-                                                class="form-control" required>
+                                                class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -532,7 +527,7 @@
                                                 <i class="bi bi-calendar3"></i>
                                             </span>
                                             <input type="date" id="masa_akhir_pemanfaatan"
-                                                name="masa_akhir_pemanfaatan" class="form-control" required>
+                                                name="masa_akhir_pemanfaatan" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -541,7 +536,7 @@
                     </div>
 
                     <!-- Step 2 Actions -->
-                    <div class="card border-0 ">
+                    <div class="card-tombol border-0 ">
                         <div class="card-body text-end pt-0">
                             <button type="button" class="btn px-5 prev-step" data-prev="1">
                                 <i class="bi bi-arrow-left-circle me-2"></i>Kembali
@@ -569,7 +564,7 @@
                                         <label for="harga_sewa" class="form-label fw-medium">Harga Sewa</label>
                                         <input type="text" id="harga_sewa_display" class="form-control"
                                             placeholder="-- Masukan harga sewa --" required>
-                                        <input type="hidden" id="harga_sewa" name="harga_sewa" required>
+                                        <input type="hidden" id="harga_sewa" name="harga_sewa" >
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -577,8 +572,8 @@
                                         <label for="harga_pemanfaatan" class="form-label fw-medium">Harga
                                             Pemanfaatan</label>
                                         <input type="text" id="harga_pemanfaatan_display"class="form-control" 
-                                            placeholder="-- Masukan harga pemanfaatan --" required>
-                                        <input type="hidden" id="harga_pemanfaatan" name="harga_pemanfaatan" required>
+                                            placeholder="-- Masukan harga pemanfaatan --" >
+                                        <input type="hidden" id="harga_pemanfaatan" name="harga_pemanfaatan" >
                                     </div>
                                 </div>
                             </div>
@@ -588,16 +583,16 @@
                                     <div class="form-group">
                                         <label for="biaya_admin" class="form-label fw-medium">Biaya Admin</label>
                                         <input type="text" id="biaya_admin_display" class="form-control"
-                                            placeholder="-- Masukan biaya admin --" required>
-                                        <input type="hidden" id="biaya_admin" name="biaya_admin" required>
+                                            placeholder="-- Masukan biaya admin --" >
+                                        <input type="hidden" id="biaya_admin" name="biaya_admin" >
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="cost_of_money" class="form-label fw-medium">Cost Of Money</label>
                                         <input type="text" id="cost_of_money_display" class="form-control"
-                                            placeholder="-- Masukan biaya COM --" required>
-                                        <input type="hidden" id="cost_of_money" name="cost_of_money" required>
+                                            placeholder="-- Masukan biaya COM --" >
+                                        <input type="hidden" id="cost_of_money" name="cost_of_money">
                                     </div>
                                 </div>
                             </div>
@@ -607,7 +602,7 @@
                                     <div class="form-group">
                                         <label for="harga_sewa_admin" class="form-label fw-medium">Harga Sewa + Admin</label>
                                         <input type="text" id="harga_sewa_admin_display"
-                                            class="form-control" placeholder="Rp.">
+                                            class="form-control" placeholder="Rp." readonly>
                                         <input type="hidden" id="harga_sewa_admin" name="harga_sewa_admin" required>
                                     </div>
                                 </div>
@@ -616,7 +611,7 @@
                                         <label for="harga_sewa_admin_com" class="form-label fw-medium">Harga Sewa + Admin +
                                             COM</label>
                                         <input type="text" id="harga_sewa_admin_com_display"
-                                            class="form-control" placeholder="Rp.">
+                                            class="form-control" placeholder="Rp." readonly>
                                         <input type="hidden" id="harga_sewa_admin_com" name="harga_sewa_admin_com" required>
                                     </div>
                                 </div>
@@ -626,7 +621,7 @@
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label for="ppn" class="form-label fw-medium">PPN 11%</label>
-                                        <input type="text" id="ppn_display" class="form-control" placeholder="Rp.">
+                                        <input type="text" id="ppn_display" class="form-control" placeholder="Rp." readonly>
                                         <input type="hidden" id="ppn" name="ppn" required>
                                     </div>
                                 </div>
@@ -634,7 +629,7 @@
                                     <div class="form-group">
                                         <label for="total_harga" class="form-label fw-medium">Total Harga</label>
                                         <input type="text" id="total_harga_display" class="form-control"
-                                            placeholder="Rp.">
+                                            placeholder="Rp." readonly>
                                         <input type="hidden" id="total_harga" name="total_harga" required>
                                     </div>
                                 </div>
@@ -652,7 +647,7 @@
                                     <div class="form-group ">
                                         <label for="terbilang" class="form-label fw-medium">Terbilang</label>
                                         <textarea id="terbilang" name="terbilang" class="form-control" rows="3"
-                                            placeholder="Tujuh ratus limapuluh ribu rupiah"></textarea>
+                                            placeholder="Tujuh ratus limapuluh ribu rupiah" readonly></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -660,7 +655,7 @@
                     </div>
 
                     <!-- Step 3 Actions -->
-                    <div class="card border-0 ">
+                    <div class="card-tombol border-0 ">
                         <div class="card-body text-end pt-0">
                             <button type="button" class="btn px-5 prev-step" data-prev="2">
                                 <i class="bi bi-arrow-left-circle me-2"></i>Kembali

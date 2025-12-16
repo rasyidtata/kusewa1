@@ -51,7 +51,6 @@ class DataMitra extends Model
 
     protected $casts = [
         'tgl_perjanjian' => 'date',
-        'masa_berlaku_identitas' => 'date',
         'tgl_penetapan_pengadilan' => 'date',
         'tgl_izin_usaha' => 'date',
         'tgl_sk_dirjen_pajak' => 'date',
@@ -84,11 +83,6 @@ class DataMitra extends Model
 
 
 
-    public function getMasaBerlakuIdentitasFormattedAttribute()
-    {
-        return $this->masa_berlaku_identitas 
-            ? \Carbon\Carbon::parse($this->masa_berlaku_identitas)->format('Y-m-d'): null;
-    }
     public function getTglPerjanjianFormattedAttribute()
     {
         return $this->tgl_perjanjian 

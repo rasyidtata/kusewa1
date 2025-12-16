@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DataMitraController;
 use App\Http\Controllers\PerjanjianSewaController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\PerpanjangController;
 use App\Http\Controllers\DashboardController;
 
 Route::get("pendaftaran/form_data_diri", [HomeController::class, "form_pendaftaran"])->name('home');
@@ -12,14 +13,57 @@ Route::get("pendaftaran/list_data", [HomeController::class, "list_data"])->name(
 Route::get("pendaftaran/perjanjian_event", [HomeController::class, "perjanjian"])->name('home');
 Route::get("list_data_perjanjian/data_perjanjian", [HomeController::class, "data_perjanjian"])->name('home');
 
+// ======================================================
+// DASHBOARD
+// ======================================================
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/home/beranda', [DashboardController::class, 'index'])->name('dashboard');
+
+
+// ======================================================
+// LAPORAN
+// ======================================================
 Route::get('/laporan/index', [DashboardController::class, 'laporan'])->name('laporan.index');
 Route::get('/laporan/download', [DashboardController::class, 'downloadPdf'])->name('laporan.download');
 
 
-Route::get("pendaftaran/form_data_diri", [PendaftaranController::class, "create"])->name('pendaftaran.form');
-Route::post("pendaftaran/create", [PendaftaranController::class, "store"])->name('pendaftaran.store');
+// ======================================================
+// PENDAFTARAN MITRA
+// ======================================================
+Route::get('pendaftaran/form_data_diri', [PendaftaranController::class, 'create'])->name('pendaftaran.form');
+Route::post('pendaftaran/create', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+
+Route::get('pendaftaran/list_data', [PerjanjianSewaController::class, 'perjanjian_sewa'])->name('pendaftaran.list');
+Route::get('pendaftaran/list_perjanjian/{id_perjanjian}', [PerjanjianSewaController::class, 'edit'])->name('pendaftaran.edit');
+Route::post('pendaftaran/update/{id_perjanjian}', [PerjanjianSewaController::class, 'update'])->name('pendaftaran.update');
+
+Route::get('pendaftaran/perjanjian_dokumen/{id_perjanjian}', [PerjanjianSewaController::class, 'showPerjanjianDokumen'])->name('pendaftaran.perjanjian_dokumen');
+
+Route::get('perjanjian/preview/{id_perjanjian}', [PerjanjianSewaController::class, 'previewPerjanjianPDF'])->name('perjanjian.preview');
+
+
+// ======================================================
+// PERPANJANGAN KONTRAK
+// ======================================================
+
+// halaman list perpanjang
+Route::get('/perpanjang', [PerpanjangController::class, 'index'])
+    ->name('perpanjang.index');
+
+// FORM STEP 1 - tampilkan data perjanjian
+Route::get('/perpanjang/form/{id}', [PerpanjangController::class, 'form'])
+    ->name('perpanjang.form');
+
+// FORM STEP 2 - form isi perpanjang kontrak
+Route::get('/perpanjang/formperpanjang/{id}', [PerpanjangController::class, 'showForm'])
+    ->name('perpanjang.formperpanjang');
+
+// SIMPAN HASIL PERPANJANG
+Route::post('/perpanjang/{id}', [PerpanjangController::class, 'store'])
+    ->name('perpanjang.store');
+
+
+
 Route::post('/pendaftaran/approve/{id_perjanjian}', [PendaftaranController::class, 'approve'])->name('pendaftaran.approve');
 Route::get('/pendaftaran/fitur_filter', [PendaftaranController::class, 'fitur_filter'])->name('pendaftaran.fitur_filter');
 

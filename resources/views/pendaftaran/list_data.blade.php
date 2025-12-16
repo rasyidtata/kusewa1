@@ -23,11 +23,12 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
-                                <th>kode Mitra</th>
-                                <th>Jenis</th>
-                                <th>Id Aset</th>
                                 <th>Nama</th>
-                                <th>Harga Aset</th>
+                                <th>Jenis</th>
+                                <th>Kategori</th>
+                                <th>Lokasi Sewa</th>
+                                <th>Penggunaan</th>
+                                <th>Total Harga</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
@@ -37,11 +38,12 @@
                             <tr>
                                 <td data-label="No" class="text-center">{{ $loop->iteration }}</td>
                                 <td data-label="Tanggal Sewa">{{ $datmit->tgl_perjanjian }}</td>
-                                <td data-label="kode Mitra" class="text-center">{{ $datmit->kode_mitra }}</td>
-                                <td data-label="Jenis" class="text-center">{{ $datmit->Jenis }}</td>
-                                <td data-label="Id Asset" class="text-center">{{ $datmit->kode_aset }}</td>
                                 <td data-label="Nama">{{ $datmit->nama }}</td>
-                                <td data-label="Harga Asset">Rp. {{ number_format($datmit->harga_sewa ?? 0, 0,
+                                <td data-label="Jenis" class="text-center">{{ $datmit->Jenis }}</td>
+                                <td data-label="kategori" class="text-center">{{ $datmit->kategori }}</td>
+                                <td data-label="Lokasi Sewa">{{ $datmit->lokasi }}</td>
+                                <td data-label="Penggunaan">{{ $datmit->penggunaan_objek }}</td>
+                                <td data-label="Total Harga">Rp. {{ number_format($datmit->total_harga ?? 0, 0,
                                     ',', '.') }}</td> 
 
                                 <td data-label="Status status-pending" class="text-center">
@@ -123,11 +125,12 @@
                             <tr>
                                 <th>No</th>
                                 <th>Tanggal</th>
-                                <th>Id Mitra</th>
-                                <th>Jenis</th>
-                                <th>Id Aset</th>
                                 <th>Nama</th>
-                                <th>Harga Aset</th>
+                                <th>Jenis</th>
+                                <th>Kategori</th>
+                                <th>Lokasi Sewa</th>
+                                <th>Penggunaan</th>
+                                <th>Total Harga</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
@@ -137,11 +140,12 @@
                             <tr>
                                 <td data-label="No" class="text-center">{{ $loop->iteration }}</td>
                                 <td data-label="Tanggal Sewa">{{ $datmit->tgl_perjanjian }}</td>
-                                <td data-label="Id Mitra"class="text-center">{{ $datmit->kode_mitra }}</td>
-                                <td data-label="jenis"class="text-center">{{ $datmit->Jenis }}</td>
-                                <td data-label="Id Asset"class="text-center">{{ $datmit->kode_aset }}</td>
                                 <td data-label="Nama">{{ $datmit->nama }}</td>
-                                <td data-label="Harga Asset">Rp. {{ number_format($datmit->harga_sewa ?? 0, 0,
+                                <td data-label="jenis"class="text-center">{{ $datmit->Jenis }}</td>
+                                <td data-label="katerori"class="text-center">{{ $datmit->kategori }}</td>
+                                <td data-label="Lokasi">{{ $datmit->lokasi }}</td>
+                                <td data-label="penggunaan">{{ $datmit->penggunaan_objek }}</td>
+                                <td data-label="Total Harga">Rp. {{ number_format($datmit->total_harga ?? 0, 0,
                                     ',', '.') }}</td>
                                 <td data-label="Status" class="text-center">
                                     <span

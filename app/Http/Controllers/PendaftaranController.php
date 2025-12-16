@@ -18,6 +18,7 @@ class PendaftaranController extends Controller
 
     public function store(Request $request)
     {
+
         // Validasi data
         $validator = Validator::make($request->all(), [
             // Data Diri - Step 1
@@ -25,20 +26,20 @@ class PendaftaranController extends Controller
             'kategori' => 'required|in:Aset,Event',
             'nama_lengkap' => 'required|string|max:255',
             'nik' => 'required|string|max:20',
-            'masa_berlaku_ktp' => 'required|date',
+            'masa_berlaku_ktp' => 'nullable|string',
             'email' => 'required|email',
-            'no_telepon' => 'required|string|max:15',
+            'no_telepon' => 'nullable|string|max:15',
             'tanggal_perjanjian' => 'required|date',
             'penyewa_berdasarkan' => 'required|string|max:255',
             'alamat' => 'required|string',
-            'foto_identitas' => 'required|file|mimes:jpg,jpeg,pdf|max:2048',
+            'foto_identitas' => 'nullable|file|mimes:jpg,jpeg,pdf|max:2048',
 
             // Data Perusahaan (kondisional)
             'nama_perwakilan' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:255',
             'perwakilan_selaku' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:255',
             'npwp' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:20',
-            'kota_penyewa' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:100',
-            'kode_pos' => 'required_if:jenis_penyewa,Perusahaan|nullable|string|max:10',
+            'kota_penyewa' => 'nullable|nullable|string|max:100',
+            'kode_pos' => 'nullable|nullable|string|max:10',
             'fax_penyewa' => 'nullable|string|max:20',
             'no_akte_pendirian' => 'nullable|string|max:50', 
             'no_anggaran_dasar' => 'nullable|string|max:50', 
@@ -63,8 +64,8 @@ class PendaftaranController extends Controller
             'hari' => 'nullable|integer|min:0|max:30',
             'masa_awal_perjanjian' => 'required|date',
             'masa_akhir_perjanjian' => 'required|date',
-            'masa_awal_pemanfaatan' => 'required|date',
-            'masa_akhir_pemanfaatan' => 'required|date',
+            'masa_awal_pemanfaatan' => 'nullable|date',
+            'masa_akhir_pemanfaatan' => 'nullable|date',
 
             // Harga Aset - Step 3
             'harga_sewa' => 'required|numeric|min:0',
@@ -92,32 +93,34 @@ class PendaftaranController extends Controller
 
             DB::commit();
  
-            return redirect('pendaftaran/list_data')->with('success', 'Produk berhasil ditambahkan');
+            return redirect('pendaftaran/fitur_filter')->with('success', 'Produk berhasil ditambahkan');
 
         } 
         
         catch (\Exception $e) {
-            DB::rollBack();
-            if ($request->ajax()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Terjadi kesalahan sistem: ' . $e->getMessage()
-                ], 500);
-            }
-            
-            return redirect()->back()->with('error', 'Terjadi kesalahan sistem: ' . $e->getMessage())->withInput();
+        DB::rollBack();
+        dd([
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+            'line' => $e->getLine(),
+            'file' => $e->getFile()
+        ]);
+        
+        return redirect()->back()
+            ->with('error', 'Terjadi kesalahan sistem: ' . $e->getMessage())
+            ->withInput();
         }
     }
 
     
-    private function simpanDataMitra(Request $request)
+     private function simpanDataMitra(Request $request)
     {
         $data = [
             'Jenis' => $request->jenis_penyewa,
             'kategori' => $request->kategori,
             'nama' => $request->nama_lengkap,
             'no_identitas' => $request->nik,
-            'masa_berlaku_identitas' => $request->masa_berlaku_ktp,
+            'masa_berlaku_identitas' => $request->masa_berlaku_ktp ?? 'SEUMUR HIDUP',
             'email' => $request->email,
             'no_tlpn' => $request->no_telepon,
             'tgl_perjanjian' => $request->tanggal_perjanjian,
@@ -152,7 +155,7 @@ class PendaftaranController extends Controller
         $file = $request->file('foto_identitas');
         $fileName = time() . '_' . $file->getClientOriginalName();
         $file->move(public_path('asset/img/identitas'), $fileName);
-        $data['foto_identitas'] = 'asset/img/identitas/' . $fileName;
+        $data['foto_identitas'] = '/asset/img/identitas/' . $fileName;
         }
 
         return DataMitra::create($data);
@@ -255,7 +258,7 @@ class PendaftaranController extends Controller
 
             DB::commit();
 
-            return redirect()->route('pendaftaran.list_data')->with('success', $message);
+            return redirect()->route('pendaftaran.fitur_filter')->with('success', $message);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -271,10 +274,11 @@ class PendaftaranController extends Controller
         $querySelesai = PerjanjianSewa::select(
                 'perjanjian_sewa.*',
                 'dm.tgl_perjanjian',
-                'dm.kode_mitra',
+                'dm.kategori',
                 'dm.nama',
                 'dm.Jenis',
-                'da.kode_aset',
+                'da.lokasi',
+                'da.penggunaan_objek',
                 'dm.status',
             )
             ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
@@ -305,10 +309,11 @@ class PendaftaranController extends Controller
         $queryProses = PerjanjianSewa::select(
                 'perjanjian_sewa.*',
                 'dm.tgl_perjanjian',
-                'dm.kode_mitra',
+                'dm.kategori',
                 'dm.nama',
                 'dm.Jenis',
-                'da.kode_aset',
+                'da.lokasi',
+                'da.penggunaan_objek',
                 'dm.status',
             )
             ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')

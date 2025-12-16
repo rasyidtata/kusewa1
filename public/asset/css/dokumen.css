@@ -201,21 +201,6 @@ body {
     font-size: 12px;
 }
 
-@media print {
-    body {
-        background: white;
-    }
-
-    .container {
-        box-shadow: none;
-        max-width: none;
-    }
-
-    .page {
-        box-shadow: none;
-        margin: 0;
-    }
-}
 
 .pasal-content p,
 .definition-item {
@@ -231,33 +216,7 @@ body {
 
 /*============================== konten table perjanjian =========================*/
 /*----- 1 -----*/
-.konten-table1 .table-konten1{
-    border: #ddd 1px solid;
-    font-size: 12px;
-    width: 100%; 
-    border-collapse: collapse;
-}
-.konten-table1 .table-konten1 th,
-.konten-table1 .table-konten1 td {
-    border: 1px solid #919191;
-}
-.konten-table1 .table-konten1 .no{
-    width: 5%;
-    padding: 2px;
-    text-align: center;
-    color: #000;
-}
-.konten-table1 .table-konten1 .sub{
-    width: 35%;
-    padding: 2px;
-    text-align: center;
-    color: #000;
-}
-.konten-table1 .table-konten1 .ket{
-    padding: 2px;
-    text-align: center;
-    color: #000;
-}
+
 
 
 /*============================== tombol =========================*/

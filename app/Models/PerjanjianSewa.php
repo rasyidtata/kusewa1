@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class PerjanjianSewa extends Model
 {
-    protected $table = 'Perjanjian_sewa';
+    protected $table = 'perjanjian_sewa'; // ← perbaikan: pakai lowercase_underscore
     protected $primaryKey = 'id_perjanjian';
     public $incrementing = true;
     protected $keyType = 'int';
+
     protected $fillable = [
-        'kode_perjanjian',
         'jangka_waktu',
         'masa_awal_perjanjian',
-        'masa_akhir_perjanjian', 
+        'masa_akhir_perjanjian',
         'masa_awal_manfaat',
         'masa_akhir_manfaat',
         'harga_sewa',
@@ -36,12 +36,15 @@ class PerjanjianSewa extends Model
         'id_admin',
         'id_mitra',
     ];
+
     protected $hidden = [];
+
     protected $casts = [
         'masa_awal_perjanjian' => 'date',
         'masa_akhir_perjanjian' => 'date',
         'masa_awal_manfaat' => 'date',
         'masa_akhir_manfaat' => 'date',
+
         'harga_sewa' => 'decimal:0',
         'harga_sewa_admin' => 'decimal:0',
         'harga_sewa_admin_com' => 'decimal:0',
@@ -50,77 +53,93 @@ class PerjanjianSewa extends Model
         'total_harga' => 'decimal:0',
         'ppn_11_persen' => 'decimal:0',
         'cost_of_money' => 'decimal:0',
+
         'persetujuan_kai' => 'boolean',
         'persetujuan_mitra' => 'boolean',
+
         'tanggal_persetujuan' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
 
+    /**
+     * ===========================
+     *      RELATIONSHIPS
+     * ===========================
+     */
+
+    // perjanjian_sewa.id_mitra → data_mitra.id_mitra
     public function dataMitra()
     {
         return $this->belongsTo(DataMitra::class, 'id_mitra', 'id_mitra');
     }
+
+    // perjanjian_sewa.id_aset → data_aset.id_aset
     public function dataAset()
     {
         return $this->belongsTo(DataAset::class, 'id_aset', 'id_aset');
     }
-    //public function admin()
-   // {
-     //   return $this->belongsTo(Admin::class, 'id_admin', 'id_admin');
-   // }
-    
 
+
+    /**
+     * ===========================
+     *      ACCESSORS
+     * ===========================
+     */
 
     public function getJangkaWaktuTahunAttribute()
     {
-        if (preg_match('/(\d+)\s*Tahun/i', $this->jangka_waktu, $matches)) {
-            return $matches[1];
+        if (preg_match('/(\d+)\s*Tahun/i', $this->jangka_waktu, $m)) {
+            return $m[1];
         }
         return '0';
     }
+
     public function getJangkaWaktuBulanAttribute()
     {
-        if (preg_match('/(\d+)\s*Bulan/i', $this->jangka_waktu, $matches)) {
-            return $matches[1];
+        if (preg_match('/(\d+)\s*Bulan/i', $this->jangka_waktu, $m)) {
+            return $m[1];
         }
         return '0';
     }
+
     public function getJangkaWaktuHariAttribute()
     {
-        if (preg_match('/(\d+)\s*Hari/i', $this->jangka_waktu, $matches)) {
-            return $matches[1];
+        if (preg_match('/(\d+)\s*Hari/i', $this->jangka_waktu, $m)) {
+            return $m[1];
         }
         return '0';
     }
 
-
-
-
+    // Format tanggal
     public function getMasaAwalPerjanjianFormattedAttribute()
     {
         return $this->masa_awal_perjanjian
-            ? \Carbon\Carbon::parse($this->masa_awal_perjanjian)->format('Y-m-d'): null;
+            ? \Carbon\Carbon::parse($this->masa_awal_perjanjian)->format('Y-m-d')
+            : null;
     }
+
     public function getMasaAkhirPerjanjianFormattedAttribute()
     {
         return $this->masa_akhir_perjanjian
-            ? \Carbon\Carbon::parse($this->masa_akhir_perjanjian)->format('Y-m-d'): null;
+            ? \Carbon\Carbon::parse($this->masa_akhir_perjanjian)->format('Y-m-d')
+            : null;
     }
+
     public function getMasaAwalManfaatFormattedAttribute()
     {
         return $this->masa_awal_manfaat
-            ? \Carbon\Carbon::parse($this->masa_awal_manfaat)->format('Y-m-d'): null;
+            ? \Carbon\Carbon::parse($this->masa_awal_manfaat)->format('Y-m-d')
+            : null;
     }
+
     public function getMasaAkhirManfaatFormattedAttribute()
     {
         return $this->masa_akhir_manfaat
-            ? \Carbon\Carbon::parse($this->masa_akhir_manfaat)->format('Y-m-d'): null;
+            ? \Carbon\Carbon::parse($this->masa_akhir_manfaat)->format('Y-m-d')
+            : null;
     }
-
-
-
 
 
     public static function generateKodePerjanjian()
@@ -156,6 +175,4 @@ class PerjanjianSewa extends Model
             }
         });
     }
-    
 }
- 

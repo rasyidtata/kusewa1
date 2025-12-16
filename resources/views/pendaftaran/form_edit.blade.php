@@ -70,10 +70,10 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
-                                    <label for="nik" class="form-label fw-medium">NIK</label>
-                                    <input type="text" id="nik" name="nik" class="form-control"
-                                        placeholder="Masukkan NIK"
-                                        value="{{ old('no_identitas', $dataps->dataMitra->no_identitas ?? '') }}">
+                                    <label for="email" class="form-label fw-medium">Alamat E-mail</label>
+                                    <input type="email" id="email" name="email" class="form-control"
+                                        placeholder="email@contoh.com"
+                                        value="{{ old('email', $dataps->dataMitra->email ?? '') }}" >
                                 </div>
                             </div>
                         </div>
@@ -81,23 +81,24 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
-                                    <label for="masa_berlaku_ktp" class="form-label fw-medium">Masa Berlaku KTP</label>
+                                    <label for="tanggal_perjanjian" class="form-label fw-medium">Tanggal
+                                        Perjanjian</label>
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="masa_berlaku_ktp" name="masa_berlaku_ktp"
+                                        <input type="date" id="tanggal_perjanjian" name="tanggal_perjanjian"
                                             class="form-control"
-                                            value="{{ $dataps->dataMitra->masa_berlaku_identitas_formatted ?? '' }}">
+                                            value="{{ $dataps->dataMitra->tgl_perjanjian_formatted ?? ''}}" >
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
-                                    <label for="email" class="form-label fw-medium">Alamat E-mail</label>
-                                    <input type="email" id="email" name="email" class="form-control"
-                                        placeholder="email@contoh.com"
-                                        value="{{ old('email', $dataps->dataMitra->email ?? '') }}" >
+                                    <label for="alamat" class="form-label fw-medium">Alamat</label>
+                                    <textarea id="alamat" name="alamat" class="form-control" rows="3"
+                                        placeholder="Masukkan alamat lengkap"
+                                        >{{ old('alamat', $dataps->dataMitra->alamat ?? '') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -123,23 +124,6 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
-                                    <label for="tanggal_perjanjian" class="form-label fw-medium">Tanggal
-                                        Perjanjian</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">
-                                            <i class="bi bi-calendar3"></i>
-                                        </span>
-                                        <input type="date" id="tanggal_perjanjian" name="tanggal_perjanjian"
-                                            class="form-control"
-                                            value="{{ $dataps->dataMitra->tgl_perjanjian_formatted ?? '' }}" >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="form-group">
                                     <label for="penyewa_berdasarkan" class="form-label fw-medium">Penyewa
                                         Berdasarkan</label>
                                     <input type="text" id="penyewa_berdasarkan" name="penyewa_berdasarkan"
@@ -147,12 +131,23 @@
                                         value="{{ old('penyewa_berdasarkan', $dataps->dataMitra->penyewa_berdasarkan ?? '') }}" required.>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
-                                    <label for="alamat" class="form-label fw-medium">Alamat</label>
-                                    <textarea id="alamat" name="alamat" class="form-control" rows="3"
-                                        placeholder="Masukkan alamat lengkap"
-                                        >{{ old('alamat', $dataps->dataMitra->alamat ?? '') }}</textarea>
+                                    <label for="masa_berlaku_ktp" class="form-label fw-medium">Masa Berlaku KTP</label>
+                                    <input type="text" id="masa_berlaku_ktp" name="masa_berlaku_ktp"
+                                        class="form-control"
+                                        value="{{ $dataps->dataMitra->masa_berlaku_identitas}}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="nik" class="form-label fw-medium">Nomor Identitas/NIK</label>
+                                    <input type="text" id="nik" name="nik" class="form-control"
+                                        placeholder="Masukkan NIK"
+                                        value="{{ old('no_identitas', $dataps->dataMitra->no_identitas ?? '') }}">
                                 </div>
                             </div>
                         </div>

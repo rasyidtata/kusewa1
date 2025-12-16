@@ -141,7 +141,7 @@ class MultiStepForm {
 
         if (jenisPenyewaValue === 'Perusahaan') {
             perusahaanFields.style.display = 'block';
-            const requiredFields = ['nama_perwakilan', 'npwp', 'kota_penyewa', 'kode_pos', 'perwakilan_selaku'];
+            const requiredFields = ['nama_perwakilan', 'npwp', 'perwakilan_selaku'];
             perusahaanFields.querySelectorAll('input, textarea').forEach(field => {
                 if (requiredFields.includes(field.name)) {
                     field.setAttribute('required', 'required');

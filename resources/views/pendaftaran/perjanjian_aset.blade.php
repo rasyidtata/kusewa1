@@ -229,6 +229,68 @@
             right: 1.5cm;
             font-size: 12px;
         }
+        .konten-table1 {
+            margin: 20px 0;
+        }
+
+        .table-konten1 {
+            border: 1px solid #919191;
+            font-size: 11px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-konten1 th,
+        .table-konten1 td {
+            border: 1px solid #919191;
+            padding: 6px;
+            vertical-align: top;
+        }
+
+        .table-konten1 .no {
+            width: 5%;
+            text-align: center;
+        }
+
+        .table-konten1 .sub {
+            width: 35%;
+        }
+
+        .table-konten1 .ket {
+            width: 60%;
+        }
+
+        .table-konten1 thead {
+            background: #ffbb54ff !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .table-konten1 thead th {
+            padding: 8px 5px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+            .table-konten1 tbody tr:nth-child(odd) { /* Baris ganjil: 1, 3, 5, 7, 9 dst */
+            background-color: #ffeaccff !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        .table-konten1 tbody tr:nth-child(even) { /* Baris genap: 2, 4, 6, 8, 10 dst */
+            background-color: #fffdf9ff !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .table-konten1 tbody td[rowspan] {
+            background: #fffdf9ff !important;
+            text-align: center !important;
+            vertical-align: middle !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
 
         @media print {
             @page {
@@ -286,6 +348,7 @@
                 width: 50% !important;
                 padding: 0 10px !important;
                 box-sizing: border-box !important;
+                justify-content: end !important;
             }
 
             .row-isi-konten::after, 
@@ -308,9 +371,6 @@
                 width: 100% !important;
             }
             
-            td, th {
-                border: 1px solid #000 !important;
-            }
 
             input[type="checkbox"] {
                 -webkit-appearance: none;
@@ -1816,7 +1876,7 @@
                         </tr>
                         <tr>
                             <td>a. IDENTITAS PENANDATANGAN (KTP/SIM/PASPOR)</td>
-                            <td>NO. {{ $dataps->dataMitra->no_identitas ?? '' }}<br>MASA BERLAKU: SEUMUR HIDUP</td>
+                            <td>NO. {{ $dataps->dataMitra->no_identitas ?? '' }}<br>MASA BERLAKU: {{ $dataps->dataMitra->masa_berlaku_identitas }}</td>
                         </tr>
                         <tr>
                             <td>b. NPWP</td>

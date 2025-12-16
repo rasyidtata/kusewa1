@@ -39,7 +39,7 @@
                     <div class="card-bodyy text-center pt-0">
                         <a href="{{ url('pendaftaran/perjanjian_dokumen/'.$dataps->id_perjanjian) }}"
                             class="btn btn-dock px-5" target="_blank">
-                            <i class="bi bi-file-earmark-text me-2"></i>DOKUMEN PERJANJIAN
+                            <i class="fas fa-file-pdf fa-sm me-2"></i>UNDUH DOKUMEN
                         </a>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     <button type="button" class="btn btn-share ">
                         <i class="bi bi-share me-2"></i>Share
                     </button>
-                    <a href="{{ url('perjanjian/download', $dataps->id_perjanjian) }}" 
+                    <a href="#" 
                         class="btn btn-download" 
                         download>
                         <i class="fas fa-file-pdf fa-sm me-2"></i>Download
