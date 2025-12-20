@@ -93,26 +93,31 @@ class PendaftaranController extends Controller
 
             DB::commit();
  
-            return redirect('pendaftaran/fitur_filter')->with('success', 'Produk berhasil ditambahkan');
+            return response()->json([
+            'success' => true,
+            'message' => 'Pendaftaran berhasil disimpan',
+            'redirect_url' => url('pendaftaran/fitur_filter'),
+            'data' => [
+                'mitra_id' => $dataMitra->id_mitra,
+                'aset_id' => $dataAset->id_aset,
+                'perjanjian_id' => $perjanjianSewa->id_perjanjian]
+            ]);
 
-        } 
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd([
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile()
+            ]);
         
-        catch (\Exception $e) {
-        DB::rollBack();
-        dd([
-            'message' => $e->getMessage(),
-            'trace' => $e->getTraceAsString(),
-            'line' => $e->getLine(),
-            'file' => $e->getFile()
-        ]);
-        
-        return redirect()->back()
-            ->with('error', 'Terjadi kesalahan sistem: ' . $e->getMessage())
-            ->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(),
+            ], 500);
         }
     }
-
-    
      private function simpanDataMitra(Request $request)
     {
         $data = [
@@ -160,8 +165,6 @@ class PendaftaranController extends Controller
 
         return DataMitra::create($data);
     }  
-
-    
     private function simpanDataAset(Request $request, $idMitra)
     {
         $data = [
@@ -174,8 +177,6 @@ class PendaftaranController extends Controller
 
         return DataAset::create($data);
     }
-
-    
     private function simpanPerjanjianSewa(Request $request, $idMitra, $idAset )
     {
         $t = (int) ($request->tahun ?? 0);

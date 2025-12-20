@@ -60,12 +60,6 @@ class PerjanjianSewaController extends Controller
 
 
 
-
-
-
-
-
-
     public function edit($id_perjanjian)
     {
 
@@ -359,6 +353,54 @@ class PerjanjianSewaController extends Controller
 
 
 
+    // Tambahkan method destroy() di controller
+    public function destroy($id_perjanjian)
+    {
+        DB::beginTransaction();
+        
+        try {
+
+            $perjanjian = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
+            $id_mitra = $perjanjian->id_mitra;
+            $id_aset = $perjanjian->id_aset;
+            
+            // Hapus perjanjian sewa
+            $perjanjian->delete();
+            
+            // Cek apakah mitra masih memiliki perjanjian lain
+            $mitraMasihAktif = PerjanjianSewa::where('id_mitra', $id_mitra)->exists();
+            
+            // Cek apakah aset masih digunakan di perjanjian lain
+            $asetMasihDigunakan = PerjanjianSewa::where('id_aset', $id_aset)->exists();
+            
+            // Hapus mitra jika tidak ada perjanjian lagi
+            if (!$mitraMasihAktif) {
+                $mitra = DataMitra::find($id_mitra);
+                if ($mitra) {
+                    // Hapus foto identitas jika ada
+                    if ($mitra->foto_identitas && file_exists(public_path($mitra->foto_identitas))) {
+                        unlink(public_path($mitra->foto_identitas));
+                    }
+                    $mitra->delete();
+                }
+            }
+            
+            // Hapus aset jika tidak digunakan lagi
+            if (!$asetMasihDigunakan) {
+                DataAset::where('id_aset', $id_aset)->delete();
+            }
+            
+            DB::commit();
+            
+            return redirect()->back()->with('success', 'Data berhasil dihapus!');
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
+        }
+    }
+
+
 
 
 
@@ -385,7 +427,6 @@ class PerjanjianSewaController extends Controller
 
         return view('perpanjang.form', compact('dataps'));
     }
-
 
     public function storePerpanjang(Request $request, $id)
     {

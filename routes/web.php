@@ -47,20 +47,16 @@ Route::get('perjanjian/preview/{id_perjanjian}', [PerjanjianSewaController::clas
 // ======================================================
 
 // halaman list perpanjang
-Route::get('/perpanjang', [PerpanjangController::class, 'index'])
-    ->name('perpanjang.index');
+Route::get('/perpanjang', [PerpanjangController::class, 'index'])->name('perpanjang.index');
 
 // FORM STEP 1 - tampilkan data perjanjian
-Route::get('/perpanjang/form/{id}', [PerpanjangController::class, 'form'])
-    ->name('perpanjang.form');
+Route::get('/perpanjang/form/{id}', [PerpanjangController::class, 'form'])->name('perpanjang.form');
 
 // FORM STEP 2 - form isi perpanjang kontrak
-Route::get('/perpanjang/formperpanjang/{id}', [PerpanjangController::class, 'showForm'])
-    ->name('perpanjang.formperpanjang');
+Route::get('/perpanjang/formperpanjang/{id}', [PerpanjangController::class, 'showForm'])->name('perpanjang.formperpanjang');
 
 // SIMPAN HASIL PERPANJANG
-Route::post('/perpanjang/{id}', [PerpanjangController::class, 'store'])
-    ->name('perpanjang.store');
+Route::post('/perpanjang/{id}', [PerpanjangController::class, 'store'])->name('perpanjang.store');
 
 
 
@@ -73,8 +69,9 @@ Route::get('/pendaftaran/form_edit/{id_perjanjian}', [PerjanjianSewaController::
 Route::post('/pendaftaran/update/{id_perjanjian}', [PerjanjianSewaController::class, 'update'])->name('pendaftaran.update');
 Route::get('/pendaftaran/detail/{id_perjanjian}', [PerjanjianSewaController::class, 'detail_perjanjian']);
 Route::get('/pendaftaran/perjanjian_dokumen/{id_perjanjian}', [PerjanjianSewaController::class, 'showPerjanjianDokumen'])->name('pendaftaran.perjanjian_dokumen');
-Route::get('/perjanjian/download/{id_perjanjian}', [PerjanjianSewaController::class, 'downloadPerjanjianPDF'])->name('perjanjian.download');
+Route::delete('/produk/delete/{id_perjanjian}', [PerjanjianSewaController::class, 'destroy'])->name('perjanjian.destroy');
 
+Route::get('/perjanjian/download/{id_perjanjian}', [PerjanjianSewaController::class, 'downloadPerjanjianPDF'])->name('perjanjian.download');
 Route::get('/foto/{id_mitra}', [PerjanjianSewaController::class, 'showFoto'])->name('pendaftaran.foto');
 Route::delete('/foto/{id_mitra}', [PerjanjianSewaController::class, 'deleteFoto'])->name('pendaftaran.foto.delete');
 

@@ -20,7 +20,8 @@
             </div>
 
 
-            <form class="biodata-form" method="POST" action="{{ url('pendaftaran/create') }}" enctype="multipart/form-data">
+            <form id="multi-step-form" class="biodata-form" method="POST" action="{{ url('pendaftaran/create') }}" 
+                enctype="multipart/form-data">
                 @csrf
                 <!-- Step 1: Data Diri -->
                 <div class="form-step active" id="step-1">
@@ -660,7 +661,7 @@
                             <button type="button" class="btn px-5 prev-step" data-prev="2">
                                 <i class="bi bi-arrow-left-circle me-2"></i>Kembali
                             </button>
-                            <button type="submit" class="btn btn-simpan-data px-5">
+                            <button type="submit" id="submitFormBtn" class="btn btn-simpan-data px-5">
                                 <i class="bi bi-check-circle me-2"></i>Simpan Data
                             </button>
                         </div>
@@ -671,7 +672,19 @@
     </div>
 </div>
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('asset/js/pendaftaran.js') }}"></script>
-<script src="{{ asset('asset/js/custom.js') }}"></script>
+<style>
+    .swal2-popup {
+        border-radius: 12px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .swal2-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+</style>
+
 @endsection

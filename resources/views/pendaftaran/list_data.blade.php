@@ -54,13 +54,21 @@
                                 <td data-label="Aksi" class="text-center"> 
                                     <div class="btn-aksi" role="group">
                                         <a href="{{ url('pendaftaran/form_edit/'.$datmit->id_perjanjian) }}"
-                                            class="btn btn-sm btn-warning">
+                                            class="btn  btn-for-edit">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <a href="{{ url('pendaftaran/detail/'.$datmit->id_perjanjian) }}" 
-                                        class="btn btn-sm btn-success">
+                                         <a href="{{ url('pendaftaran/detail/'.$datmit->id_perjanjian) }}" 
+                                        class="btn  btn-for-detail">
                                             <i class="bi bi-book"></i>
                                         </a>
+                                        <form action="{{ url('produk/delete/'.$datmit->id_perjanjian) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-for-delet"
+                                                data-nama="{{ $datmit->nama }}">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -157,9 +165,17 @@
                                 <td data-label="Aksi" class="text-center"> 
                                     <div class="btn-aksi" role="group">
                                         <a href="{{ url('pendaftaran/detail/'.$datmit->id_perjanjian) }}" 
-                                        class="btn btn-sm btn-success">
+                                        class="btn btn-for-detail">
                                             <i class="bi bi-book"></i>
                                         </a>
+                                        <form action="{{ route('perjanjian.destroy', $datmit->id_perjanjian) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-for-delet"
+                                                data-nama="{{ $datmit->nama }}">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -175,5 +191,115 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle semua form delete dengan sweetalert
+    const deleteForms = document.querySelectorAll('form[action*="delete"]');
+    
+    deleteForms.forEach(form => {
+        const deleteBtn = form.querySelector('.btn-for-delet');
+        
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const nama = this.getAttribute('data-nama');
+                
+                Swal.fire({
+                    title: '',
+                    html: `
+                        <div style="text-align: center;">
+                            <h4 style="color: #1f2937;">Hapus Data ?</h4>
+                            
+                            <p style="color: #a11212ff; font-size: 18px;"><strong>${nama || 'N/A'}</strong></p>
+                            <div style="background: #ffefefff; padding: 10px; border-radius: 5px; margin: 15px 0;">
+                                <p style="color: #af1e1eff; margin: 0; font-size: 14px;">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    <strong>Data yang dihapus tidak dapat dikembalikan!</strong>
+                                </p>
+                            </div>
+                            <p style="color: #6b7280; margin-bottom: 5px; font-size: 14px; font-style: italic;">
+                                Apakah anda yakin?
+                            </p>
+                        </div>
+                    `,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Hapus Sekarang',
+                    cancelButtonText: 'Batalkan',
+                    confirmButtonColor: '#dc2626',
+                    cancelButtonColor: '#6b7280',
+                    focusCancel: true,
+                    customClass: {}
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        // Tampilkan loading indicator
+                        Swal.fire({
+                            title: 'Menghapus...',
+                            text: 'Sedang memproses permintaan',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                        
+                        // Submit form setelah 500ms delay
+                        setTimeout(() => {
+                            form.submit();
+                        }, 500);
+                    }
+                });
+            });
+        }
+    });
+    
+    // Toast untuk notifikasi sukses/error
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            background: '#10b981',
+            color: 'white',
+            iconColor: 'white'
+        });
+    @endif
+    
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: '{{ session('error') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            background: '#dc2626',
+            color: 'white',
+            iconColor: 'white'
+        });
+    @endif
+});
+</script>
+<style>
+    .swal2-popup {
+        border-radius: 12px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .swal2-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+</style>
 
 @endsection

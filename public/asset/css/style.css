@@ -604,6 +604,13 @@ textarea.form-control {
     margin-bottom: 1.1rem;
 }
 
+input[type="text"][id$="_display"] {
+        font-family: 'Courier New', monospace;
+        font-weight: 600;
+        font-size: 14px;
+        color: #059669;
+    }
+
 /*===================================================== MULTI FORM ==========================================*/
 .form-step {
     display: none;
@@ -691,6 +698,16 @@ textarea.form-control {
 }
 .table-bordered tbody tr:hover td {
     background-color: #f5f5f5;
+}
+
+.table-bordered th:nth-child(1) {
+    width: 50px;
+}
+.table-bordered th:nth-child(2) {
+    width: 100px;
+}
+.table-bordered th:nth-child(8) {
+    width: 140px;
 }
 
 .status-badge {
@@ -802,6 +819,61 @@ textarea.form-control {
     color: white;
     padding: 9px 12px;
     font-size: 0.9rem;
+}
+
+.btn-aksi {
+    display: inline-flex;
+    gap: 4px;
+    flex-wrap: nowrap;
+}
+.btn-aksi .btn{
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+.btn-aksi .btn-for-edit {
+    background-color: #ff9800;
+    color: rgb(255, 255, 255);
+}
+.btn-aksi .btn-for-edit i {
+    font-size: 14px;
+}
+.btn-aksi .btn-for-edit:hover {
+    background-color: #ee8f00;
+    color: rgb(255, 255, 255);
+}
+.btn-aksi .btn-for-edit i:hover {
+    font-size: 16px;
+}
+
+.btn-aksi .btn-for-detail {
+    background-color: #0f6d36;
+    color: rgb(255, 255, 255);
+}
+.btn-aksi .btn-for-detail i {
+    font-size: 14px;
+}
+.btn-aksi .btn-for-detail:hover {
+    background-color: #0d582c;
+    color: rgb(255, 255, 255);
+}
+.btn-aksi .btn-for-detail i:hover {
+    font-size: 16px;
+}
+.btn-aksi .btn-for-delet {
+    background-color: none;
+    color: rgb(187, 0, 0);
+}
+.btn-aksi .btn-for-delet i{
+    font-size: 14px;
+}
+.btn-aksi .btn-for-delet i:hover{
+    font-size: 16px;
 }
 
 /*======================================== detail list ================================================*/
@@ -933,8 +1005,8 @@ textarea.form-control {
 /* Optional: Style untuk layout */
 .row-list-perjanjian {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: end;
+    align-items: end;
 }
 
 .col-3 {
@@ -1193,11 +1265,7 @@ textarea.form-control {
 }
 
 
-/* PERBAIKAN UNTUK HEADER YANG LEBIH RAPI */
-
-
-/* Mengatur lebar spesifik untuk setiap kolom agar seimbang */
-/* No */
+/* Lebar kolom spesifik berdasarkan header */
 .table-perjanjian th:nth-child(1) {
     width: 50px;
 }
