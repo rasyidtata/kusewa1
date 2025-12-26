@@ -159,7 +159,14 @@
                         <a href="{{ url('laporan/index') }}">Laporan</a>
                     </li>
 
-                    <li class="list-group-item"><a href="#">Logout</a></li>
+                    <li class="list-group-item">
+                        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-logout p-0">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
                 </ul>
             </div>
             <main class="col-10 col-md-10 p-4 ms-sm-auto col-lg-10 px-md-4">

@@ -29,8 +29,7 @@
                     <div class="row justify-content-start p-3">
                         <div class="col-md-4">
                             <div class="form-group text-center">
-                                <label for="jenis" class="form-label fw-medium">Jenis Persewaan</label>
-                                <div class="btn-group" role="group" aria-label="Jenis Penyewa">
+                                <label for="jenis" class="form-label fw-medium">Jenis Persewaan</label>                                <div class="btn-group" role="group" aria-label="Jenis Penyewa">
                                     <input type="radio" class="btn-check" name="jenis_penyewa" id="Perorangan"
                                         value="Perorangan" >
                                     <label class="btn" for="Perorangan">
@@ -48,13 +47,15 @@
                             </div>
                         </div>
                         <div class="col-md-3 mb-2">
-                            <div class="form-group text-center">
+                            <div class="form-group text-center position-relative">
                                 <label for="kategori" class="form-label fw-medium">Kategori</label>
-                                <select id="kategori" name="kategori" class="form-control kategori-border" required>
+                                <select id="kategori" name="kategori"
+                                        class="form-control kategori-border pe-5"required>
                                     <option value="" disabled selected>-- Pilih Kategori --</option>
                                     <option value="Aset">Aset</option>
                                     <option value="Event">Event</option>
                                 </select>
+                                <i id="iconKategori" class="bi bi-chevron-left dropdown-icon"></i>
                             </div>
                         </div>
                     </div>
@@ -686,5 +687,23 @@
     }
 
 </style>
+<script>
+    const select = document.getElementById('kategori');
+    const icon   = document.getElementById('iconKategori');
+
+    let isOpen = false;
+    select.addEventListener('click', () => {
+        isOpen = !isOpen;
+
+        if (isOpen) {
+            icon.classList.remove('bi-chevron-left');
+            icon.classList.add('bi-chevron-down');
+        } else {
+            icon.classList.remove('bi-chevron-down');
+            icon.classList.add('bi-chevron-left');
+        }
+    });
+</script>
+
 
 @endsection

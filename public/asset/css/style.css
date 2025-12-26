@@ -176,13 +176,28 @@ body {
 }
 
 /* Logout Style */
-.list-group-item:nth-child(7) a {
+
+/* Tombol logout */
+.btn-logout {
+    background: none;
+    border: none;
     color: #dc3545;
+    font-weight: 500;
+    text-decoration: none;
 }
 
-.list-group-item:nth-child(7):hover a {
+.list-group-item:hover .btn-logout {
     color: #ffffff;
+    font-weight: 600;
 }
+
+.list-group-item:hover {
+    background: #005C78;
+    border-left: 3px solid #005C78;
+}
+
+
+
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
@@ -366,6 +381,16 @@ body {
 
 .form-group .kategori-border {
     border: 1px solid #005C78;
+}
+.dropdown-icon {
+    position: absolute;
+    right: 15px;
+    top: 73%;
+    transform: translateY(-50%);
+    pointer-events: none; /* agar select tetap bisa diklik */
+    color: #8a9fb8;
+    font-size: 14px;
+    transition: transform 0.2s ease;
 }
 
 
@@ -677,37 +702,37 @@ input[type="text"][id$="_display"] {
     vertical-align: middle;
 
 }
-
 .table-bordered {
     border-spacing: 0;
     width: 100%;
+    min-width: 800px;
 }
 .table-bordered td {
     vertical-align: middle;
     font-size: 12px;
     background-color: #ffffff;
 }
-
 .table-bordered th,
 .table-bordered td {
     border: 1px solid #dee2e6;
 }
-
 .table-bordered tbody tr:hover {
     background-color: #f5f5f5;
 }
 .table-bordered tbody tr:hover td {
     background-color: #f5f5f5;
 }
-
 .table-bordered th:nth-child(1) {
     width: 50px;
 }
-.table-bordered th:nth-child(2) {
+.table-responsive .table-bordered th:nth-child(2) {
     width: 100px;
 }
-.table-bordered th:nth-child(8) {
-    width: 140px;
+.table-responsive .table-bordered th:nth-child(7) {
+    width: 120px;
+}
+.table-responsive .table-bordered th:nth-child(8) {
+    width: 110px;
 }
 
 .status-badge {
@@ -881,13 +906,15 @@ input[type="text"][id$="_display"] {
 
 
 .btn-dock {
-    background-color: #EB6A28;
+    background-color: #fa702b;
     color: rgb(255, 255, 255);
+    transition: all 0.3s ease;
 }
 
 .btn-dock:hover {
-    background-color: #eb7f4a;
-    color: rgb(255, 255, 255);
+    background-color: #e4682b;
+    color: white;
+    transform: translateY(-2px);
 }
 
 /* Tombol Kembali */
@@ -899,35 +926,20 @@ input[type="text"][id$="_display"] {
     text-align: start;
 }
 
-/* Tombol Download */
-.btn-download {
-    border-color: #005C78;
+
+/* Tombol Share */
+.btn-share {
+    border-color: none;
     color: #ffffff;
-    background-color: #005C78;
+    background-color: #33d158;
     padding-left: 15px;
     padding-right: 15px;
     margin-right: 20px;
     transition: all 0.3s ease;
 }
 
-.btn-download:hover {
-    background-color: #007bff;
-    color: white;
-    transform: translateY(-2px);
-}
-
-/* Tombol Share */
-.btn-share {
-    border-color: #28a745;
-    color: #ffffff;
-    background-color: #28a745;
-    padding-left: 15px;
-    padding-right: 15px;
-    transition: all 0.3s ease;
-}
-
 .btn-share:hover {
-    background-color: #09e93d;
+    background-color: #07b630;
     color: white;
     transform: translateY(-2px);
 }

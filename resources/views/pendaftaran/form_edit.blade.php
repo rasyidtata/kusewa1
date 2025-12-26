@@ -14,7 +14,7 @@
         <hr>
 
         <div class="card-body p-2">
-            <form id="updateForm" method="POST" action="{{ url('pendaftaran/update/'.$dataps->id_perjanjian) }}"
+            <form id="updateForm" method="POST" action="{{ url('pendaftaran/update/'.encrypt($dataps->id_perjanjian)) }}"
                 enctype="multipart/form-data">
                 @csrf
                 <!-- Tampilkan error validasi dengan SweetAlert -->
@@ -35,12 +35,12 @@
                             <div class="row">
                                 <div class="col-4">
                                     <input type="text" id="jenis_penyewa" name="jenis_penyewa" class="form-control"
-                                        placeholder="-" value="{{ old('Jenis', $dataps->dataMitra->Jenis ?? '') }}">
+                                        placeholder="-" value="{{ old('Jenis', $dataps->dataMitra->Jenis ?? '') }}" readonly>
                                 </div>
                                 <div class="col-4">
                                     <input type="text" id="kategori" name="kategori" class="form-control"
                                         placeholder="-"
-                                        value="{{ old('kategori', $dataps->dataMitra->kategori ?? '') }}">
+                                        value="{{ old('kategori', $dataps->dataMitra->kategori ?? '') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -604,7 +604,7 @@
                                     <input type="text" id="harga_sewa_display" class="form-control"
                                         placeholder="-- Masukan harga sewa --"
                                         value="{{ number_format($dataps->harga_sewa ?? 0, 0, ',', '.') }}">
-                                    <input type="hidden" id="harga_sewa" name="harga_sewa">
+                                    <input type="hidden" id="harga_sewa" name="harga_sewa" value="{{ $dataps->harga_sewa ?? 0 }}">
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -614,7 +614,7 @@
                                     <input type="text" id="harga_pemanfaatan_display" class="form-control"
                                         placeholder="-- Masukan harga pemanfaatan --"
                                         value="{{ number_format($dataps->harga_pemanfaatan ?? 0, 0, ',', '.') }}">
-                                    <input type="hidden" id="harga_pemanfaatan" name="harga_pemanfaatan">
+                                    <input type="hidden" id="harga_pemanfaatan" name="harga_pemanfaatan" value="{{ $dataps->harga_pemanfaatan ?? 0 }}">
                                 </div>
                             </div>
                         </div>
@@ -626,7 +626,7 @@
                                     <input type="text" id="biaya_admin_display" class="form-control"
                                         placeholder="-- Masukan biaya admin --"
                                         value="{{ number_format($dataps->biaya_admin_ukur ?? 0, 0, ',', '.') }}">
-                                    <input type="hidden" id="biaya_admin" name="biaya_admin">
+                                    <input type="hidden" id="biaya_admin" name="biaya_admin" value="{{ $dataps->biaya_admin_ukur ?? 0 }}">
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -635,7 +635,7 @@
                                     <input type="text" id="cost_of_money_display" class="form-control"
                                         placeholder="-- Masukan biaya COM --"
                                         value="{{ number_format($dataps->cost_of_money ?? 0, 0, ',', '.') }}">
-                                    <input type="hidden" id="cost_of_money" name="cost_of_money">
+                                    <input type="hidden" id="cost_of_money" name="cost_of_money" value="{{ $dataps->cost_of_money ?? 0 }}">
                                 </div>
                             </div>
                         </div>
@@ -647,8 +647,8 @@
                                         (Rp.)</label>
                                     <input type="text" id="harga_sewa_admin_display" class="form-control"
                                         placeholder="Rp."
-                                        value="{{ number_format($dataps->harga_sewa_admin ?? 0, 0, ',', '.') }}">
-                                    <input type="hidden" id="harga_sewa_admin" name="harga_sewa_admin">
+                                        value="{{ number_format($dataps->harga_sewa_admin ?? 0, 0, ',', '.') }}" readonly>
+                                    <input type="hidden" id="harga_sewa_admin" name="harga_sewa_admin" value="{{ $dataps->harga_sewa_admin ?? 0 }}">
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -657,8 +657,8 @@
                                         COM (Rp.)</label>
                                     <input type="text" id="harga_sewa_admin_com_display" class="form-control"
                                         placeholder="Rp."
-                                        value="{{ number_format($dataps->harga_sewa_admin_com ?? 0, 0, ',', '.') }}">
-                                    <input type="hidden" id="harga_sewa_admin_com" name="harga_sewa_admin_com">
+                                        value="{{ number_format($dataps->harga_sewa_admin_com ?? 0, 0, ',', '.') }}" readonly>
+                                    <input type="hidden" id="harga_sewa_admin_com" name="harga_sewa_admin_com" value="{{ $dataps->harga_sewa_admin_com ?? 0 }}">
                                 </div>
                             </div>
                         </div>
@@ -668,16 +668,16 @@
                                 <div class="form-group">
                                     <label for="ppn" class="form-label fw-medium">PPN 11% (Rp.)</label>
                                     <input type="text" id="ppn_display" class="form-control" placeholder="Rp."
-                                        value="{{ number_format($dataps->ppn_11_persen ?? 0, 0, ',', '.') }}">
-                                    <input type="hidden" id="ppn" name="ppn">
+                                        value="{{ number_format($dataps->ppn_11_persen ?? 0, 0, ',', '.') }}" readonly>
+                                    <input type="hidden" id="ppn" name="ppn" value="{{ $dataps->ppn_11_persen ?? 0 }}">
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="total_harga" class="form-label fw-medium">Total Harga (Rp.)</label>
                                     <input type="text" id="total_harga_display" class="form-control" placeholder="-"
-                                        value="{{ number_format($dataps->total_harga ?? 0, 0, ',', '.') }}">
-                                    <input type="hidden" id="total_harga" name="total_harga">
+                                        value="{{ number_format($dataps->total_harga ?? 0, 0, ',', '.') }}" readonly>
+                                    <input type="hidden" id="total_harga" name="total_harga" value="{{ $dataps->total_harga ?? 0 }}">
                                 </div>
                             </div>
                         </div>
@@ -694,7 +694,7 @@
                                 <div class="form-group ">
                                     <label for="terbilang" class="form-label fw-medium">Terbilang</label>
                                     <textarea id="terbilang" name="terbilang" class="form-control" rows="3"
-                                        placeholder="-">{{ old('terbilang', $dataps->terbilang ?? '') }}</textarea>
+                                        placeholder="-" readonly>{{ old('terbilang', $dataps->terbilang ?? '') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -745,7 +745,6 @@
                 iconColor: 'white'
             });
         @endif
-
         @if (session('error'))
             Swal.fire({
                 icon: 'error',
@@ -761,7 +760,6 @@
                 iconColor: 'white'
             });
         @endif
-
         @if (session('warning'))
             Swal.fire({
                 icon: 'warning',
@@ -1103,7 +1101,6 @@
         }
     });
 </script>
-
 <style>
     /* Style untuk SweetAlert */
     .swal2-popup {

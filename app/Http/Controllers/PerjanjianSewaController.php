@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class PerjanjianSewaController extends Controller
 {
@@ -63,12 +64,13 @@ class PerjanjianSewaController extends Controller
     public function edit($id_perjanjian)
     {
 
-        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
+        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail(decrypt($id_perjanjian));
         return view('pendaftaran.form_edit', compact('dataps'));
     }
     public function update(Request $request, $id_perjanjian)
     {
-        $perjanjianSewa = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
+
+        $perjanjianSewa = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail(decrypt($id_perjanjian));
         $validator = Validator::make($request->all(), [
             // Data Diri - Step 1
             'jenis_penyewa' => 'required|in:Perorangan,Perusahaan',
@@ -233,7 +235,7 @@ class PerjanjianSewaController extends Controller
     }
     private function updatePerjanjianSewa(Request $request, $id_perjanjian)
     {
-        $perjanjianSewa = PerjanjianSewa::find($id_perjanjian);
+        $perjanjianSewa = PerjanjianSewa::find(decrypt($id_perjanjian));
         $t = (int) ($request->tahun ?? 0);
         $b = (int) ($request->bulan ?? 0);
         $h = (int) ($request->hari ?? 0);
@@ -319,34 +321,13 @@ class PerjanjianSewaController extends Controller
         }
     }
 
-    public function downloadPerjanjianPDF($id_perjanjian)
-    {
-        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
-
-        $kategori = $dataps->dataMitra->kategori ?? 'Aset';
-        
-        // Tentukan view berdasarkan kategori
-        if (strtolower($kategori) === 'event') {
-            $view = 'pendaftaran.perjanjian_event';
-        } else {
-            $view = 'pendaftaran.perjanjian_aset';
-        }
-
-        $pdf = Pdf::loadView($view, compact('dataps'))
-                ->setPaper('A4', 'portrait');
-
-        $kategoriText = ucfirst(strtolower($kategori));
-        $fileName = "Perjanjian_{$kategoriText}_KAI_{$dataps->id_perjanjian}.pdf";
-
-        return $pdf->download($fileName); 
-    }
 
 
     public function detail_perjanjian($id_perjanjian)
     {
         
         // Ambil data dengan relasi yang lengkap
-        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
+        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail(decrypt($id_perjanjian));
         
         return view('pendaftaran.detail', compact('dataps'));
     }

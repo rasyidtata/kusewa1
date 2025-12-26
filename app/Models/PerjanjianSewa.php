@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PerjanjianSewa extends Model
 {
-    protected $table = 'perjanjian_sewa'; // ← perbaikan: pakai lowercase_underscore
+    protected $table = 'perjanjian_sewa'; 
     protected $primaryKey = 'id_perjanjian';
     public $incrementing = true;
     protected $keyType = 'int';
@@ -63,11 +63,6 @@ class PerjanjianSewa extends Model
         'deleted_at' => 'datetime',
     ];
 
-    /**
-     * ===========================
-     *      RELATIONSHIPS
-     * ===========================
-     */
 
     // perjanjian_sewa.id_mitra → data_mitra.id_mitra
     public function dataMitra()
@@ -82,12 +77,7 @@ class PerjanjianSewa extends Model
     }
 
 
-    /**
-     * ===========================
-     *      ACCESSORS
-     * ===========================
-     */
-
+    /* ACCESSORS */
     public function getJangkaWaktuTahunAttribute()
     {
         if (preg_match('/(\d+)\s*Tahun/i', $this->jangka_waktu, $m)) {

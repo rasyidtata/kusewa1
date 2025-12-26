@@ -53,11 +53,11 @@
                                 </td>
                                 <td data-label="Aksi" class="text-center"> 
                                     <div class="btn-aksi" role="group">
-                                        <a href="{{ url('pendaftaran/form_edit/'.$datmit->id_perjanjian) }}"
+                                        <a href="{{ url('pendaftaran/form_edit/'.encrypt($datmit->id_perjanjian)) }}"
                                             class="btn  btn-for-edit">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                         <a href="{{ url('pendaftaran/detail/'.$datmit->id_perjanjian) }}" 
+                                         <a href="{{ url('pendaftaran/detail/'.encrypt($datmit->id_perjanjian)) }}" 
                                         class="btn  btn-for-detail">
                                             <i class="bi bi-book"></i>
                                         </a>
@@ -164,7 +164,7 @@
                                 </td>
                                 <td data-label="Aksi" class="text-center"> 
                                     <div class="btn-aksi" role="group">
-                                        <a href="{{ url('pendaftaran/detail/'.$datmit->id_perjanjian) }}" 
+                                        <a href="{{ url('pendaftaran/detail/'.encrypt($datmit->id_perjanjian)) }}" 
                                         class="btn btn-for-detail">
                                             <i class="bi bi-book"></i>
                                         </a>
@@ -256,7 +256,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Toast untuk notifikasi sukses/error
-    @if(session('success'))
+    @if
+    (session('success'))
         Swal.fire({
             icon: 'success',
             title: 'Berhasil!',
@@ -271,8 +272,8 @@ document.addEventListener('DOMContentLoaded', function() {
             iconColor: 'white'
         });
     @endif
-    
-    @if(session('error'))
+    @if
+    (session('error'))
         Swal.fire({
             icon: 'error',
             title: 'Gagal!',
@@ -283,6 +284,22 @@ document.addEventListener('DOMContentLoaded', function() {
             timer: 4000,
             timerProgressBar: true,
             background: '#dc2626',
+            color: 'white',
+            iconColor: 'white'
+        });
+    @endif
+    @if 
+    (session('warning'))
+        Swal.fire({
+            icon: 'warning',
+            title: 'Peringatan!',
+            text: '{{ session('warning') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            background: '#f59e0b',
             color: 'white',
             iconColor: 'white'
         });

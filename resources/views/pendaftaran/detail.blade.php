@@ -47,9 +47,7 @@
                     <button type="button" class="btn btn-share ">
                         <i class="bi bi-share me-2"></i>Share
                     </button>
-                    <a href="#" class="btn btn-download" download>
-                        <i class="fas fa-file-pdf fa-sm me-2"></i>Download
-                    </a>
+
                 </div>
             </div>
             <div class="card mb-4 border-0 p-5">
@@ -164,7 +162,7 @@
 
     // Notifikasi session
     @if (session('success'))
-        Swal.fire({
+        Swal.fire({ 
             icon: 'success',
             title: 'Berhasil!',
             text: '{{ session('success') }}',
@@ -297,7 +295,7 @@
                     </p>
                 </div>
             `,
-            
+
             showCancelButton: true,
             confirmButtonColor: '#10b981',
             cancelButtonColor: '#6b7280',
@@ -380,7 +378,7 @@
             cancelButtonText: 'Edit Alasan',
             reverseButtons: true,
             customClass: {
-                
+
             }
         }).then((result) => {
             if (result.isConfirmed) {
