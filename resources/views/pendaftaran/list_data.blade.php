@@ -256,8 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Toast untuk notifikasi sukses/error
-    @if
-    (session('success'))
+    @if(session('success'))
         Swal.fire({
             icon: 'success',
             title: 'Berhasil!',
@@ -272,8 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
             iconColor: 'white'
         });
     @endif
-    @if
-    (session('error'))
+    @if(session('error'))
         Swal.fire({
             icon: 'error',
             title: 'Gagal!',
@@ -288,8 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
             iconColor: 'white'
         });
     @endif
-    @if 
-    (session('warning'))
+    @if (session('warning'))
         Swal.fire({
             icon: 'warning',
             title: 'Peringatan!',
