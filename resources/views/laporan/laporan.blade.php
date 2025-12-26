@@ -54,7 +54,7 @@
                             <th>No</th>
                             <th>Nama Mitra</th>
                             <th>Lokasi Aset</th>
-                            <th>Periode Sewa</th>
+                            <th>Penggunaan</th> <th>Periode Sewa</th>
                             <th>Status</th>
                             <th>Nilai Kontrak</th>
                         </tr>
@@ -64,7 +64,11 @@
                         <tr>
                             <td class="text-center">{{ $key + 1 }}</td>
                             <td class="font-weight-bold">{{ $t->dataMitra->nama ?? '-' }}</td>
+                            
                             <td>{{ $t->dataAset->lokasi ?? '-' }}</td>
+                            
+                            <td>{{ $t->dataAset->penggunaan_objek ?? '-' }}</td>
+
                             <td>
                                 <small class="d-block text-muted">Mulai: {{ \Carbon\Carbon::parse($t->masa_awal_perjanjian)->format('d/m/Y') }}</small>
                                 <small class="d-block text-muted">Akhir: {{ \Carbon\Carbon::parse($t->masa_akhir_perjanjian)->format('d/m/Y') }}</small>
@@ -75,14 +79,14 @@
                                     ($t->status == 'peringatan' ? 'secondary' : 
                                     ($t->status == 'mati' ? 'danger' : 'warning')) 
                                 }}">
-                                    {{ $t->status }}
+                                    {{ ucfirst($t->status) }}
                                 </span>
                             </td>
                             <td class="text-right font-weight-bold text-primary">Rp {{ number_format($t->total_harga, 0, ',', '.') }}</td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">
+                            <td colspan="7" class="text-center text-muted py-4">
                                 <i class="fas fa-folder-open fa-3x mb-3 text-gray-300"></i><br>
                                 Tidak ada data pada periode ini.
                             </td>
@@ -91,7 +95,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="bg-light font-weight-bold">
-                            <td colspan="5" class="text-right text-uppercase">Total Pendapatan:</td>
+                            <td colspan="6" class="text-right text-uppercase">Total Pendapatan:</td>
                             <td class="text-right text-success h5 mb-0">Rp {{ number_format($transaksi->sum('total_harga'), 0, ',', '.') }}</td>
                         </tr>
                     </tfoot>

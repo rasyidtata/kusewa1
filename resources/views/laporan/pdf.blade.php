@@ -36,9 +36,9 @@
         <thead>
             <tr>
                 <th width="5%">No</th>
-                <th width="20%">Nama Mitra</th>
-                <th width="25%">Lokasi Aset</th>
-                <th width="20%">Masa Sewa</th>
+                <th width="15%">Nama Mitra</th>
+                <th width="20%">Lokasi Aset</th>
+                <th width="15%">Penggunaan</th> <th width="15%">Masa Sewa</th>
                 <th width="10%">Status</th>
                 <th width="20%" class="text-right">Nilai Kontrak</th>
             </tr>
@@ -49,6 +49,9 @@
                 <td class="text-center">{{ $loop->iteration }}</td>
                 <td>{{ $t->dataMitra->nama ?? '-' }}</td>
                 <td>{{ $t->dataAset->lokasi ?? '-' }}</td>
+                
+                <td>{{ $t->dataAset->penggunaan_objek ?? '-' }}</td>
+                
                 <td>
                     {{ \Carbon\Carbon::parse($t->masa_awal_perjanjian)->format('d/m/y') }} - 
                     {{ \Carbon\Carbon::parse($t->masa_akhir_perjanjian)->format('d/m/y') }}
@@ -63,13 +66,13 @@
             </tr>
             @empty
             <tr>
-                <td colspan="6" class="text-center">Tidak ada data pada periode ini.</td>
+                <td colspan="7" class="text-center">Tidak ada data pada periode ini.</td>
             </tr>
             @endforelse
         </tbody>
         <tfoot>
             <tr class="total-row">
-                <td colspan="5" class="text-right">TOTAL PENDAPATAN</td>
+                <td colspan="6" class="text-right">TOTAL PENDAPATAN</td>
                 <td class="text-right">Rp {{ number_format($transaksi->sum('total_harga'), 0, ',', '.') }}</td>
             </tr>
         </tfoot>
