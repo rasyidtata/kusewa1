@@ -175,6 +175,7 @@ class PendaftaranController extends Controller
             'luas_bangunan' => $request->luas_bangunan,
         ];
 
+
         return DataAset::create($data);
     }
     private function simpanPerjanjianSewa(Request $request, $idMitra, $idAset )
