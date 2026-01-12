@@ -124,7 +124,7 @@
                 <div class="col-12 col-md-3">
                     <div class="header-actions">
                         <div class="logo-secondary">
-                            <img src="{{ asset('asset/img/logo_kai.png') }}" height="100px" class="logo-img">
+                            <img src="{{ asset('asset/img/logo_kna.png') }}" height="100px" class="logo-img">
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,6 @@
                     <li class="list-group-item">
                         <a href="{{ route('perpanjang.index') }}">Perpanjang Kontrak</a>
                     </li>
-                    <li class="list-group-item"><a href="#">Putus Kontrak</a></li>
                     <li class="list-group-item"><a href="{{ url('list_data/data_perjanjian') }}">List Data perjanjian</a></li>
                     <li class="list-group-item">
                         <a href="{{ url('laporan/index') }}">Laporan</a>

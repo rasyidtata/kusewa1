@@ -5,11 +5,11 @@
 @section('content')
 <div class="container-form-biodata">
     <div class="text-start p-3">
-        <a> Perjanjian Mitra KAI DAOP 6 Yogyakarta</a>
+        <a> Edit Perjanjian Mitra KAI DAOP 6 Yogyakarta</a>
     </div>
     <div class="card card-form">
         <div class="card-header-form text- text-center py-3">
-            <h4 class="card-title-form mb-0">DATA DIRI</h4>
+            <h4 class="card-title-form mb-0">FORM EDIT DATA DIRI</h4>
         </div>
         <hr>
 
@@ -319,8 +319,8 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="tgl_persetujuan_kenmenhum_dan_ham"
-                                            name="tgl_persetujuan_kenmenhum_dan_ham" class="form-control"
+                                        <input type="date" id="tanggal_kemenkumham"
+                                            name="tanggal_kemenkumham" class="form-control"
                                             placeholder="-"
                                             value="{{ $dataps->dataMitra->tgl_persetujuan_kenmenhum_dan_ham_formatted ?? '' }}">
                                     </div>
@@ -328,9 +328,9 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
-                                    <label for="no_kenmenhum_dan_ham" class="form-label fw-medium">Nomor Kemenkum dan
+                                    <label for="no_kemenkumham" class="form-label fw-medium">Nomor Kemenkum dan
                                         HAM</label>
-                                    <input type="text" id="no_kenmenhum_dan_ham" name="no_kenmenhum_dan_ham"
+                                    <input type="text" id="no_kemenkumham" name="no_kemenkumham"
                                         class="form-control" placeholder="-"
                                         value="{{ old('no_kenmenhum_dan_ham', $dataps->dataMitra->no_kenmenhum_dan_ham ?? '') }}">
                                 </div>
@@ -341,13 +341,13 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
-                                    <label for="tgl_penetapan_pengadilan" class="form-label fw-medium">Tanggal
+                                    <label for="tanggal_penetapan_pengadilan" class="form-label fw-medium">Tanggal
                                         Penetapan Pengadilan (CV)</label>
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="tgl_penetapan_pengadilan" name="tgl_penetapan_pengadilan"
+                                        <input type="date" id="tanggal_penetapan_pengadilan" name="tanggal_penetapan_pengadilan"
                                             class="form-control" placeholder="-"
                                             value="{{ $dataps->dataMitra->tgl_penetapan_pengadilan_formatted ?? '' }}">
                                     </div>
@@ -368,13 +368,13 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
-                                    <label for="tgl_izin_usaha" class="form-label fw-medium">Tanggal Izin
+                                    <label for="tanggal_izin_berusaha" class="form-label fw-medium">Tanggal Izin
                                         Berusaha</label>
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="date" id="tgl_izin_usaha" name="tgl_izin_usaha"
+                                        <input type="date" id="tanggal_izin_berusaha" name="tanggal_izin_berusaha"
                                             class="form-control" placeholder="-"
                                             value="{{ $dataps->dataMitra->tgl_izin_usaha_formatted ?? '' }}">
                                     </div>

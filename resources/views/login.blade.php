@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Login Sederhana</title>
+    <title>Halaman Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -66,7 +66,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: -30px auto 40px;
+            margin: -10px auto 40px;
         }
         .logo img {
             width: 100px;
@@ -238,7 +238,7 @@
     <div class="login-container">
         <div class="login-header">
             <div class="logo-kai">
-                <img src="{{ asset('asset/img/logo_kai.png') }}" alt="Logo">
+                <img src="{{ asset('asset/img/logo_kna.png') }}" alt="Logo">
             </div>
             <div class="logo">
                 <img src="{{ asset('asset/img/kusewa.png') }}" alt="Logo">

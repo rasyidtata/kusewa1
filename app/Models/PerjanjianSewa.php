@@ -62,7 +62,7 @@ class PerjanjianSewa extends Model
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-
+ 
 
     // perjanjian_sewa.id_mitra → data_mitra.id_mitra
     public function dataMitra()

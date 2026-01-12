@@ -47,7 +47,6 @@
             <div class="col-2">
                 <a href="#">Copy /</a>
                 <a href="#">Exsel /</a>
-                <a href="#">PDF</a>
             </div>
         </div>
         <div class="table-perjanjian-responsive">
@@ -73,7 +72,9 @@
                     @forelse($dataPerjanjian as $datmit)
                     <tr>
                         <td data-label="No" class="text-center">{{ $loop->iteration }}</td>
-                        <td data-label="Tanggal" class="text-center">{{ $datmit->updated_at }}</td>
+                        <td data-label="Tanggal" class="text-center">
+                            {{ \Carbon\Carbon::parse($datmit->updated_at)->translatedFormat('d F Y') }}
+                        </td>
                         <td data-label="Kategori" class="text-center">{{ $datmit->kategori }}</td>
                         <td data-label="Nama">{{ $datmit->nama }}</td>
                         <td data-label="Nama Perwakilan">{{ $datmit->nama_perwakilan }}</td>
@@ -83,8 +84,9 @@
                         <td data-label="No.HP" class="text-center">{{ $datmit->no_tlpn }}</td>
                         <td data-label="No.Perjanjian" class="text-center">{{ $datmit->kode_perjanjian }}</td>
                         <td data-label="Lokasi Sewa">{{ $datmit->lokasi }}</td>
-                        <td data-label="Total Harga">Rp. {{ number_format($datmit->total_harga ?? 0, 0,
-                            ',', '.') }}</td>
+                        <td data-label="Total Harga">
+                            Rp. {{ number_format($datmit->total_harga ?? 0, 0, ',', '.') }}
+                        </td>
                         <td data-label="Status" class="text-center">
                             <span class="badge bg-{{ 
                                 $datmit->status == 'aktif' ? 'success' : 
