@@ -46,7 +46,7 @@
         <div class="row row-data-perjanjian">
             <div class="col-2">
                 <a href="#">Copy /</a>
-                <a href="#">Exsel /</a>
+                <a href="{{ route('perjanjian.export.excel', request()->query()) }}">Exsel /</a>
             </div>
         </div>
         <div class="table-perjanjian-responsive">

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DataPerjanjianExport;
 use Carbon\Carbon;
 
 class PerjanjianSewaController extends Controller
@@ -381,6 +383,50 @@ class PerjanjianSewaController extends Controller
         }
     }
 
+
+    public function exportExcel(Request $request)
+    {
+        try {
+            $query = PerjanjianSewa::query()->with(['mitra', 'aset']);
+            
+            // Filter kategori
+            if ($request->filled('filterkategori')) {
+                $query->where('kategori', $request->filterkategori);
+            }
+            
+            // Filter jenis
+            if ($request->filled('filterjenis')) {
+                $query->where('Jenis', $request->filterjenis);
+            }
+            
+            // Filter pencarian
+            if ($request->filled('table_search')) {
+                $search = $request->table_search;
+                $query->where(function($q) use ($search) {
+                    $q->where('nama', 'like', '%'.$search.'%')
+                    ->orWhere('kode_perjanjian', 'like', '%'.$search.'%')
+                    ->orWhere('nama_perwakilan', 'like', '%'.$search.'%')
+                    ->orWhere('no_tlpn', 'like', '%'.$search.'%')
+                    ->orWhere('lokasi', 'like', '%'.$search.'%')
+                    ->orWhereHas('mitra', function($q2) use ($search) {
+                        $q2->where('email', 'like', '%'.$search.'%')
+                            ->orWhere('no_identitas', 'like', '%'.$search.'%')
+                            ->orWhere('npwp', 'like', '%'.$search.'%');
+                    });
+                });
+            }
+            
+            $data = $query->get();
+            
+            $fileName = 'data-perjanjian-lengkap-' . date('Y-m-d') . '.xlsx';
+            
+            // Gunakan export class baru
+            return Excel::download(new DataPerjanjianExport($data), $fileName);
+            
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error: ' . $e->getMessage());
+        }
+    }
 
 
 

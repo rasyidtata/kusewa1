@@ -71,6 +71,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get("pendaftaran/list_perjanjian", [HomeController::class, "list_perjanjian"])->name('menu.list_perjanjian');
     Route::get("pendaftaran/perjanjian_event", [HomeController::class, "perjanjian"])->name('menu.perjanjian_event');
+    Route::get('/list_data/data_perjanjian/export-excel', [PerjanjianSewaController::class, 'exportExcel'])->name('perjanjian.export.excel');
 
 
 });
