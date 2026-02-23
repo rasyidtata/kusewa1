@@ -638,7 +638,7 @@
                 <h6 class=" mt-4"><strong>TENTANG :<br>
                         PERSEWAAN ASET MILIK PT. KERETA API INDONESIA (Persero)
                         DI {{ strtoupper($dataps->dataAset->lokasi ?? '') }}
-                        UNTUK {{ strtoupper($dataps->dataAset->penggunaan_objek ?? '') }}
+                        UNTUK {{ strtoupper($dataps->penggunaan_aset ?? '') }}
                     </strong>
                 </h6>
                 <h6 class="tgl-cover"><strong>MASA BERLAKU :<br>
@@ -1487,7 +1487,7 @@
                         <tr>
                             <td></td>
                             <td>c. PENGGUNAAN</td>
-                            <td colspan="2">{{ strtoupper($dataps->dataAset->penggunaan_objek ?? '') }}</td>
+                            <td colspan="2">{{ strtoupper($dataps->penggunaan_aset ?? '') }}</td>
                         </tr>
 
                         <!-- 4. STATUS PERJANJIAN -->

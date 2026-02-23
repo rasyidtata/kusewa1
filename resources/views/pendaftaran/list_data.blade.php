@@ -37,12 +37,14 @@
                             @forelse($dataProses as $datmit)
                             <tr>
                                 <td data-label="No" class="text-center">{{ $loop->iteration }}</td>
-                                <td data-label="Tanggal Sewa">{{ $datmit->tgl_perjanjian }}</td>
+                                <td data-label="Tanggal Sewa">
+                                    {{ \Carbon\Carbon::parse($datmit->updated_at)->translatedFormat('d F Y') }}
+                                </td>
                                 <td data-label="Nama">{{ $datmit->nama }}</td>
                                 <td data-label="Jenis" class="text-center">{{ $datmit->Jenis }}</td>
                                 <td data-label="kategori" class="text-center">{{ $datmit->kategori }}</td>
                                 <td data-label="Lokasi Sewa">{{ $datmit->lokasi }}</td>
-                                <td data-label="Penggunaan">{{ $datmit->penggunaan_objek }}</td>
+                                <td data-label="Penggunaan">{{ $datmit->penggunaan_aset }}</td>
                                 <td data-label="Total Harga">Rp. {{ number_format($datmit->total_harga ?? 0, 0,
                                     ',', '.') }}</td> 
 
@@ -147,12 +149,14 @@
                             @forelse($dataSelesai as $datmit)
                             <tr>
                                 <td data-label="No" class="text-center">{{ $loop->iteration }}</td>
-                                <td data-label="Tanggal Sewa">{{ $datmit->tgl_perjanjian }}</td>
+                                <td data-label="Tanggal Sewa">
+                                    {{ \Carbon\Carbon::parse($datmit->updated_at)->translatedFormat('d F Y') }}
+                                </td>
                                 <td data-label="Nama">{{ $datmit->nama }}</td>
                                 <td data-label="jenis"class="text-center">{{ $datmit->Jenis }}</td>
                                 <td data-label="katerori"class="text-center">{{ $datmit->kategori }}</td>
                                 <td data-label="Lokasi">{{ $datmit->lokasi }}</td>
-                                <td data-label="penggunaan">{{ $datmit->penggunaan_objek }}</td>
+                                <td data-label="penggunaan">{{ $datmit->penggunaan_aset }}</td>
                                 <td data-label="Total Harga">Rp. {{ number_format($datmit->total_harga ?? 0, 0,
                                     ',', '.') }}</td>
                                 <td data-label="Status" class="text-center">
@@ -168,6 +172,7 @@
                                         class="btn btn-for-detail">
                                             <i class="bi bi-book"></i>
                                         </a>
+                                        @if (auth()->user()->role === 'admin')
                                         <form action="{{ route('perjanjian.destroy', $datmit->id_perjanjian) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
@@ -176,6 +181,7 @@
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

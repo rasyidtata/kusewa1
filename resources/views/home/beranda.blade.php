@@ -6,7 +6,7 @@
 <div class="container-fluid">
     
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Dashboard Monitoring Aset</h1>
+        <h1 class="h6 mb-0 text-gray-800 font-weight-bold pt-4">Dashboard Monitoring Aset</h1>
     </div>
 
     <div class="row">
@@ -57,7 +57,7 @@
         <div class="col-xl-8 col-lg-7">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-chart-line me-2"></i>Tren Pendapatan Sewa</h6>
+                    <h6 class="m-0 font-weight-bold text-warning"><i class="fas fa-chart-line me-2"></i>Tren Pendapatan Sewa</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-area" style="height: 350px;">
@@ -70,7 +70,7 @@
         <div class="col-xl-4 col-lg-5">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-chart-pie me-2"></i>Status Aset</h6>
+                    <h6 class="m-0 font-weight-bold text-warning"><i class="fas fa-chart-pie me-2"></i>Status Aset</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-pie pt-4 pb-2" style="height: 300px;">
@@ -87,6 +87,7 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>

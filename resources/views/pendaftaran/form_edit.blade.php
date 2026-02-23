@@ -63,7 +63,6 @@
                                     <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control"
                                         placeholder="Masukkan nama lengkap"
                                         value="{{ old('nama', $dataps->dataMitra->nama ?? '') }}">
-
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -150,6 +149,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- Upload KTP -->
                 <div class="card mb-4">
                     <div class="card-header">
@@ -459,6 +459,17 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
+                                    <label for="nama_aset" class="form-label fw-medium">Nama
+                                        Aset</label>
+                                    <input type="text" id="nama_aset" name="nama_aset" class="form-control"
+                                        placeholder="-- Masukkan nama aset --" 
+                                        value="{{ old('nama_aset', $dataps->dataAset->nama_aset ?? '') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
                                     <label for="alamat_asset" class="form-label fw-medium">Alamat Lokasi
                                         Asset</label>
                                     <textarea id="alamat_asset" name="alamat_asset" class="form-control" rows="3"
@@ -472,7 +483,7 @@
                                         Asset</label>
                                     <textarea id="penggunaan_asset" name="penggunaan_asset" class="form-control"
                                         rows="3" placeholder="-"
-                                        value="340413140998788001"> {{ old('penggunaan_objek', $dataps->dataAset->penggunaan_objek ?? '') }}</textarea>
+                                        value="340413140998788001"> {{ old('penggunaan_objek', $dataps->penggunaan_aset ?? '') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -533,7 +544,7 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="text" id="masa_awal_perjanjian" name="masa_awal_perjanjian"
+                                        <input type="date" id="masa_awal_perjanjian" name="masa_awal_perjanjian"
                                             class="form-control"
                                             value="{{ $dataps->masa_awal_perjanjian_formatted ?? '' }}">
                                     </div>
@@ -547,7 +558,7 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-calendar3"></i>
                                         </span>
-                                        <input type="text" id="masa_akhir_perjanjian" name="masa_akhir_perjanjian"
+                                        <input type="date" id="masa_akhir_perjanjian" name="masa_akhir_perjanjian"
                                             class="form-control"
                                             value="{{ $dataps->masa_akhir_perjanjian_formatted ?? '' }}">
                                     </div>
@@ -585,6 +596,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
 

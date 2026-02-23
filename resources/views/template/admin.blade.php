@@ -11,10 +11,7 @@
     <link href="{{ asset('asset/css/style.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
     <style>
         .card {
             border: none;
@@ -99,11 +96,11 @@
             box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
         }
     </style>
-
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('css_custom')
+
+    
 </head>
 
 <body>
@@ -135,11 +132,58 @@
     <div class="container-fluid-konten">
         <div class="row row-konten ">
             <div class="col-2 col-md-2 bg-light p-0">
+                <ul class="user-halaman">
+                    @auth
+                    <li class="user-role">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="role-badge {{ auth()->user()->role === 'admin' ? 'badge-admin' : 'badge-pegawai' }}">
+                            {{ ucfirst(auth()->user()->role) }}
+                        </span>
+                    </li>
+
+                    @if(auth()->user()->role === 'pegawai')
+                    <li class="user-info">
+                        <i class="fas fa-id-badge"></i>
+                        <span class="user-name">{{ auth()->user()->name }}</span>
+                    </li>
+                    <li class="user-info">
+                        <i class="fas fa-envelope"></i>
+                        <span class="user-email">{{ auth()->user()->email }}</span>
+                    </li>
+                    @endif
+                    <li class="user-status">
+                        <i class="fas fa-circle status-indicator"></i>
+                        <span class="status-text">Online</span>
+                    </li>
+                    @else
+                    <li class="user-role">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="role-badge badge-guest">Guest</span>
+                    </li>
+                    <li class="user-status">
+                        <i class="fas fa-circle status-indicator offline"></i>
+                        <span class="status-text">Offline</span>
+                    </li>
+                    @endauth
+                </ul>
                 <ul class="list-group sidebar-menu">
                     <li class="list-group-item">
                         <a href="{{ route('dashboard') }}">Home</a>
                     </li>
-
+                    
+                    @if (auth()->user()->role === 'admin')
+                    <li class="list-group-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="mitraDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            Pendaftaran Pegawai
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="mitraDropdown">
+                            <li><a class="dropdown-item" href="{{ url('admin_fitur/pendaftaran') }}">Form Pendaftaran </a></li>
+                            <li><a class="dropdown-item" href="{{ url('/admin_fitur/list') }}">List Data Pegawai</a></li>
+                        </ul>
+                    </li>
+                    @endif
+                    
                     <li class="list-group-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="mitraDropdown" role="button"
                             data-bs-toggle="dropdown">
@@ -147,7 +191,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="mitraDropdown">
                             <li><a class="dropdown-item" href="{{ route('pendaftaran.form') }}">Form Pendaftaran</a></li>
-                            <li><a class="dropdown-item" href="{{ url('pendaftaran/fitur_filter') }}">List Data</a></li>
+                            <li><a class="dropdown-item" href="{{ url('pendaftaran/fitur_filter') }}">List Data Mitra</a></li>
                         </ul>
                     </li>
                     <li class="list-group-item">
@@ -159,9 +203,9 @@
                     </li>
 
                     <li class="list-group-item">
-                        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
                             @csrf
-                            <button type="submit" class="btn btn-logout p-0">
+                            <button type="btn" class="btn btn-logout p-0" id="logout-btn">
                                 Logout
                             </button>
                         </form>

@@ -81,45 +81,7 @@
                                             <label for="nama_lengkap" class="form-label fw-medium">Nama Lengkap</label>
                                             <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control"
                                                 placeholder="Masukkan nama lengkap"
-                                                value="{{ old('nama_lengkap', $dataps->dataMitra->nama ?? '') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="form-group">
-                                            <label for="penyewa_berdasarkan" class="form-label fw-medium">Penyewa
-                                                Berdasarkan</label>
-                                            <input type="text" id="penyewa_berdasarkan" name="penyewa_berdasarkan"
-                                                class="form-control" placeholder="Berdasarkan"
-                                                value="{{ old('penyewa_berdasarkan', $dataps->dataMitra->penyewa_berdasarkan ?? '') }}">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <div class="form-group">
-                                            <label for="alamat" class="form-label fw-medium">Alamat</label>
-                                            <textarea id="alamat" name="alamat" class="form-control" rows="3"
-                                                placeholder="Masukkan alamat lengkap">{{ old('alamat', $dataps->dataMitra->alamat ?? '') }}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <div class="form-group">
-                                            <label for="kode_pos" class="form-label fw-medium">Kode Pos</label>
-                                            <input type="text" id="kode_pos" name="kode_pos" class="form-control"
-                                                placeholder="Kode Pos"
-                                                value="{{ old('kode_pos', $dataps->dataMitra->kode_pos ?? '') }}">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <div class="form-group">
-                                            <label for="no_telepon" class="form-label fw-medium">No Telepon/WA</label>
-                                            <input type="tel" id="no_telepon" name="no_telepon" class="form-control"
-                                                placeholder="08xxxxxxxxxx"
-                                                value="{{ old('no_tlpn', $dataps->dataMitra->no_tlpn ?? '') }}">
+                                                value="{{ old('nama', $dataps->dataMitra->nama ?? '') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
@@ -131,36 +93,58 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="tanggal_perjanjian" class="form-label fw-medium">Tanggal
+                                                Perjanjian</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
+                                                <input type="date" id="tanggal_perjanjian" name="tanggal_perjanjian"
+                                                    class="form-control"
+                                                    value="{{ $dataps->dataMitra->tgl_perjanjian_formatted ?? ''}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="alamat" class="form-label fw-medium">Alamat</label>
+                                            <textarea id="alamat" name="alamat" class="form-control" rows="3"
+                                                placeholder="Masukkan alamat lengkap">{{ old('alamat', $dataps->dataMitra->alamat ?? '') }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Dokumen Penyewa -->
+                        <!-- Kontak Informasi -->
                         <div class="card mb-4">
                             <div class="card-header">
                                 <h5 class="card-title">
-                                    <i class="bi bi-person-badge me-2"></i>Dokumen Penyewa
+                                    <i class="bi bi-whatsapp me-2"></i>Kontak Informasi
                                 </h5>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="nik" class="form-label fw-medium">NIK</label>
-                                            <input type="text" id="nik" name="nik" class="form-control"
-                                                placeholder="Masukkan NIK"
-                                                value="{{ old('no_identitas', $dataps->dataMitra->no_identitas ?? '') }}">
+                                            <label for="no_telepon" class="form-label fw-medium">No Telepon/WA</label>
+                                            <input type="tel" id="no_telepon" name="no_telepon" class="form-control"
+                                                placeholder="08xxxxxxxxxx"
+                                                value="{{ old('no_tlpn', $dataps->dataMitra->no_tlpn ?? '') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="masa_berlaku_ktp" class="form-label fw-medium">Masa Berlaku
-                                                KTP</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                                                <input type="date" id="Masa_Berlaku_KTP" name="Masa_Berlaku_KTP"
-                                                    class="form-control"
-                                                    value="{{ $dataps->dataMitra->masa_berlaku_identitas_formatted ?? '' }}">
-                                            </div>
+                                            <label for="penyewa_berdasarkan" class="form-label fw-medium">Penyewa
+                                                Berdasarkan</label>
+                                            <input type="text" id="penyewa_berdasarkan" name="penyewa_berdasarkan"
+                                                class="form-control" placeholder="Berdasarkan"
+                                                value="{{ old('penyewa_berdasarkan', $dataps->dataMitra->penyewa_berdasarkan ?? '') }}"
+                                                required.>
                                         </div>
                                     </div>
                                 </div>
@@ -168,10 +152,17 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="npwp" class="form-label fw-medium">NPWP</label>
-                                            <input type="text" id="npwp" name="npwp" class="form-control"
-                                                placeholder="Masukkan NPWP"
-                                                value="{{ old('npwp', $dataps->dataMitra->npwp ?? '') }}">
+                                            <label for="masa_berlaku_ktp" class="form-label fw-medium">Masa Berlaku KTP</label>
+                                            <input type="text" id="masa_berlaku_ktp" name="masa_berlaku_ktp"
+                                                class="form-control" value="{{ $dataps->dataMitra->masa_berlaku_identitas}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="nik" class="form-label fw-medium">Nomor Identitas/NIK</label>
+                                            <input type="text" id="nik" name="nik" class="form-control"
+                                                placeholder="Masukkan NIK"
+                                                value="{{ old('no_identitas', $dataps->dataMitra->no_identitas ?? '') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -187,12 +178,48 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="foto_ktp" class="form-label fw-medium">Foto KTP</label>
-                                    <input type="file" id="foto_ktp" name="foto_ktp" class="form-control"
-                                        accept=".jpg,.jpeg,.pdf">
+                                    <label for="foto_identitas" class="form-label fw-medium">Foto Identitas (KTP/SIM)</label>
+                                    <input type="file" id="foto_identitas" name="foto_identitas" class="form-control"
+                                        accept="image/*,.pdf">
+
+                                    @if($dataps->dataMitra->foto_identitas)
+                                    <div class="mt-3">
+                                        <label class="form-label">Foto Saat Ini:</label><br>
+                                        @if(pathinfo($dataps->dataMitra->foto_identitas, PATHINFO_EXTENSION) === 'pdf')
+                                        <div class="alert alert-info">
+                                            <i class="bi bi-file-pdf me-2"></i>File PDF:
+                                            <a href="{{ asset($dataps->dataMitra->foto_identitas) }}" target="_blank"
+                                                class="ms-2">
+                                                Lihat Dokumen
+                                            </a>
+                                        </div>
+                                        @else
+                                        <img src="{{ asset($dataps->dataMitra->foto_identitas) }}" alt="Foto Identitas"
+                                            class="img-thumbnail mt-2"
+                                            style="max-width: 300px; max-height: 200px; object-fit: cover;">
+                                        @endif
+
+                                        <!-- Tombol hapus foto -->
+                                        <div class="mt-2">
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="confirmDeleteFoto('{{ $dataps->dataMitra->id_mitra }}')">
+                                                <i class="bi bi-trash me-1"></i>Hapus Foto
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @else
+                                    <div class="mt-2">
+                                        <div class="alert alert-warning">
+                                            <i class="bi bi-exclamation-triangle me-2"></i>Belum ada foto identitas yang
+                                            diupload
+                                        </div>
+                                    </div>
+                                    @endif
+
                                     <div class="form-text">
                                         <small class="text-muted">*Isi sesuai dengan data diri yang benar</small><br>
-                                        <small class="text-muted">**File yang bisa di upload berupa jpg, jpeg, pdf</small>
+                                        <small class="text-muted">**File yang bisa di upload berupa jpg, jpeg, png, pdf (maks.
+                                            2MB)</small>
                                     </div>
                                 </div>
                             </div>
@@ -206,14 +233,12 @@
                                 </h5>
                             </div>
                             <div class="card-body">
-                                <!-- Baris 1 -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="nama_perwakilan" class="form-label fw-medium">Nama
-                                                Perwakilan</label>
-                                            <input type="text" id="nama_perwakilan" name="nama_perwakilan"
-                                                class="form-control" placeholder="-"
+                                            <label for="nama_perwakilan" class="form-label fw-medium">Nama Perwakilan</label>
+                                            <input type="text" id="nama_perwakilan" name="nama_perwakilan" class="form-control"
+                                                placeholder="-"
                                                 value="{{ old('nama_perwakilan', $dataps->dataMitra->nama_perwakilan ?? '') }}">
                                         </div>
                                     </div>
@@ -228,13 +253,11 @@
                                     </div>
                                 </div>
 
-                                <!-- Baris 2 -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="npwp_perusahaan" class="form-label fw-medium">NPWP</label>
-                                            <input type="text" id="npwp_perusahaan" name="npwp_perusahaan"
-                                                class="form-control" placeholder="-"
+                                            <label for="npwp" class="form-label fw-medium">NPWP</label>
+                                            <input type="text" id="npwp" name="npwp" class="form-control" placeholder="-"
                                                 value="{{ old('npwp', $dataps->dataMitra->npwp ?? '') }}">
                                         </div>
                                     </div>
@@ -248,13 +271,12 @@
                                     </div>
                                 </div>
 
-                                <!-- Baris 3 -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="kode_pos_perusahaan" class="form-label fw-medium">Kode Pos</label>
-                                            <input type="text" id="kode_pos_perusahaan" name="kode_pos_perusahaan"
-                                                class="form-control" placeholder="-"
+                                            <label for="kode_pos" class="form-label fw-medium">Kode Pos</label>
+                                            <input type="text" id="kode_pos" name="kode_pos" class="form-control"
+                                                placeholder="-"
                                                 value="{{ old('kode_pos', $dataps->dataMitra->kode_pos ?? '') }}">
                                         </div>
                                     </div>
@@ -268,7 +290,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Baris 4 -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
@@ -281,16 +302,17 @@
                                     </div>
                                 </div>
 
-                                <!-- Baris 5 -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="tanggal_anggaran_dasar" class="form-label fw-medium">Tanggal
-                                                Anggaran Dasar</label>
+                                            <label for="tanggal_anggaran_dasar" class="form-label fw-medium">Tanggal Anggaran
+                                                Dasar</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                                                <input type="date" id="Tanggal_Anggaran_Dasar" name="Tanggal_Anggaran_Dasar"
-                                                    class="form-control"
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
+                                                <input type="date" id="tanggal_anggaran_dasar" name="tanggal_anggaran_dasar"
+                                                    placeholder="-" class="form-control"
                                                     value="{{ $dataps->dataMitra->tgl_anggaran_dasar_formatted ?? '' }}">
                                             </div>
                                         </div>
@@ -304,18 +326,20 @@
                                                 value="{{ old('no_anggaran_dasar', $dataps->dataMitra->no_anggaran_dasar ?? '') }}">
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- Baris 6 -->
+
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="tanggal_kemenkumham" class="form-label fw-medium">Tanggal
-                                                Persetujuan Kemenkum dan HAM</label>
+                                            <label for="tanggal_kemenkumham" class="form-label fw-medium">Tanggal Persetujuan
+                                                Kemenkum dan HAM</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                                                <input type="date" id="Tanggal_Persetujuan_Kemenkum_dan_HAM"
-                                                    name="Tanggal_Persetujuan_Kemenkum_dan_HAM" class="form-control"
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
+                                                <input type="date" id="tanggal_kemenkumham"
+                                                    name="tanggal_kemenkumham" class="form-control"
                                                     placeholder="-"
                                                     value="{{ $dataps->dataMitra->tgl_persetujuan_kenmenhum_dan_ham_formatted ?? '' }}">
                                             </div>
@@ -330,43 +354,47 @@
                                                 value="{{ old('no_kenmenhum_dan_ham', $dataps->dataMitra->no_kenmenhum_dan_ham ?? '') }}">
                                         </div>
                                     </div>
+
                                 </div>
 
-                                <!-- Baris 7 -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
                                             <label for="tanggal_penetapan_pengadilan" class="form-label fw-medium">Tanggal
                                                 Penetapan Pengadilan (CV)</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                                                <input type="date" id="Tanggal_Penetapan_Pengadilan"
-                                                    name="Tanggal_Penetapan_Pengadilan" class="form-control" placeholder="-"
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
+                                                <input type="date" id="tanggal_penetapan_pengadilan" name="tanggal_penetapan_pengadilan"
+                                                    class="form-control" placeholder="-"
                                                     value="{{ $dataps->dataMitra->tgl_penetapan_pengadilan_formatted ?? '' }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="no_penetapan_pengadilan" class="form-label fw-medium">Nomor
-                                                Penetapan Pengadilan (CV)</label>
+                                            <label for="no_penetapan_pengadilan" class="form-label fw-medium">Nomor Penetapan
+                                                Pengadilan (CV)</label>
                                             <input type="text" id="no_penetapan_pengadilan" name="no_penetapan_pengadilan"
                                                 class="form-control" placeholder="-"
                                                 value="{{ old('no_penetapan_pengadilan', $dataps->dataMitra->no_penetapan_pengadilan ?? '') }}">
                                         </div>
                                     </div>
+
                                 </div>
 
-                                <!-- Baris 8 -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
                                             <label for="tanggal_izin_berusaha" class="form-label fw-medium">Tanggal Izin
                                                 Berusaha</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                                                <input type="date" id="Tanggal_Nomor_Izin_Berusaha"
-                                                    name="Tanggal_Nomor_Izin_Berusaha" class="form-control" placeholder="-"
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
+                                                <input type="date" id="tanggal_izin_berusaha" name="tanggal_izin_berusaha"
+                                                    class="form-control" placeholder="-"
                                                     value="{{ $dataps->dataMitra->tgl_izin_usaha_formatted ?? '' }}">
                                             </div>
                                         </div>
@@ -380,18 +408,19 @@
                                                 value="{{ old('no_izin_berusaha', $dataps->dataMitra->no_izin_berusaha ?? '') }}">
                                         </div>
                                     </div>
+
                                 </div>
 
-                                <!-- Baris 9 -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
                                             <label for="tanggal_surat_keterangan_pajak" class="form-label fw-medium">Tanggal
                                                 Surat Keterangan Terdaftar Dirjen Pajak</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                                                <input type="date" id="Tanggal_Surat_Keterangan_Terdaftar_Dirjen_Pajak"
-                                                    name="Tanggal_Surat_Keterangan_Terdaftar_Dirjen_Pajak"
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
+                                                <input type="date" id="tgl_sk_dirjen_pajak" name="tgl_sk_dirjen_pajak"
                                                     class="form-control" placeholder="-"
                                                     value="{{ $dataps->dataMitra->tgl_sk_dirjen_pajak_formatted ?? '' }}">
                                             </div>
@@ -399,36 +428,39 @@
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="surat_keterangan_pajak" class="form-label fw-medium">Surat
-                                                Keterangan Terdaftar Dirjen Pajak</label>
-                                            <input type="text" id="surat_keterangan_pajak" name="surat_keterangan_pajak"
-                                                class="form-control" placeholder="-"
+                                            <label for="sk_dirjen_pajak" class="form-label fw-medium">Surat Keterangan
+                                                Terdaftar Dirjen Pajak</label>
+                                            <input type="text" id="sk_dirjen_pajak" name="sk_dirjen_pajak" class="form-control"
+                                                placeholder="-"
                                                 value="{{ old('sk_dirjen_pajak', $dataps->dataMitra->sk_dirjen_pajak ?? '') }}">
                                         </div>
                                     </div>
+
                                 </div>
 
-                                <!-- Baris 10 -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="tanggal_surat_pengukuhan_pkp" class="form-label fw-medium">Tanggal
-                                                Surat Pengukuhan Pengusaha Kena Pajak</label>
+                                            <label for="tgl_surat_pengukuhan_kena_pajak" class="form-label fw-medium">Tanggal
+                                                Surat
+                                                Pengukuhan Pengusaha Kena Pajak</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                                                <input type="date" id="Tanggal_Surat_Pengukuhan_Pengusaha_Kena_Pajak"
-                                                    name="Tanggal_Surat_Pengukuhan_Pengusaha_Kena_Pajak"
-                                                    class="form-control" placeholder="-"
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
+                                                <input type="date" id="tgl_surat_pengukuhan_kena_pajak"
+                                                    name="tgl_surat_pengukuhan_kena_pajak" class="form-control" placeholder="-"
                                                     value="{{ $dataps->dataMitra->tgl_surat_pengukuhan_kena_pajak_formatted ?? '' }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="surat_pengukuhan_pkp" class="form-label fw-medium">Surat Pengukuhan
+                                            <label for="surat_pengukuhan_kena_pajak" class="form-label fw-medium">Surat
+                                                Pengukuhan
                                                 Pengusaha Kena Pajak</label>
-                                            <input type="text" id="surat_pengukuhan_pkp" name="surat_pengukuhan_pkp"
-                                                class="form-control" placeholder="-"
+                                            <input type="text" id="surat_pengukuhan_kena_pajak"
+                                                name="surat_pengukuhan_kena_pajak" class="form-control" placeholder="-"
                                                 value="{{ old('surat_pengukuhan_kena_pajak', $dataps->dataMitra->surat_pengukuhan_kena_pajak ?? '') }}">
                                         </div>
                                     </div>
@@ -459,6 +491,18 @@
                                 </h5>
                             </div>
                             <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="nama_aset" class="form-label fw-medium">Nama
+                                                Aset</label>
+                                            <input type="text" id="nama_aset" name="nama_aset" class="form-control"
+                                                placeholder="-- Masukkan nama aset --" 
+                                                value="{{ old('nama_aset', $dataps->dataAset->nama_aset ?? '') }}">
+                                            <input type="hidden" name="id_aset" value="{{ old('id_aset', $dataps->dataAset->id_aset ?? '') }}">
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- Baris 1 -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -466,7 +510,8 @@
                                             <label for="alamat_asset" class="form-label fw-medium">Alamat Lokasi
                                                 Asset</label>
                                             <textarea id="alamat_asset" name="alamat_asset" class="form-control" rows="3"
-                                                placeholder="-">{{ old('lokasi', $dataps->dataAset->lokasi ?? '') }}</textarea>
+                                                placeholder="-"
+                                                value="340413140998788001">{{ old('lokasi', $dataps->dataAset->lokasi ?? '') }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
@@ -474,8 +519,8 @@
                                             <label for="penggunaan_asset" class="form-label fw-medium">Penggunaan Lokasi
                                                 Asset</label>
                                             <textarea id="penggunaan_asset" name="penggunaan_asset" class="form-control"
-                                                rows="3"
-                                                placeholder="-">{{ old('penggunaan_objek', $dataps->dataAset->penggunaan_objek ?? '') }}</textarea>
+                                                rows="3" placeholder="-"
+                                                value="340413140998788001"> {{ old('penggunaan_objek', $dataps->penggunaan_aset ?? '') }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -484,16 +529,16 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="luas_tanah" class="form-label fw-medium">Luas Tanah</label>
-                                            <input type="text" id="luas_tanah" name="luas_tanah" class="form-control"
-                                                placeholder="Luas Tanah Dalam m"
+                                            <label for="luas_tanah" class="form-label fw-medium">Luas Tanah (m²)</label>
+                                            <input type="" id="luas_tanah" name="luas_tanah" class="form-control"
+                                                placeholder="Luas Tanah Dalan m"
                                                 value="{{ old('luas_tanah', $dataps->dataAset->luas_tanah ?? '') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="luas_bangunan" class="form-label fw-medium">Luas Bangunan</label>
-                                            <input type="text" id="luas_bangunan" name="luas_bangunan" class="form-control"
+                                            <label for="luas_bangunan" class="form-label fw-medium">Luas Bangunan (m²)</label>
+                                            <input type="" id="luas_bangunan" name="luas_bangunan" class="form-control"
                                                 placeholder="Luas Bangunan Dalam m"
                                                 value="{{ old('luas_bangunan', $dataps->dataAset->luas_bangunan ?? '') }}">
                                         </div>
@@ -505,21 +550,24 @@
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
                                             <label class="form-label fw-medium">Jangka Waktu Sewa</label>
-                                            <div class="row g-2">
+                                            <div class="row">
                                                 <div class="col-4">
-                                                    <input type="text" id="tahun" name="tahun" class="form-control"
-                                                        placeholder="Tahun"
-                                                        value="{{ $dataps->jangka_waktu_tahun ?? '0' }} / Tahun">
+                                                    <label class="form-label small">Tahun</label>
+                                                    <input type="number" id="tahun" name="tahun" class="form-control"
+                                                        placeholder="0" min="0"
+                                                        value="{{ old('tahun', $dataps->jangka_waktu_tahun ?? 0) }}">
                                                 </div>
                                                 <div class="col-4">
-                                                    <input type="text" id="bulan" name="bulan" class="form-control"
-                                                        placeholder="Bulan"
-                                                        value="{{ $dataps->jangka_waktu_bulan ?? '0' }} / Bulan">
+                                                    <label class="form-label small">Bulan</label>
+                                                    <input type="number" id="bulan" name="bulan" class="form-control"
+                                                        placeholder="0" min="0" max="11"
+                                                        value="{{ old('bulan', $dataps->jangka_waktu_bulan ?? 0) }}">
                                                 </div>
                                                 <div class="col-4">
-                                                    <input type="text" id="hari" name="hari" class="form-control"
-                                                        placeholder="Hari"
-                                                        value="{{ $dataps->jangka_waktu_hari ?? '0' }} / Hari">
+                                                    <label class="form-label small">Hari</label>
+                                                    <input type="number" id="hari" name="hari" class="form-control"
+                                                        placeholder="0" min="0" max="30"
+                                                        value="{{ old('hari', $dataps->jangka_waktu_hari ?? 0) }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -533,7 +581,9 @@
                                             <label for="masa_awal_perjanjian" class="form-label fw-medium">Massa Awal
                                                 Perjanjian</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
                                                 <input type="date" id="masa_awal_perjanjian" name="masa_awal_perjanjian"
                                                     class="form-control"
                                                     value="{{ $dataps->masa_awal_perjanjian_formatted ?? '' }}">
@@ -545,7 +595,9 @@
                                             <label for="masa_akhir_perjanjian" class="form-label fw-medium">Massa Akhir
                                                 Perjanjian</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
                                                 <input type="date" id="masa_akhir_perjanjian" name="masa_akhir_perjanjian"
                                                     class="form-control"
                                                     value="{{ $dataps->masa_akhir_perjanjian_formatted ?? '' }}">
@@ -561,7 +613,9 @@
                                             <label for="masa_awal_pemanfaatan" class="form-label fw-medium">Massa Awal
                                                 Pemanfaatan</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
                                                 <input type="date" id="masa_awal_pemanfaatan" name="masa_awal_pemanfaatan"
                                                     class="form-control"
                                                     value="{{ $dataps->masa_awal_manfaat_formatted ?? '' }}">
@@ -570,12 +624,14 @@
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="massa_Akhir_pemanfaatan" class="form-label fw-medium">Massa Akhir
+                                            <label for="masa_akhir_pemanfaatan" class="form-label fw-medium">Massa Akhir
                                                 Pemanfaatan</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
-                                                <input type="date" id="massa_Akhir_pemanfaatan"
-                                                    name="massa_Akhir_pemanfaatan" class="form-control"
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
+                                                <input type="date" id="masa_akhir_pemanfaatan" name="masa_akhir_pemanfaatan"
+                                                    class="form-control"
                                                     value="{{ $dataps->masa_akhir_manfaat_formatted ?? '' }}">
                                             </div>
                                         </div>
@@ -787,9 +843,7 @@
                             <div class="text-start">
                                 <p>${data.message}</p>
                                 <div class="mt-3 p-2 bg-light rounded">
-                                    <small class="d-block"><strong>ID Mitra:</strong> ${data.data.mitra_id}</small>
-                                    <small class="d-block"><strong>ID Aset:</strong> ${data.data.aset_id}</small>
-                                    <small class="d-block"><strong>ID Perjanjian:</strong> ${data.data.perjanjian_id}</small>
+                                    <small class="d-block"><strong>Nama Mitra:</strong> ${data.data.nama}</small>
                                 </div>
                             </div>
                         `,

@@ -4,11 +4,11 @@
 
 @section('content')
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Laporan & Rekapitulasi</h1>
+    <h1 class="h6 mb-4 pt-4 text-gray-800 font-weight-bold">Laporan & Rekapitulasi</h1>
 
     <div class="card shadow mb-4 border-left-primary">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-filter me-2"></i>Filter Data Laporan</h6>
+            <h6 class="m-0 font-weight-bold text-warning"><i class="fas fa-filter me-2"></i>Filter Data Laporan</h6>
         </div>
         <div class="card-body">
             <form method="GET" action="{{ route('laporan.index') }}">
@@ -42,7 +42,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">
+            <h6 class="m-0 font-weight-bold text-warning">
                 <i class="fas fa-table me-2"></i>Detail Data ({{ \Carbon\Carbon::parse($startDate)->format('d M Y') }} - {{ \Carbon\Carbon::parse($endDate)->format('d M Y') }})
             </h6>
         </div>
@@ -75,11 +75,11 @@
                             </td>
                             <td data-label="Status Perjanjian" class="text-center">
                                 <span class="badge bg-{{ 
-                                    $t->status == 'aktif' ? 'success' : 
-                                    ($t->status == 'peringatan' ? 'secondary' : 
-                                    ($t->status == 'mati' ? 'danger' : 'warning')) 
+                                    $t->status_calculated == 'aktif' ? 'success' : 
+                                    ($t->status_calculated == 'peringatan' ? 'warning' : 
+                                    ($t->status_calculated == 'mati' ? 'danger' : 'secondary')) 
                                 }}">
-                                    {{ ucfirst($t->status) }}
+                                    {{ $t->status_calculated }}
                                 </span>
                             </td>
                             <td class="text-right font-weight-bold text-primary">Rp {{ number_format($t->total_harga, 0, ',', '.') }}</td>
