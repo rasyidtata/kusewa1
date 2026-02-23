@@ -10,9 +10,27 @@ class PerpanjangController extends Controller
 {
     public function index()
     {
-        $dataps = DataMitra::with(['perjanjianSewa.DataAset'])
-            ->whereIn('status', ['Diterima', 'Ditolak'])
+        // Ambil semua data dengan relasi
+        $dataps = PerjanjianSewa::
+            select(
+                'perjanjian_sewa.*',
+                'dm.tgl_perjanjian',
+                'dm.kategori',
+                'dm.nama',
+                'dm.Jenis',
+                'dm.updated_at',
+            )
+            ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
+            ->join('data_aset as da', 'perjanjian_sewa.id_aset', '=', 'da.id_aset')
+            ->whereIn('dm.status', ['Diterima'])
             ->get();
+
+        // Filter data yang statusnya 'mati' atau 'peringatan'
+        $dataps = $dataps->filter(function($item) {
+            return in_array($item->status_calculated, ['mati', 'peringatan']);
+        });
+
+        
 
         return view('perpanjang.index', compact('dataps'));
     }

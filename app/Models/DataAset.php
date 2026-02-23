@@ -15,7 +15,7 @@ class DataAset extends Model
         'lokasi',
         'luas_tanah',
         'luas_bangunan',
-        'penggunaan_objek',
+        'nama_aset',
     ];
     protected $hidden = [];
     protected $casts = [

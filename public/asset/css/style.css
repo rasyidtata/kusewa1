@@ -157,25 +157,24 @@ body {
 
 /* Hover Effect */
 .list-group-item:hover {
-    background: #005C78;
+    background: #e6e6e6ad;
 }
 
-.list-group-item:hover a {
+/*.list-group-item:hover a {
     color: #ffffff;
-}
+}*/
 
 /* Active State */
 .list-group-item.active {
-    background: #005C78;
-    border-left: 3px solid #005C78;
+    background: #e6e6e6ad;
+    border-left: 3px solid #e6e6e6ad;
 }
 
-.list-group-item.active a {
+/*.list-group-item.active a {
     color: #ffffff;
     font-weight: 600;
-}
+}*?
 
-/* Logout Style */
 
 /* Tombol logout */
 .btn-logout {
@@ -186,14 +185,14 @@ body {
     text-decoration: none;
 }
 
-.list-group-item:hover .btn-logout {
+/*.list-group-item:hover .btn-logout {
     color: #ffffff;
     font-weight: 600;
-}
+}*/
 
 .list-group-item:hover {
-    background: #005C78;
-    border-left: 3px solid #005C78;
+    background: #e6e6e6ad;
+    border-left: 3px solid #e6e6e6ad;
 }
 
 
@@ -254,18 +253,7 @@ body {
     font-size: 0.85rem;
 }
 
-.list-group-item .dropdown-item:hover {
-    background: #005C78;
-    color: #ffffff !important;
-}
 
-.list-group-item.dropdown .dropdown-toggle:hover,
-.list-group-item.dropdown .dropdown-toggle:focus,
-.list-group-item.dropdown .dropdown-toggle:active,
-.list-group-item.dropdown .dropdown-toggle.active,
-.list-group-item.dropdown.show .dropdown-toggle {
-    color: #ffffff !important;
-}
 
 /*-----------------sidebar konten---------------*/
 .row-konten .col-10.col-md-10 {
@@ -382,12 +370,14 @@ body {
 .form-group .kategori-border {
     border: 1px solid #005C78;
 }
+
 .dropdown-icon {
     position: absolute;
     right: 15px;
     top: 73%;
     transform: translateY(-50%);
-    pointer-events: none; /* agar select tetap bisa diklik */
+    pointer-events: none;
+    /* agar select tetap bisa diklik */
     color: #8a9fb8;
     font-size: 14px;
     transition: transform 0.2s ease;
@@ -630,11 +620,11 @@ textarea.form-control {
 }
 
 input[type="text"][id$="_display"] {
-        font-family: 'Courier New', monospace;
-        font-weight: 600;
-        font-size: 14px;
-        color: #059669;
-    }
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    color: #059669;
+}
 
 /*===================================================== MULTI FORM ==========================================*/
 .form-step {
@@ -702,37 +692,49 @@ input[type="text"][id$="_display"] {
     vertical-align: middle;
 
 }
+
 .table-bordered {
     border-spacing: 0;
     width: 100%;
     min-width: 800px;
 }
+
 .table-bordered td {
     vertical-align: middle;
     font-size: 12px;
     background-color: #ffffff;
 }
+
 .table-bordered th,
 .table-bordered td {
     border: 1px solid #dee2e6;
 }
+
 .table-bordered tbody tr:hover {
     background-color: #f5f5f5;
 }
+
 .table-bordered tbody tr:hover td {
     background-color: #f5f5f5;
 }
+
 .table-bordered th:nth-child(1) {
-    width: 50px;
+    width: 20px;
 }
+
 .table-responsive .table-bordered th:nth-child(2) {
     width: 100px;
 }
+.table-responsive .table-bordered th:nth-child(3) {
+    width: 170px;
+}
+
 .table-responsive .table-bordered th:nth-child(7) {
     width: 120px;
 }
+
 .table-responsive .table-bordered th:nth-child(8) {
-    width: 110px;
+    width: 120px;
 }
 
 .status-badge {
@@ -851,7 +853,8 @@ input[type="text"][id$="_display"] {
     gap: 4px;
     flex-wrap: nowrap;
 }
-.btn-aksi .btn{
+
+.btn-aksi .btn {
     width: 28px;
     height: 28px;
     padding: 0;
@@ -861,17 +864,21 @@ input[type="text"][id$="_display"] {
     align-items: center;
     transition: all 0.3s ease;
 }
+
 .btn-aksi .btn-for-edit {
     background-color: #ff9800;
     color: rgb(255, 255, 255);
 }
+
 .btn-aksi .btn-for-edit i {
     font-size: 14px;
 }
+
 .btn-aksi .btn-for-edit:hover {
     background-color: #ee8f00;
     color: rgb(255, 255, 255);
 }
+
 .btn-aksi .btn-for-edit i:hover {
     font-size: 16px;
 }
@@ -880,24 +887,30 @@ input[type="text"][id$="_display"] {
     background-color: #0f6d36;
     color: rgb(255, 255, 255);
 }
+
 .btn-aksi .btn-for-detail i {
     font-size: 14px;
 }
+
 .btn-aksi .btn-for-detail:hover {
     background-color: #0d582c;
     color: rgb(255, 255, 255);
 }
+
 .btn-aksi .btn-for-detail i:hover {
     font-size: 16px;
 }
+
 .btn-aksi .btn-for-delet {
     background-color: none;
     color: rgb(187, 0, 0);
 }
-.btn-aksi .btn-for-delet i{
+
+.btn-aksi .btn-for-delet i {
     font-size: 14px;
 }
-.btn-aksi .btn-for-delet i:hover{
+
+.btn-aksi .btn-for-delet i:hover {
     font-size: 16px;
 }
 
@@ -1009,11 +1022,6 @@ input[type="text"][id$="_display"] {
 
 
 
-
-
-
-
-
 /* Optional: Style untuk layout */
 .row-list-perjanjian {
     display: flex;
@@ -1102,7 +1110,7 @@ input[type="text"][id$="_display"] {
 }
 
 /* Style untuk tombol */
-.col-tombol-filter{
+.col-tombol-filter {
     display: flex;
     justify-content: end;
     align-items: center;
@@ -1197,14 +1205,10 @@ input[type="text"][id$="_display"] {
 }
 
 /* Efek hover smooth zoom + highlight biru */
-.custom-hover tbody tr {
-    transition: transform 0.15s ease, background-color 0.2s ease;
-}
+
 
 .custom-hover tbody tr:hover {
-    background-color: #e8f2ff !important; /* biru muda */
-    transform: scale(1.01); /* zoom sangat ringan */
-    cursor: pointer;
+    background-color: #e8f2ff !important;
 }
 
 
@@ -1272,6 +1276,7 @@ input[type="text"][id$="_display"] {
 .table-perjanjian tbody tr:hover {
     background-color: #f5f5f5;
 }
+
 .table-perjanjian tbody tr:hover td {
     background-color: #f5f5f5;
 }
@@ -1429,4 +1434,217 @@ input[type="text"][id$="_display"] {
     }
 
 
+}
+
+/* =====================================  USER HALAMAN PADA MENU ======================================= */
+
+.user-halaman {
+    list-style-type: none;
+    padding: 20px 15px;
+    margin: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 3px solid #fff;
+}
+
+.user-halaman li {
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.user-halaman li i {
+    width: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.role-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-admin {
+    background-color: #28a745;
+    color: white;
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+}
+
+.badge-pegawai {
+    background-color: #28a745;
+    color: white;
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+}
+
+.badge-guest {
+    background-color: #6c757d;
+    color: white;
+}
+
+.user-info .user-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.user-info .user-email {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.user-status .status-indicator {
+    color: #00ff3c;
+    font-size: 10px;
+    animation: pulse 2s infinite;
+}
+
+.user-status .status-indicator.offline {
+    color: #dc3545;
+    animation: none;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.status-text {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .user-halaman {
+        min-height: 120px;
+        padding: 15px 10px;
+    }
+
+    .user-halaman li {
+        font-size: 12px;
+        padding: 5px 0;
+    }
+
+    .role-badge {
+        padding: 3px 8px;
+        font-size: 10px;
+    }
+
+}
+
+
+/*==================================== list data pegawai ============================================*/
+
+.container-list-pegawai .text-start a {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.card-list-pegawai {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-list-pegawai-responsive {
+    flex: 1;
+    overflow: auto;
+}
+
+.table-list-pegawai thead tr {
+    border: 1px;
+}
+
+.table-list-pegawai thead th {
+    position: sticky;
+    top: 0;
+    background-color: #2c3e50;
+    color: white;
+    z-index: 11;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+.table-list-pegawai {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-list-pegawai td {
+    vertical-align: middle;
+    font-size: 12px;
+    background-color: #ffffff;
+}
+
+.table-list-pegawai th,
+.table-list-pegawai td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: left;
+}
+
+.table-list-pegawai th {
+    background-color: #ffffff;
+    font-weight: bold;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table-list-pegawai tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.table-list-pegawai tbody tr:hover td {
+    background-color: #f5f5f5;
+}
+
+
+
+.container-list-pegawai {
+    padding: 0px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.table-list-pegawai th:nth-child(1) {
+    width: 50px;
+}
+
+
+.table-liat-pegawai th:nth-child(2) {
+    width: 100px;
+}
+
+.table-list-pegawai th:nth-child(3) {
+    width: 300px;
+}
+
+.table-list-pegawai th:nth-child(4) {
+    width: 150px;
+}
+.table-list-pegawai th:nth-child(5) {
+    width: 100px;
 }

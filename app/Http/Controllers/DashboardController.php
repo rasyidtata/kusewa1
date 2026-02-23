@@ -24,6 +24,9 @@ class DashboardController extends Controller
 
         $transaksi = PerjanjianSewa::with(['dataMitra', 'dataAset'])
             ->whereBetween('masa_awal_perjanjian', [$startDate, $endDate])
+            ->whereHas('dataMitra', function($query) {
+                $query->where('status', 'Diterima');
+                })
             ->orderBy('masa_awal_perjanjian', 'desc')
             ->get();
 
@@ -51,7 +54,7 @@ class DashboardController extends Controller
         $pendapatan = PerjanjianSewa::select(
             DB::raw('DATE_FORMAT(masa_awal_perjanjian, "%Y-%m") as bulan'),
             DB::raw('SUM(total_harga) as total')
-        )
+        ) 
         ->groupBy('bulan')->orderBy('bulan')->limit(12)->get();
 
         // 2. Grafik Status

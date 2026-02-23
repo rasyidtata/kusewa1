@@ -21,21 +21,20 @@ class CheckRole
         }
 
         $user = Auth::user();
-        
-        // Pastikan user model memiliki property 'role'
-        if (!isset($user->role)) {
-            return redirect()->route('login')->with('error', 'Role pengguna tidak ditemukan!');
-        }
-
 
         if (!in_array($user->role, $roles)) {
-            // Jika tidak punya akses, bisa redirect ke halaman tertentu
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
             
-            return redirect()->route('dashboard')
-                ->with('error', 'Anda tidak memiliki akses ke halaman tersebut!');
+            // Redirect ke dashboard sesuai role
+            if ($user->role === 'admin') {
+                return redirect()->route('dashboard')
+                    ->with('error', 'Anda tidak memiliki akses ke halaman tersebut!');
+            } else {
+                return redirect()->route('dashboard.pegawai')
+                    ->with('error', 'Anda tidak memiliki akses ke halaman tersebut!');
+            }
         }
 
         return $next($request);

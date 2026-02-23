@@ -9,9 +9,23 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use Carbon\Carbon;
 
-class DataPerjanjianExport implements FromCollection, WithHeadings, WithMapping, ShouldAutoSize, WithStyles
+class DataPerjanjianExport extends DefaultValueBinder implements 
+    FromCollection, 
+    WithHeadings, 
+    WithMapping, 
+    ShouldAutoSize, 
+    WithStyles, 
+    WithColumnFormatting,
+    WithCustomValueBinder
 {
     protected $data;
 
@@ -22,8 +36,7 @@ class DataPerjanjianExport implements FromCollection, WithHeadings, WithMapping,
 
     public function collection()
     {
-        // Load relasi untuk semua data
-        return $this->data->load(['mitra', 'aset']);
+        return $this->data;
     }
 
     public function headings(): array
@@ -41,7 +54,7 @@ class DataPerjanjianExport implements FromCollection, WithHeadings, WithMapping,
             'Masa Berlaku Identitas',
             'Email',
             'No. Telepon',
-            'Tanggal Perjanjian',
+            'Tanggal Perjanjian Mitra',
             'Penyewa Berdasarkan',
             'Alamat Mitra',
             'Nama Perwakilan',
@@ -65,16 +78,14 @@ class DataPerjanjianExport implements FromCollection, WithHeadings, WithMapping,
             'Tanggal Surat Pengukuhan Kena Pajak',
             
             // Data Aset
+            'Kode Aset',
             'Lokasi Aset',
-            'Penggunaan Objek',
+            'Penggunaan Aset',
             'Luas Tanah',
             'Luas Bangunan',
             
             // Data Perjanjian Sewa
             'Jangka Waktu',
-            'Jangka Waktu (Tahun)',
-            'Jangka Waktu (Bulan)',
-            'Jangka Waktu (Hari)',
             'Masa Awal Perjanjian',
             'Masa Akhir Perjanjian',
             'Masa Awal Pemanfaatan',
@@ -94,66 +105,84 @@ class DataPerjanjianExport implements FromCollection, WithHeadings, WithMapping,
 
     public function map($perjanjian): array
     {
+        // Helper function untuk mendapatkan nilai numerik
+        $getNumericValue = function($value) {
+            return is_numeric($value) ? (float) $value : 0;
+        };
+
+        // Helper function untuk mengkonversi ke Excel serial date
+        $toExcelDate = function($date) {
+            if (!$date) return null;
+            try {
+                // Konversi ke Carbon jika belum
+                if (!($date instanceof Carbon)) {
+                    $date = Carbon::parse($date);
+                }
+                return $date;
+            } catch (\Exception $e) {
+                return null;
+            }
+        };
+
         return [
-            // ID dan informasi dasar
-            $perjanjian->id,
-            $perjanjian->kode_perjanjian,
-            \Carbon\Carbon::parse($perjanjian->updated_at)->format('d-m-Y'),
+            // Placeholder untuk No (akan diisi di styles)
+            '', 
+             
+            $perjanjian->kode_perjanjian ?? '',
+            $toExcelDate($perjanjian->updated_at),
             
-            // Data Mitra (relasi)
-            $perjanjian->kategori ?? $perjanjian->mitra->kategori ?? '',
-            $perjanjian->Jenis ?? $perjanjian->mitra->Jenis ?? '',
-            $perjanjian->nama ?? $perjanjian->mitra->nama ?? '',
-            $perjanjian->mitra->no_identitas ?? '',
-            $perjanjian->mitra->masa_berlaku_identitas ?? '',
-            $perjanjian->mitra->email ?? '',
-            $perjanjian->no_tlpn ?? $perjanjian->mitra->no_tlpn ?? '',
-            $perjanjian->mitra->tgl_perjanjian ?? '',
-            $perjanjian->mitra->penyewa_berdasarkan ?? '',
-            $perjanjian->alamat ?? $perjanjian->mitra->alamat ?? '',
-            $perjanjian->nama_perwakilan ?? $perjanjian->mitra->nama_perwakilan ?? '',
-            $perjanjian->penyewa_selaku ?? $perjanjian->mitra->penyewa_selaku ?? '',
-            $perjanjian->mitra->npwp ?? '',
-            $perjanjian->mitra->kota_penyewa ?? '',
-            $perjanjian->mitra->kode_pos ?? '',
-            $perjanjian->mitra->fax_penyewa ?? '',
-            $perjanjian->mitra->no_akta_pendirian ?? '',
-            $perjanjian->mitra->no_anggaran_dasar ?? '',
-            \Carbon\Carbon::parse($perjanjian->mitra->tgl_anggaran_dasar ?? null)->format('d-m-Y'),
-            $perjanjian->mitra->no_kenmenhum_dan_ham ?? '',
-            \Carbon\Carbon::parse($perjanjian->mitra->tgl_persetujuan_kenmenhum_dan_ham ?? null)->format('d-m-Y'),
-            $perjanjian->mitra->no_penetapan_pengadilan ?? '',
-            \Carbon\Carbon::parse($perjanjian->mitra->tgl_penetapan_pengadilan ?? null)->format('d-m-Y'),
-            $perjanjian->mitra->no_izin_berusaha ?? '',
-            \Carbon\Carbon::parse($perjanjian->mitra->tgl_izin_usaha ?? null)->format('d-m-Y'),
-            $perjanjian->mitra->sk_dirjen_pajak ?? '',
-            \Carbon\Carbon::parse($perjanjian->mitra->tgl_sk_dirjen_pajak ?? null)->format('d-m-Y'),
-            $perjanjian->mitra->surat_pengukuhan_kena_pajak ?? '',
-            \Carbon\Carbon::parse($perjanjian->mitra->tgl_surat_pengukuhan_kena_pajak ?? null)->format('d-m-Y'),
+            // Data Mitra - Langsung dari hasil join (sesuai controller)
+            $perjanjian->kategori ?? '',
+            $perjanjian->Jenis ?? '',
+            $perjanjian->nama ?? '',
+            $perjanjian->no_identitas ?? '',
+            $perjanjian->masa_berlaku_identitas ?? '',
+            $perjanjian->email ?? '',
+            $perjanjian->no_tlpn ?? '',
+            $toExcelDate($perjanjian->tgl_perjanjian),
+            $perjanjian->penyewa_berdasarkan ?? '',
+            $perjanjian->alamat ?? '',
+            $perjanjian->nama_perwakilan ?? '',
+            $perjanjian->penyewa_selaku ?? '',
+            $perjanjian->npwp ?? '',
+            $perjanjian->kota_penyewa ?? '',
+            $perjanjian->kode_pos ?? '',
+            $perjanjian->fax_penyewa ?? '',
+            $perjanjian->no_akta_pendirian ?? '',
+            $perjanjian->no_anggaran_dasar ?? '',
+            $toExcelDate($perjanjian->tgl_anggaran_dasar),
+            $perjanjian->no_kenmenhum_dan_ham ?? '',
+            $toExcelDate($perjanjian->tgl_persetujuan_kenmenhum_dan_ham),
+            $perjanjian->no_penetapan_pengadilan ?? '',
+            $toExcelDate($perjanjian->tgl_penetapan_pengadilan),
+            $perjanjian->no_izin_berusaha ?? '',
+            $toExcelDate($perjanjian->tgl_izin_usaha),
+            $perjanjian->sk_dirjen_pajak ?? '',
+            $toExcelDate($perjanjian->tgl_sk_dirjen_pajak),
+            $perjanjian->surat_pengukuhan_kena_pajak ?? '',
+            $toExcelDate($perjanjian->tgl_surat_pengukuhan_kena_pajak),
             
-            // Data Aset (relasi)
-            $perjanjian->lokasi ?? $perjanjian->aset->lokasi ?? '',
-            $perjanjian->aset->penggunaan_objek ?? '',
-            $perjanjian->aset->luas_tanah ?? '',
-            $perjanjian->aset->luas_bangunan ?? '',
+            // Data Aset - Langsung dari hasil join
+            $perjanjian->kode_aset ?? '',
+            $perjanjian->lokasi ?? '',
+            $perjanjian->penggunaan_aset ?? '',
+            $getNumericValue($perjanjian->luas_tanah ?? 0),
+            $getNumericValue($perjanjian->luas_bangunan ?? 0),
             
-            // Data Perjanjian Sewa
+            // Data Perjanjian
             $perjanjian->jangka_waktu ?? '',
-            $perjanjian->jangka_waktu_tahun ?? 0,
-            $perjanjian->jangka_waktu_bulan ?? 0,
-            $perjanjian->jangka_waktu_hari ?? 0,
-            \Carbon\Carbon::parse($perjanjian->masa_awal_perjanjian ?? null)->format('d-m-Y'),
-            \Carbon\Carbon::parse($perjanjian->masa_akhir_perjanjian ?? null)->format('d-m-Y'),
-            \Carbon\Carbon::parse($perjanjian->masa_awal_manfaat ?? null)->format('d-m-Y'),
-            \Carbon\Carbon::parse($perjanjian->masa_akhir_manfaat ?? null)->format('d-m-Y'),
-            'Rp ' . number_format($perjanjian->harga_sewa ?? 0, 0, ',', '.'),
-            'Rp ' . number_format($perjanjian->harga_pemanfaatan ?? 0, 0, ',', '.'),
-            'Rp ' . number_format($perjanjian->biaya_admin_ukur ?? 0, 0, ',', '.'),
-            'Rp ' . number_format($perjanjian->cost_of_money ?? 0, 0, ',', '.'),
-            'Rp ' . number_format($perjanjian->harga_sewa_admin ?? 0, 0, ',', '.'),
-            'Rp ' . number_format($perjanjian->harga_sewa_admin_com ?? 0, 0, ',', '.'),
-            'Rp ' . number_format($perjanjian->ppn_11_persen ?? 0, 0, ',', '.'),
-            'Rp ' . number_format($perjanjian->total_harga ?? 0, 0, ',', '.'),
+            $toExcelDate($perjanjian->masa_awal_perjanjian),
+            $toExcelDate($perjanjian->masa_akhir_perjanjian),
+            $toExcelDate($perjanjian->masa_awal_manfaat),
+            $toExcelDate($perjanjian->masa_akhir_manfaat),
+            $getNumericValue($perjanjian->harga_sewa ?? 0),
+            $getNumericValue($perjanjian->harga_pemanfaatan ?? 0),
+            $getNumericValue($perjanjian->biaya_admin_ukur ?? 0),
+            $getNumericValue($perjanjian->cost_of_money ?? 0),
+            $getNumericValue($perjanjian->harga_sewa_admin ?? 0),
+            $getNumericValue($perjanjian->harga_sewa_admin_com ?? 0),
+            $getNumericValue($perjanjian->ppn_11_persen ?? 0),
+            $getNumericValue($perjanjian->total_harga ?? 0),
             $perjanjian->terbilang ?? '',
             $perjanjian->status ?? ''
         ];
@@ -161,17 +190,75 @@ class DataPerjanjianExport implements FromCollection, WithHeadings, WithMapping,
 
     public function styles(Worksheet $sheet)
     {
+        $rowCount = $this->data->count();
+        $lastRow = $rowCount + 1;
+        
+        // Style header
+        $sheet->getStyle('A1:' . $sheet->getHighestColumn() . '1')->applyFromArray([
+            'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF'], 'size' => 12],
+            'fill' => ['fillType' => 'solid', 'startColor' => ['rgb' => '4472C4']],
+            'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER, 'vertical' => Alignment::VERTICAL_CENTER]
+        ]);
+        
+        // Auto filter
+        $sheet->setAutoFilter('A1:' . $sheet->getHighestColumn() . '1');
+        
+        // Set nomor urut
+        for ($i = 2; $i <= $lastRow; $i++) {
+            $sheet->setCellValue('A' . $i, $i - 1);
+        }
+        
+        // Set column widths
+        $sheet->getColumnDimension('A')->setWidth(5); // No
+        $sheet->getColumnDimension('B')->setWidth(20); // Kode Perjanjian
+        
+        return [];
+    }
+
+    public function columnFormats(): array
+    {
         return [
-            // Style untuk header
-            1 => [
-                'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF']],
-                'fill' => ['fillType' => 'solid', 'startColor' => ['rgb' => '4472C4']]
-            ],
+            // Format untuk TANGGAL
+            'C' => 'dd-mm-yyyy', // Tanggal Update
+            'H' => 'dd-mm-yyyy', // Masa Berlaku Identitas
+            'K' => 'dd-mm-yyyy', // Tanggal Perjanjian Mitra
+            'U' => 'dd-mm-yyyy', // Tanggal Anggaran Dasar
+            'W' => 'dd-mm-yyyy', // Tanggal Kemenkumham
+            'Y' => 'dd-mm-yyyy', // Tanggal Penetapan Pengadilan
+            'AA' => 'dd-mm-yyyy', // Tanggal Izin Usaha
+            'AC' => 'dd-mm-yyyy', // Tanggal SK Dirjen Pajak
+            'AE' => 'dd-mm-yyyy', // Tanggal Surat Pengukuhan Kena Pajak
+            'AP' => 'dd-mm-yyyy', // Masa Awal Perjanjian
+            'AQ' => 'dd-mm-yyyy', // Masa Akhir Perjanjian
+            'AR' => 'dd-mm-yyyy', // Masa Awal Pemanfaatan
+            'AS' => 'dd-mm-yyyy', // Masa Akhir Pemanfaatan
             
-            // Auto filter untuk semua kolom
-            'A1' . ':' . $sheet->getHighestColumn() . '1' => [
-                'autoFilter' => true
-            ],
+            // Format ANGKA
+            'AI' => '#,##0', // Luas Tanah
+            'AJ' => '#,##0', // Luas Bangunan
+            'AL' => '#,##0', // Jangka Waktu (Tahun)
+            'AM' => '#,##0', // Jangka Waktu (Bulan)
+            'AN' => '#,##0', // Jangka Waktu (Hari)
+            
+            // Format CURRENCY
+            'AT' => '"Rp" #,##0', // Harga Sewa
+            'AU' => '"Rp" #,##0', // Harga Pemanfaatan
+            'AV' => '"Rp" #,##0', // Biaya Admin Ukur
+            'AW' => '"Rp" #,##0', // Cost of Money
+            'AX' => '"Rp" #,##0', // Harga Sewa Admin
+            'AY' => '"Rp" #,##0', // Harga Sewa Admin COM
+            'AZ' => '"Rp" #,##0', // PPN 11%
+            'BA' => '"Rp" #,##0', // Total Harga
         ];
+    }
+
+    public function bindValue(Cell $cell, $value)
+    {
+        if ($value instanceof Carbon) {
+            $cell->setValueExplicit(\PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel($value), DataType::TYPE_NUMERIC);
+            return true;
+        }
+        
+        return parent::bindValue($cell, $value);
     }
 }

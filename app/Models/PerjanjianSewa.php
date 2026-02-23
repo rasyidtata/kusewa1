@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class PerjanjianSewa extends Model
 {
@@ -35,6 +36,7 @@ class PerjanjianSewa extends Model
         'id_aset',
         'id_admin',
         'id_mitra',
+        'penggunaan_aset',
     ];
 
     protected $hidden = [];
@@ -164,5 +166,30 @@ class PerjanjianSewa extends Model
                 $model->kode_perjanjian = self::generateKodePerjanjian();
             }
         });
+    }
+
+    public function getStatusCalculatedAttribute($value)
+    {
+        $mitra = DataMitra::find($this->id_mitra);
+        if ($mitra && $mitra->status == 'Ditolak') {
+            return 'mati';
+        }
+        
+        $today = now();
+        $akhirPerjanjian = Carbon::parse($this->masa_akhir_perjanjian);
+        $selisihHari = $today->diffInDays($akhirPerjanjian, false); 
+        
+        // Jika sudah melewati tanggal akhir
+        if ($akhirPerjanjian->isPast()) {
+            return 'mati';
+        }
+        
+        // Jika H-1 (kurang dari atau sama dengan 1 hari)
+        if ($selisihHari <= 2) {
+            return 'peringatan';
+        }
+        
+        // Selain itu aktif
+        return 'aktif';
     }
 }

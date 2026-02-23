@@ -30,5 +30,10 @@ class HomeController extends Controller
     {
         return view("list_data.data_perjanjian");
     }
+
+    public function admin_pendaftaran()
+    {
+        return view("admin_fitur.pendaftaran");
+    }
 }
 

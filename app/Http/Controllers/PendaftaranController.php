@@ -8,6 +8,7 @@ use App\Models\PerjanjianSewa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class PendaftaranController extends Controller
 {
@@ -16,9 +17,90 @@ class PendaftaranController extends Controller
         return view('pendaftaran.form_data_diri');
     }
 
+    private function findOrCreateMitra(Request $request)
+    {
+        Log::info('findOrCreateMitra called', [
+            'id_mitra' => $request->id_mitra,
+            'nama_lengkap' => $request->nama_lengkap
+        ]);
+
+        // KASUS 1: User MEMILIH mitra yang sudah ada dari autocomplete
+        if ($request->filled('id_mitra') && $request->id_mitra != 'new' && is_numeric($request->id_mitra)) {
+            $mitra = DataMitra::find($request->id_mitra);
+            
+            if ($mitra) {
+                Log::info('Menggunakan mitra existing berdasarkan PILIHAN USER', [
+                    'id_mitra' => $mitra->id_mitra,
+                    'nama' => $mitra->nama
+                ]);
+                return $mitra; // LANGSUNG RETURN, TANPA UPDATE
+            }
+        }
+
+        // KASUS 2: Cek apakah sudah ada mitra dengan nama yang SAMA PERSIS
+        $existingMitra = DataMitra::where('nama', '=', $request->nama_lengkap)->first();
+        
+        if ($existingMitra) {
+            Log::info('Menggunakan mitra existing berdasarkan NAMA', [
+                'id_mitra' => $existingMitra->id_mitra,
+                'nama' => $existingMitra->nama
+            ]);
+            return $existingMitra; // LANGSUNG RETURN, TANPA UPDATE
+        }
+
+        // KASUS 3: Buat mitra BARU jika benar-benar tidak ada
+        Log::info('MEMBUAT MITRA BARU', ['nama' => $request->nama_lengkap]);
+        
+        $data = [
+            'Jenis' => $request->jenis_penyewa,
+            'kategori' => $request->kategori,
+            'nama' => $request->nama_lengkap,
+            'no_identitas' => $request->nik,
+            'masa_berlaku_identitas' => $request->masa_berlaku_ktp ?? 'SEUMUR HIDUP',
+            'email' => $request->email,
+            'no_tlpn' => $request->no_telepon,
+            'tgl_perjanjian' => $request->tanggal_perjanjian,
+            'penyewa_berdasarkan' => $request->penyewa_berdasarkan,
+            'alamat' => $request->alamat,
+            'nama_perwakilan' => $request->nama_perwakilan,
+            'penyewa_selaku' => $request->perwakilan_selaku,
+            'npwp' => $request->npwp,
+            'kota_penyewa' => $request->kota_penyewa,
+            'kode_pos' => $request->kode_pos,
+            'fax_penyewa' => $request->fax_penyewa,
+            'no_akta_pendirian' => $request->no_akte_pendirian,
+            'no_penetapan_pengadilan' => $request->no_penetapan_pengadilan,
+            'tgl_penetapan_pengadilan' => $request->tanggal_penetapan_pengadilan,
+            'no_anggaran_dasar' => $request->no_anggaran_dasar,
+            'tgl_anggaran_dasar' => $request->tanggal_anggaran_dasar,
+            'no_kenmenhum_dan_ham' => $request->no_kemenkumham,
+            'tgl_persetujuan_kenmenhum_dan_ham' => $request->tanggal_kemenkumham,
+            'no_izin_berusaha' => $request->no_izin_berusaha,
+            'tgl_izin_usaha' => $request->tanggal_izin_berusaha,
+            'sk_dirjen_pajak' => $request->surat_keterangan_pajak,
+            'tgl_sk_dirjen_pajak' => $request->tanggal_surat_keterangan_pajak,
+            'surat_pengukuhan_kena_pajak' => $request->surat_pengukuhan_pkp,
+            'tgl_surat_pengukuhan_kena_pajak' => $request->tanggal_surat_pengukuhan_pkp,
+            'status' => 'Proses',
+        ];
+
+        // Upload foto identitas
+        if ($request->hasFile('foto_identitas')) {
+            $file = $request->file('foto_identitas');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('asset/img/identitas'), $fileName);
+            $data['foto_identitas'] = '/asset/img/identitas/' . $fileName;
+        }
+
+        $mitra = DataMitra::create($data);
+        Log::info('Mitra baru berhasil dibuat', ['id_mitra' => $mitra->id_mitra]);
+        
+        return $mitra;
+    }
+
     public function store(Request $request)
     {
-
+        
         // Validasi data
         $validator = Validator::make($request->all(), [
             // Data Diri - Step 1
@@ -29,7 +111,7 @@ class PendaftaranController extends Controller
             'masa_berlaku_ktp' => 'nullable|string',
             'email' => 'required|email',
             'no_telepon' => 'nullable|string|max:15',
-            'tanggal_perjanjian' => 'required|date',
+            'tanggal_perjanjian' => 'nullable|date',
             'penyewa_berdasarkan' => 'required|string|max:255',
             'alamat' => 'required|string',
             'foto_identitas' => 'nullable|file|mimes:jpg,jpeg,pdf|max:2048',
@@ -55,10 +137,11 @@ class PendaftaranController extends Controller
             'surat_pengukuhan_pkp' => 'nullable|string|max:50', 
             'tanggal_surat_pengukuhan_pkp' => 'nullable|date', 
             // Data Aset - Step 2
-            'alamat_asset' => 'required|string',
-            'penggunaan_asset' => 'required|string',
+            'id_aset' => 'required|exists:data_aset,id_aset',
+            'nama_aset' => 'required|string|max:255',
             'luas_tanah' => 'nullable|numeric',
             'luas_bangunan' => 'nullable|numeric',
+
             'tahun' => 'nullable|integer|min:0',
             'bulan' => 'nullable|integer|min:0|max:11',
             'hari' => 'nullable|integer|min:0|max:30',
@@ -76,12 +159,20 @@ class PendaftaranController extends Controller
             'harga_sewa_admin_com' => 'required|numeric|min:0',
             'ppn' => 'required|numeric|min:0',
             'total_harga' => 'required|numeric|min:0',
-            'terbilang' => 'required|string'
+            'terbilang' => 'required|string',
+            'penggunaan_asset' => 'required|string',
         ]);
-        
 
-        
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
         DB::beginTransaction();
+        
 
         try {
             // Step 1: Simpan Data Mitra
@@ -100,24 +191,19 @@ class PendaftaranController extends Controller
             'data' => [
                 'mitra_id' => $dataMitra->id_mitra,
                 'aset_id' => $dataAset->id_aset,
+                'nama' => $dataMitra->nama,
                 'perjanjian_id' => $perjanjianSewa->id_perjanjian]
             ]);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            dd([
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'line' => $e->getLine(),
-                'file' => $e->getFile()
-            ]);
-        
             return response()->json([
                 'success' => false,
-                'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(),
+                'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()
             ], 500);
         }
     }
+    
      private function simpanDataMitra(Request $request)
     {
         $data = [
@@ -167,16 +253,16 @@ class PendaftaranController extends Controller
     }  
     private function simpanDataAset(Request $request, $idMitra)
     {
-        $data = [
-            'id_mitra' => $idMitra,
-            'lokasi' => $request->alamat_asset,
-            'penggunaan_objek' => $request->penggunaan_asset,
-            'luas_tanah' => $request->luas_tanah,
-            'luas_bangunan' => $request->luas_bangunan,
-        ];
-
-
-        return DataAset::create($data);
+        // VALIDASI: Pastikan aset dengan ID tersebut ada
+        $aset = DataAset::find($request->id_aset);
+        
+        if (!$aset) {
+            throw new \Exception('Aset yang dipilih tidak ditemukan');
+        }
+        
+        // KEMBALIKAN objek aset yang sudah ada (bukan membuat baru)
+        return $aset;
+        
     }
     private function simpanPerjanjianSewa(Request $request, $idMitra, $idAset )
     {
@@ -207,7 +293,8 @@ class PendaftaranController extends Controller
             'harga_sewa_admin_com' => $request->harga_sewa_admin_com,
             'ppn_11_persen' => $request->ppn,
             'total_harga' => $request->total_harga,
-            'terbilang' => $request->terbilang
+            'terbilang' => $request->terbilang,
+            'penggunaan_aset' => $request->penggunaan_asset
         ];
 
         return PerjanjianSewa::create($data);
@@ -280,7 +367,8 @@ class PendaftaranController extends Controller
                 'dm.nama',
                 'dm.Jenis',
                 'da.lokasi',
-                'da.penggunaan_objek',
+                'dm.updated_at',
+                //'da.penggunaan_objek',
                 'dm.status',
             )
             ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
@@ -315,7 +403,8 @@ class PendaftaranController extends Controller
                 'dm.nama',
                 'dm.Jenis',
                 'da.lokasi',
-                'da.penggunaan_objek',
+                'dm.updated_at',
+                //'da.penggunaan_objek',
                 'dm.status',
             )
             ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
@@ -328,6 +417,84 @@ class PendaftaranController extends Controller
         $dataSelesai = $querySelesai->orderBy('perjanjian_sewa.updated_at', 'desc')->get();
 
         return view('pendaftaran.list_data', compact('dataSelesai', 'dataProses'));
+    }
+
+
+    // API Endpoint untuk pencarian aset
+    public function search(Request $request)
+    {
+        $search = $request->get('q');
+        
+        // Cari berdasarkan nama_aset atau lokasi
+        $asets = DataAset::where('nama_aset', 'like', "%{$search}%")
+                        ->orWhere('lokasi', 'like', "%{$search}%")
+                        ->limit(10)
+                        ->get(['id_aset', 'nama_aset', 'lokasi', 'luas_tanah', 'luas_bangunan']); 
+        
+        // Format response untuk JavaScript
+        $formattedAsets = $asets->map(function($aset) {
+            return [
+                'id_aset' => $aset->id_aset,        
+                'nama_aset' => $aset->nama_aset,
+                'alamat_asset' => $aset->lokasi,
+                'luas_tanah' => $aset->luas_tanah,      
+                'luas_bangunan' => $aset->luas_bangunan 
+            ];
+        });
+        
+        return response()->json($formattedAsets);
+    }
+
+    // Di MitraController.php
+    public function searchmitra(Request $request)
+    {
+        $query = $request->get('q');
+        $type = $request->get('type');
+        
+        $mitraQuery = DataMitra::where('nama', 'LIKE', "%{$query}%")
+                            ->orWhere('email', 'LIKE', "%{$query}%")
+                            ->orWhere('no_identitas', 'LIKE', "%{$query}%")
+                            ->orWhere('no_tlpn', 'LIKE', "%{$query}%");
+        
+        // Filter berdasarkan jenis jika ada
+        if ($type) {
+            $mitraQuery->where('Jenis', $type);
+        }
+        
+        // Ambil SEMUA field yang diperlukan untuk autocomplete
+        $mitras = $mitraQuery->limit(10)->get([
+            'id_mitra', 
+            'nama',
+            'email',
+            'no_tlpn',
+            'alamat',
+            'no_identitas',
+            'masa_berlaku_identitas',
+            'penyewa_berdasarkan',
+            'Jenis',
+            'kategori',
+            'nama_perwakilan',
+            'penyewa_selaku',
+            'npwp',
+            'kota_penyewa',
+            'kode_pos',
+            'fax_penyewa',
+            'no_akta_pendirian',
+            'no_anggaran_dasar',
+            'tgl_anggaran_dasar',
+            'no_kenmenhum_dan_ham',
+            'tgl_persetujuan_kenmenhum_dan_ham',
+            'no_penetapan_pengadilan',
+            'tgl_penetapan_pengadilan',
+            'no_izin_berusaha',
+            'tgl_izin_usaha',
+            'sk_dirjen_pajak',
+            'tgl_sk_dirjen_pajak',
+            'surat_pengukuhan_kena_pajak',
+            'tgl_surat_pengukuhan_kena_pajak'
+        ]);
+        
+        return response()->json($mitras);
     }
 
 }

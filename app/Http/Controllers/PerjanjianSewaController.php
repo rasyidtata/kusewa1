@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DataPerjanjianExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 
 class PerjanjianSewaController extends Controller
@@ -25,15 +25,40 @@ class PerjanjianSewaController extends Controller
             'dm.Jenis',
             'dm.nama_perwakilan',
             'dm.penyewa_selaku',
+            'dm.penyewa_berdasarkan',
             'dm.alamat',
             'dm.no_tlpn',
             'dm.kategori',
+            'dm.email',
+            'dm.no_identitas',
+            'dm.npwp',
+            'dm.masa_berlaku_identitas',
+            'dm.fax_penyewa',
+            'dm.kota_penyewa',
+            'dm.kode_pos',
+            'dm.no_akta_pendirian',
+            'dm.no_anggaran_dasar',
+            'dm.tgl_anggaran_dasar',
+            'dm.no_kenmenhum_dan_ham',
+            'dm.tgl_persetujuan_kenmenhum_dan_ham',
+            'dm.no_penetapan_pengadilan',
+            'dm.tgl_penetapan_pengadilan',
+            'dm.no_izin_berusaha',
+            'dm.tgl_izin_usaha', 
+            'dm.sk_dirjen_pajak',
+            'dm.tgl_sk_dirjen_pajak',
+            'dm.surat_pengukuhan_kena_pajak',
+            'dm.tgl_surat_pengukuhan_kena_pajak',
             'da.kode_aset',
-            'da.lokasi'
+            'da.lokasi',
+            'da.luas_tanah',
+            'da.luas_bangunan'
         )
         ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
         ->join('data_aset as da', 'perjanjian_sewa.id_aset', '=', 'da.id_aset')
         ->orderBy('perjanjian_sewa.updated_at', 'desc');
+
+        $query->whereIn('dm.status', ['Diterima', 'Ditola']);
 
         // Filter berdasarkan kategori
         if ($request->filled('filterkategori')) {
@@ -43,6 +68,16 @@ class PerjanjianSewaController extends Controller
         // Filter berdasarkan jenis mitra
         if ($request->filled('filterjenis')) {
             $query->where('dm.Jenis', $request->filterjenis);
+        }
+
+        // Filter berdasarkan tanggal awal (Dari)
+        if ($request->filled('tanggal_awal')) {
+            $query->whereDate('perjanjian_sewa.updated_at', '>=', $request->tanggal_awal);
+        }
+
+        // Filter berdasarkan tanggal akhir (Sampai)
+        if ($request->filled('tanggal_akhir')) {
+            $query->whereDate('perjanjian_sewa.updated_at', '<=', $request->tanggal_akhir);
         }
 
         // Filter berdasarkan pencarian
@@ -60,9 +95,6 @@ class PerjanjianSewaController extends Controller
 
         return view('list_data.data_perjanjian', compact('dataPerjanjian'));
     }
-
-
-
     public function edit($id_perjanjian)
     {
 
@@ -110,6 +142,7 @@ class PerjanjianSewaController extends Controller
 
             // Data Aset - Step 2
             'alamat_asset' => 'required|string',
+            'nama_aset' => 'required|string|max:255',
             'penggunaan_asset' => 'required|string',
             'luas_tanah' => 'nullable|integer|min:0',
             'luas_bangunan' => 'nullable|integer|min:0',
@@ -132,20 +165,16 @@ class PerjanjianSewaController extends Controller
             'total_harga' => 'nullable|numeric|min:0',
             'terbilang' => 'nullable|string'
         ]);
-
         // Validasi gagal
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
-
         DB::beginTransaction();
 
         try {
-            // Ambil data perjanjian sewa
             
-
             // Step 1: Update Data Mitra
             $this->updateDataMitra($request, $perjanjianSewa->id_mitra);
 
@@ -227,7 +256,7 @@ class PerjanjianSewaController extends Controller
         $dataAset = DataAset::find($id_aset);
         $data = [
             'lokasi' => $request->alamat_asset,
-            'penggunaan_objek' => $request->penggunaan_asset,
+            'nama_aset' => $request->nama_aset,
             'luas_tanah' => $request->luas_tanah,
             'luas_bangunan' => $request->luas_bangunan,
         ];
@@ -269,7 +298,8 @@ class PerjanjianSewaController extends Controller
             'harga_sewa_admin_com' => $request->harga_sewa_admin_com,
             'ppn_11_persen' => $request->ppn,
             'total_harga' => $request->total_harga,
-            'terbilang' => $request->terbilang
+            'terbilang' => $request->terbilang,
+            'penggunaan_aset' => $request->penggunaan_asset
         ];
 
         $perjanjianSewa->fill($data);
@@ -336,46 +366,20 @@ class PerjanjianSewaController extends Controller
 
 
 
-    // Tambahkan method destroy() di controller
+    //  method destroy
     public function destroy($id_perjanjian)
     {
         DB::beginTransaction();
         
         try {
-
             $perjanjian = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id_perjanjian);
-            $id_mitra = $perjanjian->id_mitra;
-            $id_aset = $perjanjian->id_aset;
             
-            // Hapus perjanjian sewa
+            // Hapus perjanjian sewa SAJA
             $perjanjian->delete();
-            
-            // Cek apakah mitra masih memiliki perjanjian lain
-            $mitraMasihAktif = PerjanjianSewa::where('id_mitra', $id_mitra)->exists();
-            
-            // Cek apakah aset masih digunakan di perjanjian lain
-            $asetMasihDigunakan = PerjanjianSewa::where('id_aset', $id_aset)->exists();
-            
-            // Hapus mitra jika tidak ada perjanjian lagi
-            if (!$mitraMasihAktif) {
-                $mitra = DataMitra::find($id_mitra);
-                if ($mitra) {
-                    // Hapus foto identitas jika ada
-                    if ($mitra->foto_identitas && file_exists(public_path($mitra->foto_identitas))) {
-                        unlink(public_path($mitra->foto_identitas));
-                    }
-                    $mitra->delete();
-                }
-            }
-            
-            // Hapus aset jika tidak digunakan lagi
-            if (!$asetMasihDigunakan) {
-                DataAset::where('id_aset', $id_aset)->delete();
-            }
             
             DB::commit();
             
-            return redirect()->back()->with('success', 'Data berhasil dihapus!');
+            return redirect()->back()->with('success', 'Data perjanjian berhasil dihapus!');
             
         } catch (\Exception $e) {
             DB::rollBack();
@@ -387,146 +391,124 @@ class PerjanjianSewaController extends Controller
     public function exportExcel(Request $request)
     {
         try {
-            $query = PerjanjianSewa::query()->with(['mitra', 'aset']);
-            
+            // Gunakan query yang SAMA dengan function perjanjian_sewa
+            $query = PerjanjianSewa::select(
+                'perjanjian_sewa.*',
+                'dm.tgl_perjanjian',
+                'dm.kode_mitra',
+                'dm.nama',
+                'dm.Jenis',
+                'dm.nama_perwakilan',
+                'dm.penyewa_selaku',
+                'dm.penyewa_berdasarkan',
+                'dm.alamat',
+                'dm.no_tlpn',
+                'dm.kategori',
+                'dm.email',
+                'dm.no_identitas',
+                'dm.npwp',
+                'dm.masa_berlaku_identitas',
+                'dm.fax_penyewa',
+                'dm.kota_penyewa',
+                'dm.kode_pos',
+                'dm.no_akta_pendirian',
+                'dm.no_anggaran_dasar',
+                'dm.tgl_anggaran_dasar',
+                'dm.no_kenmenhum_dan_ham',
+                'dm.tgl_persetujuan_kenmenhum_dan_ham',
+                'dm.no_penetapan_pengadilan',
+                'dm.tgl_penetapan_pengadilan',
+                'dm.no_izin_berusaha',
+                'dm.tgl_izin_usaha', 
+                'dm.sk_dirjen_pajak',
+                'dm.tgl_sk_dirjen_pajak',
+                'dm.surat_pengukuhan_kena_pajak',
+                'dm.tgl_surat_pengukuhan_kena_pajak',
+                'da.kode_aset',
+                'da.lokasi',
+                'da.luas_tanah',
+                'da.luas_bangunan'
+            )
+            ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
+            ->join('data_aset as da', 'perjanjian_sewa.id_aset', '=', 'da.id_aset')
+            ->orderBy('perjanjian_sewa.updated_at', 'desc');
+
+            $query->whereIn('dm.status', ['Diterima', 'Ditolak']);
+
             // Filter kategori
             if ($request->filled('filterkategori')) {
-                $query->where('kategori', $request->filterkategori);
+                $query->where('dm.kategori', $request->filterkategori);
             }
-            
+
             // Filter jenis
             if ($request->filled('filterjenis')) {
-                $query->where('Jenis', $request->filterjenis);
+                $query->where('dm.Jenis', $request->filterjenis);
             }
-            
+
+            // Filter berdasarkan tanggal awal (Dari)
+            if ($request->filled('tanggal_awal')) {
+                $query->whereDate('perjanjian_sewa.updated_at', '>=', $request->tanggal_awal);
+            }
+
+            // Filter berdasarkan tanggal akhir (Sampai)
+            if ($request->filled('tanggal_akhir')) {
+                $query->whereDate('perjanjian_sewa.updated_at', '<=', $request->tanggal_akhir);
+            }
+
             // Filter pencarian
             if ($request->filled('table_search')) {
                 $search = $request->table_search;
                 $query->where(function($q) use ($search) {
-                    $q->where('nama', 'like', '%'.$search.'%')
-                    ->orWhere('kode_perjanjian', 'like', '%'.$search.'%')
-                    ->orWhere('nama_perwakilan', 'like', '%'.$search.'%')
-                    ->orWhere('no_tlpn', 'like', '%'.$search.'%')
-                    ->orWhere('lokasi', 'like', '%'.$search.'%')
-                    ->orWhereHas('mitra', function($q2) use ($search) {
-                        $q2->where('email', 'like', '%'.$search.'%')
-                            ->orWhere('no_identitas', 'like', '%'.$search.'%')
-                            ->orWhere('npwp', 'like', '%'.$search.'%');
-                    });
+                    $q->where('dm.nama', 'LIKE', "%{$search}%")
+                    ->orWhere('dm.kode_mitra', 'LIKE', "%{$search}%")
+                    ->orWhere('da.kode_aset', 'LIKE', "%{$search}%")
+                    ->orWhere('perjanjian_sewa.kode_perjanjian', 'LIKE', "%{$search}%")
+                    ->orWhere('dm.email', 'LIKE', "%{$search}%")
+                    ->orWhere('dm.no_identitas', 'LIKE', "%{$search}%")
+                    ->orWhere('dm.npwp', 'LIKE', "%{$search}%")
+                    ->orWhere('dm.no_tlpn', 'LIKE', "%{$search}%")
+                    ->orWhere('da.lokasi', 'LIKE', "%{$search}%");
                 });
             }
-            
+
             $data = $query->get();
-            
-            $fileName = 'data-perjanjian-lengkap-' . date('Y-m-d') . '.xlsx';
-            
-            // Gunakan export class baru
-            return Excel::download(new DataPerjanjianExport($data), $fileName);
-            
-        } catch (\Exception $e) {
-            return back()->with('error', 'Error: ' . $e->getMessage());
-        }
-    }
 
-
-
-
-
-
-
-    /* ==================================================================== */
-    /*                FITUR PERPANJANGAN PERJANJIAN SEWA                    */
-    /* ==================================================================== */
-
-    public function indexPerpanjang()
-    {
-        $data = PerjanjianSewa::with(['dataMitra', 'dataAset'])->get();
-        return view('perpanjang.index', compact('data'));
-    }
-
-    public function formPerpanjang($id)
-    {
-        $dataps = PerjanjianSewa::with(['dataMitra', 'dataAset'])->findOrFail($id);
-
-        // Formatkan tanggal untuk input form (agar aman jika null)
-        $dataps->masa_awal_perjanjian_formatted = optional($dataps->masa_awal_perjanjian)->format('Y-m-d');
-        $dataps->masa_akhir_perjanjian_formatted = optional($dataps->masa_akhir_perjanjian)->format('Y-m-d');
-
-        return view('perpanjang.form', compact('dataps'));
-    }
-
-    public function storePerpanjang(Request $request, $id)
-    {
-        $perjanjian = PerjanjianSewa::findOrFail($id);
-
-        // Tentukan minimal tanggal yang valid
-        $minDate = $perjanjian->masa_akhir_perjanjian
-            ? Carbon::parse($perjanjian->masa_akhir_perjanjian)->format('Y-m-d')
-            : Carbon::now()->format('Y-m-d');
-
-        // Validasi form
-        $validated = $request->validate([
-            'tanggal_perpanjang' => ['required', 'date', 'after:' . $minDate],
-        ], [
-            'tanggal_perpanjang.after' => "Tanggal perpanjangan harus lebih besar dari tanggal akhir sebelumnya ($minDate)."
-        ]);
-
-        DB::beginTransaction();
-        try {
-
-            $newEnd = Carbon::parse($validated['tanggal_perpanjang']);
-            $oldStart = $perjanjian->masa_awal_perjanjian
-                ? Carbon::parse($perjanjian->masa_awal_perjanjian)
-                : null;
-
-            // Hitung ulang jangka waktu total
-            $jangkaParts = [];
-
-            if ($oldStart) {
-                $diffYears = $oldStart->diffInYears($newEnd);
-                $intermediate = $oldStart->copy()->addYears($diffYears);
-
-                $diffMonths = $intermediate->diffInMonths($newEnd);
-                $intermediate = $intermediate->copy()->addMonths($diffMonths);
-
-                $diffDays = $intermediate->diffInDays($newEnd);
-
-                if ($diffYears > 0)
-                    $jangkaParts[] = $diffYears . ' Tahun';
-                if ($diffMonths > 0)
-                    $jangkaParts[] = $diffMonths . ' Bulan';
-                if ($diffDays > 0)
-                    $jangkaParts[] = $diffDays . ' Hari';
-            } else {
-                $jangkaParts[] = '0 Hari';
+            if ($data->isEmpty()) {
+                return back()->with('warning', 'Tidak ada data untuk diexport');
             }
 
-            // Simpan data perpanjangannya
-            $perjanjian->masa_akhir_perjanjian = $newEnd->format('Y-m-d');
-            $perjanjian->jangka_waktu = implode(' ', $jangkaParts) ?: '0 Hari';
-            $perjanjian->save();
+            $fileName = 'data-perjanjian-lengkap-' . date('Y-m-d-His') . '.xlsx';
 
-            DB::commit();
-
-            return redirect()->route('perpanjang.index')
-                ->with('success', 'Perpanjangan berhasil disimpan. Masa akhir diperbarui!');
+            return Excel::download(new DataPerjanjianExport($data), $fileName);
 
         } catch (\Exception $e) {
-            DB::rollBack();
-
-            return redirect()->back()->withInput()
-                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return back()->with('error', 'Gagal export data: ' . $e->getMessage());
         }
+    }
+
+    public function suggestNama(Request $request)
+    {
+        $search = $request->get('query');
+        
+        if (strlen($search) < 2) {
+            return response()->json([]);
+        }
+        
+        // Query khusus untuk mendapatkan saran nama dari data_mitra
+        $suggestions = PerjanjianSewa::select('dm.nama', 'dm.kode_mitra', 'dm.kategori')
+            ->join('data_mitra as dm', 'perjanjian_sewa.id_mitra', '=', 'dm.id_mitra')
+            ->where('dm.nama', 'LIKE', "%{$search}%")
+            ->whereIn('dm.status', ['Diterima', 'Ditolak'])
+            ->distinct()
+            ->limit(10)
+            ->orderBy('dm.nama', 'asc')
+            ->get();
+        
+        return response()->json($suggestions);
     }
 
 
 
 
-
-
-    
-
-
-    
 
 }
